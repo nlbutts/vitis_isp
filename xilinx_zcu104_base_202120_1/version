@@ -1,0 +1,4 @@
+build: 2021.2_1020_1630
+vitis_used: /proj/xbuilds/CustTA/2021.2_2021_1020_1126
+petalinux_used: /proj/petalinux/2021.2/petalinux-v2021.2_1014_1
+embedded_commit: 6a383a8181d603487f956291fd67a0e4b3eeca5d
