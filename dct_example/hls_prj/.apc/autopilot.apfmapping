@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <autopilotfilemapping:AutoPilotFileMapping xmlns:autopilotfilemapping="www.autoesl.com/autopilotfilemapping">
   <source>
-    <originFiles name="dct.h" path="/home/nlbutts/projects/vitis_isp/dct_example/dct.h"/>
     <originFiles name="dct.cpp" path="/home/nlbutts/projects/vitis_isp/dct_example/dct.cpp"/>
+    <originFiles name="dct.h" path="/home/nlbutts/projects/vitis_isp/dct_example/dct.h"/>
   </source>
   <testbench>
-    <originFiles name="out.golden.dat" path="/home/nlbutts/projects/vitis_isp/dct_example/out.golden.dat"/>
-    <originFiles name="in.dat" path="/home/nlbutts/projects/vitis_isp/dct_example/in.dat"/>
-    <originFiles name="dct_test.cpp" path="/home/nlbutts/projects/vitis_isp/dct_example/dct_test.cpp"/>
-    <originFiles name="dct_coeff_table.txt" path="/home/nlbutts/projects/vitis_isp/dct_example/dct_coeff_table.txt"/>
     <originFiles name="dct-extern.h" path="/home/nlbutts/projects/vitis_isp/dct_example/dct-extern.h"/>
+    <originFiles name="dct_coeff_table.txt" path="/home/nlbutts/projects/vitis_isp/dct_example/dct_coeff_table.txt"/>
+    <originFiles name="dct_test.cpp" path="/home/nlbutts/projects/vitis_isp/dct_example/dct_test.cpp"/>
+    <originFiles name="in.dat" path="/home/nlbutts/projects/vitis_isp/dct_example/in.dat"/>
+    <originFiles name="out.golden.dat" path="/home/nlbutts/projects/vitis_isp/dct_example/out.golden.dat"/>
   </testbench>
 </autopilotfilemapping:AutoPilotFileMapping>

@@ -37,9 +37,24 @@
 			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/.apc/.tb</location>
 		</link>
 		<link>
-			<name>solution1/constraints</name>
+			<name>solution_base/constraints</name>
 			<type>2</type>
-			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution1/.tcls</location>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_base/.tcls</location>
+		</link>
+		<link>
+			<name>solution_dataflow/constraints</name>
+			<type>2</type>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_dataflow/.tcls</location>
+		</link>
+		<link>
+			<name>solution_pipeline/constraints</name>
+			<type>2</type>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_pipeline/.tcls</location>
+		</link>
+		<link>
+			<name>solution_pipeline_mem/constraints</name>
+			<type>2</type>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_pipeline_mem/.tcls</location>
 		</link>
 		<link>
 			<name>source/dct.cpp</name>
@@ -77,19 +92,64 @@
 			<location>/home/nlbutts/projects/vitis_isp/dct_example/out.golden.dat</location>
 		</link>
 		<link>
-			<name>solution1/constraints/.xml.directive</name>
+			<name>solution_base/constraints/.xml.directive</name>
 			<type>1</type>
-			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution1/solution1.directive</location>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_base/solution_base.directive</location>
 		</link>
 		<link>
-			<name>solution1/constraints/directives.tcl</name>
+			<name>solution_base/constraints/directives.tcl</name>
 			<type>1</type>
-			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution1/directives.tcl</location>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_base/directives.tcl</location>
 		</link>
 		<link>
-			<name>solution1/constraints/script.tcl</name>
+			<name>solution_base/constraints/script.tcl</name>
 			<type>1</type>
-			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution1/script.tcl</location>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_base/script.tcl</location>
+		</link>
+		<link>
+			<name>solution_dataflow/constraints/.xml.directive</name>
+			<type>1</type>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_dataflow/solution_dataflow.directive</location>
+		</link>
+		<link>
+			<name>solution_dataflow/constraints/directives.tcl</name>
+			<type>1</type>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_dataflow/directives.tcl</location>
+		</link>
+		<link>
+			<name>solution_dataflow/constraints/script.tcl</name>
+			<type>1</type>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_dataflow/script.tcl</location>
+		</link>
+		<link>
+			<name>solution_pipeline/constraints/.xml.directive</name>
+			<type>1</type>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_pipeline/solution_pipeline.directive</location>
+		</link>
+		<link>
+			<name>solution_pipeline/constraints/directives.tcl</name>
+			<type>1</type>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_pipeline/directives.tcl</location>
+		</link>
+		<link>
+			<name>solution_pipeline/constraints/script.tcl</name>
+			<type>1</type>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_pipeline/script.tcl</location>
+		</link>
+		<link>
+			<name>solution_pipeline_mem/constraints/.xml.directive</name>
+			<type>1</type>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_pipeline_mem/solution_pipeline_mem.directive</location>
+		</link>
+		<link>
+			<name>solution_pipeline_mem/constraints/directives.tcl</name>
+			<type>1</type>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_pipeline_mem/directives.tcl</location>
+		</link>
+		<link>
+			<name>solution_pipeline_mem/constraints/script.tcl</name>
+			<type>1</type>
+			<location>/home/nlbutts/projects/vitis_isp/dct_example/hls_prj/solution_pipeline_mem/script.tcl</location>
 		</link>
 	</linkedResources>
 </projectDescription>

@@ -3,48 +3,22 @@
   <errorLogs>
     <logs>
       <synLog/>
-      <simLog/>
-      <mgLog/>
-      <packageLog/>
-      <csimLog/>
     </logs>
   </errorLogs>
   <warningLogs>
     <logs>
       <synLog>
-        <logs message="WARNING: [RTGEN 206-101] Design contains AXI ports. Reset is fixed to synchronous and active low." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:36.027-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_BREADY' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.833-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_AWUSER' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.829-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_AWREGION' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.825-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_AWQOS' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.822-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_AWPROT' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.817-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_AWCACHE' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.814-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_AWLOCK' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.810-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_AWBURST' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.805-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_AWSIZE' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.801-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_AWLEN' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.800-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_AWID' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.797-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_AWADDR' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.793-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_WR_Loop_Row/m_axi_gmem_AWVALID' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:35.790-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_RD_Loop_Row/m_axi_gmem_ARUSER' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:34.568-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_RD_Loop_Row/m_axi_gmem_ARREGION' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:34.566-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_RD_Loop_Row/m_axi_gmem_ARQOS' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:34.564-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_RD_Loop_Row/m_axi_gmem_ARPROT' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:34.561-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_RD_Loop_Row/m_axi_gmem_ARCACHE' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:34.559-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_RD_Loop_Row/m_axi_gmem_ARLOCK' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:34.556-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_RD_Loop_Row/m_axi_gmem_ARBURST' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:34.553-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_RD_Loop_Row/m_axi_gmem_ARSIZE' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:34.551-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_RD_Loop_Row/m_axi_gmem_ARLEN' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:34.548-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_RD_Loop_Row/m_axi_gmem_ARID' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:34.545-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_RD_Loop_Row/m_axi_gmem_ARADDR' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:34.543-0600" type="Warning"/>
-        <logs message="WARNING: [RTGEN 206-101] Setting dangling out port 'dct_Pipeline_RD_Loop_Row/m_axi_gmem_ARVALID' to 0." projectName="hls_test" solutionName="solution1" date="2022-01-06T13:07:34.540-0600" type="Warning"/>
+        <logs message="WARNING: [RTGEN 206-101] Design contains AXI ports. Reset is fixed to synchronous and active low." projectName="hls_prj" solutionName="solution_pipeline_mem" date="2022-01-10T11:18:38.879-0600" type="Warning"/>
+        <logs message="WARNING: [HLS 200-1016] The critical path in module 'dct' consists of the following:&#x9;wire read operation ('output') on port 'output_r' [14]  (1 ns)&#xA;&#x9;'call' operation ('_ln107', dct.cpp:107) to 'write_data' [22]  (3.65 ns)&#xA;&#xA;&#xA;Resolution: For help on HLS 200-1016 see www.xilinx.com/cgi-bin/docs/rdoc?v=2021.2;t=hls+guidance;d=200-1016.html" projectName="hls_prj" solutionName="solution_pipeline_mem" date="2022-01-10T11:18:29.886-0600" type="Warning"/>
+        <logs message="WARNING: [HLS 200-871] Estimated clock period (4.65ns) exceeds the target (target clock period: 5ns, clock uncertainty: 1.35ns, effective delay budget: 3.65ns).&#xA;Resolution: For help on HLS 200-871 see www.xilinx.com/cgi-bin/docs/rdoc?v=2021.2;t=hls+guidance;d=200-871.html" projectName="hls_prj" solutionName="solution_pipeline_mem" date="2022-01-10T11:18:29.882-0600" type="Warning"/>
+        <logs message="WARNING: [HLS 200-875] II = 303 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.&#xA;Resolution: For help on HLS 200-875 see www.xilinx.com/cgi-bin/docs/rdoc?v=2021.2;t=hls+guidance;d=200-875.html" projectName="hls_prj" solutionName="solution_pipeline_mem" date="2022-01-10T11:18:29.505-0600" type="Warning"/>
+        <logs message="WARNING: [HLS 200-875] II = 302 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.&#xA;Resolution: For help on HLS 200-875 see www.xilinx.com/cgi-bin/docs/rdoc?v=2021.2;t=hls+guidance;d=200-875.html" projectName="hls_prj" solutionName="solution_pipeline_mem" date="2022-01-10T11:18:29.501-0600" type="Warning"/>
+        <logs message="WARNING: [HLS 200-875] II = 301 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.&#xA;Resolution: For help on HLS 200-875 see www.xilinx.com/cgi-bin/docs/rdoc?v=2021.2;t=hls+guidance;d=200-875.html" projectName="hls_prj" solutionName="solution_pipeline_mem" date="2022-01-10T11:18:29.497-0600" type="Warning"/>
+        <logs message="WARNING: [HLS 200-875] II = 300 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.&#xA;Resolution: For help on HLS 200-875 see www.xilinx.com/cgi-bin/docs/rdoc?v=2021.2;t=hls+guidance;d=200-875.html" projectName="hls_prj" solutionName="solution_pipeline_mem" date="2022-01-10T11:18:29.493-0600" type="Warning"/>
+        <logs message="WARNING: [HLS 200-875] II = 299 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.&#xA;Resolution: For help on HLS 200-875 see www.xilinx.com/cgi-bin/docs/rdoc?v=2021.2;t=hls+guidance;d=200-875.html" projectName="hls_prj" solutionName="solution_pipeline_mem" date="2022-01-10T11:18:29.489-0600" type="Warning"/>
+        <logs message="WARNING: [HLS 200-875] II = 298 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.&#xA;Resolution: For help on HLS 200-875 see www.xilinx.com/cgi-bin/docs/rdoc?v=2021.2;t=hls+guidance;d=200-875.html" projectName="hls_prj" solutionName="solution_pipeline_mem" date="2022-01-10T11:18:29.485-0600" type="Warning"/>
+        <logs message="WARNING: [HLS 200-875] II = 297 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.&#xA;Resolution: For help on HLS 200-875 see www.xilinx.com/cgi-bin/docs/rdoc?v=2021.2;t=hls+guidance;d=200-875.html" projectName="hls_prj" solutionName="solution_pipeline_mem" date="2022-01-10T11:18:29.480-0600" type="Warning"/>
       </synLog>
-      <simLog>
-        <logs message="WARNING: [XSIM 43-3431] One or more environment variables have been detected which affect the operation of the C compiler. These are typically not set in standard installations and are not tested by Xilinx, however they may be appropriate for your system, so the flow will attempt to continue.  If errors occur, try running xelab with the &quot;-mt off -v 1&quot; switches to see more information from the C compiler. The following environment variables have been detected:&#xA;    LIBRARY_PATH" projectName="hls_test" solutionName="solution1" date="2022-01-06T13:11:32.119-0600" type="Warning"/>
-      </simLog>
-      <mgLog/>
-      <packageLog/>
-      <csimLog/>
     </logs>
   </warningLogs>
 </vivadoHLSLog:LogRoot>
