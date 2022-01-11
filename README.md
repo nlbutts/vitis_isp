@@ -35,3 +35,16 @@ Xilinx has issues with 2022. See this post for a fix
 https://support.xilinx.com/s/article/76960?language=en_US
 
 
+# Get Linux working
+Use **dd** to copy the sd_card.img to an SD card. But then it won't boot and it
+takes forever. The **BOOT.BIN** file that is created has the **.bit** embedded.
+The FSBL takes a good long forever to load that. So it is better to take the
+output of the plinux build, without the .bit file and then have u-boot load the
+FPGA image.
+
+Copy the plinux **BOOT.BIN** into the first partition of the SD card.
+
+`
+setenv loadfpga "fatload mmc 0 '${ramdisk_addr_r}' system.bit;fpga load 0 '${ramdisk_addr_r}' '${filesize}'"
+saveenv
+`

@@ -2172,13 +2172,13 @@ CONFIG_run-postinsts=y
 # xrt
 #
 CONFIG_xrt=y
-CONFIG_xrt-dev=y
-CONFIG_xrt-dbg=y
+# CONFIG_xrt-dev is not set
+# CONFIG_xrt-dbg is not set
 
 #
 # zocl
 #
-CONFIG_zocl=y
+# CONFIG_zocl is not set
 # CONFIG_zocl-dev is not set
 # CONFIG_zocl-dbg is not set
 
@@ -2190,7 +2190,7 @@ CONFIG_zocl=y
 #
 # opencl-headers
 #
-CONFIG_opencl-headers=y
+# CONFIG_opencl-headers is not set
 
 #
 # protobuf
