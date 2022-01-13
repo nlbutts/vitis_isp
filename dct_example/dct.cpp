@@ -66,7 +66,7 @@ Xpose_Col_Inner_Loop:
          out_block[j][i] = col_outbuf[i][j];
 }
 
-void read_data(short input[N], short buf[DCT_SIZE][DCT_SIZE])
+void read_data(short input[N_DCT], short buf[DCT_SIZE][DCT_SIZE])
 {
    int r, c;
 
@@ -79,7 +79,7 @@ buf[r][c] = input[r * DCT_SIZE + c];
    }
 }
 
-void write_data(short buf[DCT_SIZE][DCT_SIZE], short output[N])
+void write_data(short buf[DCT_SIZE][DCT_SIZE], short output[N_DCT])
 {
    int r, c;
 
@@ -91,7 +91,7 @@ WR_Loop_Col:
    }
 }
 
-void dct(short input[N], short output[N]) {
+void dct(short input[N_DCT], short output[N_DCT]) {
 
 
    short buf_2d_in[DCT_SIZE][DCT_SIZE];

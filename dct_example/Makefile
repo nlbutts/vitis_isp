@@ -55,7 +55,7 @@ TARGET ?= sw_emu
 # ################### Setting up default value of DEVICE ##############################
 DEVICE ?= xilinx_u200_xdma_201830_2
 
-# ###################### Setting up default value of HOST_ARCH ####################### 
+# ###################### Setting up default value of HOST_ARCH #######################
 HOST_ARCH ?= x86
 
 # #################### Checking if DEVICE in blacklist #############################
@@ -83,7 +83,8 @@ endif
 
 # ######################## Setting up Project Variables #################################
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
-XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/L2/*}')
+#XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/L2/*}')
+XF_PROJ_ROOT = /home/nlbutts/projects/xilinx/Vitis_Libraries/vision
 CUR_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
 XFLIB_DIR = $(XF_PROJ_ROOT)
 
@@ -108,13 +109,13 @@ endif
 
 # ######################### Setting up Host Variables #########################
 #Include Required Host Source Files
-HOST_SRCS += $(XFLIB_DIR)/L2/examples/demosaicing/xf_demosaicing_tb.cpp
+HOST_SRCS += xf_dct_test.cpp
 HOST_SRCS += $(XFLIB_DIR)/ext/xcl2/xcl2.cpp
-CXXFLAGS += -I$(XFLIB_DIR)/L2/examples/demosaicing/build
+CXXFLAGS += -Ibuild
 CXXFLAGS += -I$(XFLIB_DIR)/ext/xcl2/
 CXXFLAGS += -I$(XFLIB_DIR)/L1/include
 
-LDFLAGS += -lopencv_videoio -lopencv_imgcodecs -lopencv_core -lopencv_imgproc -lopencv_features2d -lopencv_flann -lopencv_video -lopencv_calib3d -lopencv_highgui
+#LDFLAGS +=
 
 
 ifeq ($(TARGET),sw_emu)
@@ -134,7 +135,7 @@ CXXFLAGS += -I$(XILINX_XRT)/include -I$(XILINX_HLS)/include -std=c++11 -O3 -Wall
 endif
 LDFLAGS += -L$(XILINX_XRT)/lib -lOpenCL -lpthread -lrt -Wno-unused-label -Wno-narrowing -DVERBOSE
 CXXFLAGS += -fmessage-length=0 -O3
-CXXFLAGS += -I$(CUR_DIR)/src/ 
+CXXFLAGS += -I$(CUR_DIR)/src/
 
 ifeq ($(HOST_ARCH), x86)
 LDFLAGS += -L$(XILINX_HLS)/lnx64/tools/fpo_v7_0 -Wl,--as-needed -lgmp -lmpfr -lIp_floating_point_v7_0_bitacc_cmodel
@@ -176,22 +177,22 @@ else
 K_IMAGE := $(EDGE_COMMON_SW)/Image
 endif
 
-EXE_NAME := demosaicing
+EXE_NAME := dct_test
 EXE_FILE := $(BUILD_DIR)/$(EXE_NAME)
 ifeq ($(TARGET),$(filter $(TARGET),sw_emu))
-HOST_ARGS := $(XFLIB_DIR)/data/128x128.png 
+#HOST_ARGS := $(XFLIB_DIR)/data/128x128.png
 
 PKG_HOST_ARGS = $(foreach args,$(HOST_ARGS),$(subst $(dir $(patsubst %/,%,$(args))),,$(args)))
 LIBRARY_PATH =$(OPENCV_LIB):$(LD_LIBRARY_PATH):$(XILINX_XRT)/lib
 endif
 ifeq ($(TARGET),$(filter $(TARGET),hw_emu))
-HOST_ARGS := $(XFLIB_DIR)/data/128x128.png  
+#HOST_ARGS := $(XFLIB_DIR)/data/128x128.png
 
 PKG_HOST_ARGS = $(foreach args,$(HOST_ARGS),$(subst $(dir $(patsubst %/,%,$(args))),,$(args)))
 LIBRARY_PATH =$(OPENCV_LIB):$(LD_LIBRARY_PATH):$(XILINX_XRT)/lib
 endif
 ifeq ($(TARGET),$(filter $(TARGET),hw))
-HOST_ARGS := $(XFLIB_DIR)/data/4k.jpg 
+#HOST_ARGS := $(XFLIB_DIR)/data/4k.jpg
 
 PKG_HOST_ARGS = $(foreach args,$(HOST_ARGS),$(subst $(dir $(patsubst %/,%,$(args))),,$(args)))
 LIBRARY_PATH =$(OPENCV_LIB):$(LD_LIBRARY_PATH):$(XILINX_XRT)/lib
@@ -203,28 +204,24 @@ VPP_FLAGS += --hls.jobs 8
 VPP_LDFLAGS += --vivado.synth.jobs 8 --vivado.impl.jobs 8
 VPP_FLAGS += -I$(XFLIB_DIR)/L1/include/
 
-VPP_FLAGS += -I$(XFLIB_DIR)/L2/examples/demosaicing/build
-
-
-VPP_FLAGS += 
-VPP_FLAGS += 
+VPP_FLAGS += -Ibuild
 
 # Kernel args
 
 # ############################ Declaring Binary Containers ##########################
 
 ifeq ($(HOST_ARCH), x86)
-BINARY_CONTAINERS += $(BUILD_DIR)/krnl_demosaicing.xclbin
-BINARY_CONTAINERS_PKG += $(BUILD_DIR)/krnl_demosaicing.xclbin
+BINARY_CONTAINERS += $(BUILD_DIR)/krnl_dct_test.xclbin
+BINARY_CONTAINERS_PKG += $(BUILD_DIR)/krnl_dct_test.xclbin
 else
-BINARY_CONTAINERS += $(BUILD_DIR)/krnl_demosaicing_xo.xclbin
-BINARY_CONTAINERS_PKG += $(BUILD_DIR)/krnl_demosaicing.xclbin
+BINARY_CONTAINERS += $(BUILD_DIR)/krnl_dct_xo.xclbin
+BINARY_CONTAINERS_PKG += $(BUILD_DIR)/krnl_dct.xclbin
 endif
-BINARY_CONTAINER_krnl_demosaicing_OBJS += $(TEMP_DIR)/demosaicing_accel.xo
+BINARY_CONTAINER_krnl_dct_OBJS += $(TEMP_DIR)/dct_accel.xo
 
 # ######################### Setting Targets of Makefile ################################
-DATA_FILE += $(XFLIB_DIR)/data/4k.jpg
-DATA_FILE += $(XFLIB_DIR)/data/128x128.png
+DATA_FILE += in.dat
+DATA_FILE += out.golden.dat
 
 .PHONY: all clean cleanall docs emconfig
 ifeq ($(HOST_ARCH), x86)
@@ -299,15 +296,15 @@ endif
 build: xclbin
 
 # ################ Setting Rules for Binary Containers (Building Kernels) ################
-$(TEMP_DIR)/demosaicing_accel.xo: $(XFLIB_DIR)/L2/examples/demosaicing/xf_demosaicing_accel.cpp
-	$(ECHO) "Compiling Kernel: demosaicing_accel"
+$(TEMP_DIR)/dct_accel.xo: xf_dct_accel.cpp
+	$(ECHO) "Compiling Kernel: dct_accel"
 	mkdir -p $(TEMP_DIR)
-	$(VPP) -c $(demosaicing_accel_VPP_FLAGS) $(VPP_FLAGS) -k demosaicing_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' $^
+	$(VPP) -c $(dct_VPP_FLAGS) $(VPP_FLAGS) -k dct_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' $^
 
 
-$(BINARY_CONTAINERS): $(BINARY_CONTAINER_krnl_demosaicing_OBJS)
+$(BINARY_CONTAINERS): $(BINARY_CONTAINER_krnl_dct_OBJS)
 	mkdir -p $(BUILD_DIR)
-	$(VPP) -l $(VPP_FLAGS) --temp_dir $(TEMP_DIR) --report_dir $(BUILD_REPORT_DIR)/krnl_demosaicing $(VPP_LDFLAGS) $(VPP_LDFLAGS_krnl_demosaicing) -o '$@' $(+)
+	$(VPP) -l $(VPP_FLAGS) --temp_dir $(TEMP_DIR) --report_dir $(BUILD_REPORT_DIR)/krnl_dct $(VPP_LDFLAGS) $(VPP_LDFLAGS_krnl_dct) -o '$@' $(+)
 
 
 # ################# Setting Rules for Host (Building Host Executable) ################
@@ -327,7 +324,7 @@ $(EMCONFIG_DIR)/emconfig.json:
 
 # ###############Setting Essential Checks And Running Rules For Vitis Flow #############
 # Setting default value for vitis flow
-RESULT_VAL ?= 
+RESULT_VAL ?=
 RUN_LEVEL ?= 7
 run: all
 ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
@@ -339,7 +336,7 @@ ifeq ($(findstring vck190, $(DEVICE)), vck190)
 	export XCL_EMULATION_MODE=$(TARGET)
 	$(PERL) $(XF_PROJ_ROOT)/ext/make_utility/embedded_run_emulation.pl "./$(EMBEDDED_PACKAGE_OUT)/launch_$(TARGET).sh -noc-memory-config qemu-memory-_ddr@0x00000000 -no-reboot" "./run_script.sh" "$(RESULT_STRING)" "$(RUN_LEVEL)" | tee embedded_run.log
 else
-	$(PERL) $(XF_PROJ_ROOT)/ext/make_utility/embedded_run_emulation.pl "./$(EMBEDDED_PACKAGE_OUT)/launch_$(TARGET).sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log 
+	$(PERL) $(XF_PROJ_ROOT)/ext/make_utility/embedded_run_emulation.pl "./$(EMBEDDED_PACKAGE_OUT)/launch_$(TARGET).sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log
 endif
 endif
 else
@@ -398,8 +395,8 @@ cleanh:
 cleank:
 	-$(RMDIR) $(BUILD_DIR)/*.xclbin _vimage *xclbin.run_summary qemu-memory-_* emulation/ _vimage/ start_simulation.sh *.xclbin
 	-$(RMDIR) _x_temp.*/_x.* _x_temp.*/.Xil _x_temp.*/profile_summary.* xo_* _x*
-	-$(RMDIR) _x_temp.*/dltmp* _x_temp.*/kernel_info.dat _x_temp.*/*.log 
-	-$(RMDIR) _x_temp.* 
+	-$(RMDIR) _x_temp.*/dltmp* _x_temp.*/kernel_info.dat _x_temp.*/*.log
+	-$(RMDIR) _x_temp.*
 
 cleanall: cleanh cleank
 	-$(RMDIR) $(BUILD_DIR) sd_card* build_dir.* emconfig.json *.html $(TEMP_DIR) $(CUR_DIR)/reports *.csv *.run_summary $(CUR_DIR)/*.raw package_* run_script.sh .ipcache *.str

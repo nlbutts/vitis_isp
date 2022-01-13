@@ -66,6 +66,7 @@
     <Format formatName="sysgen_ise"/>
     <Format formatName="syn_dcp"/>
     <Format formatName="pcore" use_netlist="none"/>
+    <Format formatName="xo"/>
   </ExportDesign>
   <Simulation>
     <SimFlow askAgain="true" clangSanitizer="false" compile="false" compileChoice="gcc" disableDeadlockDetect="false" dumpTrace="none" enableDataflowProfiling="true" enableFifoSizing="false" name="cosim" optimizeCompile="true" random_stall="false" reduce_diskspace="false" setup="false" toolName="Auto" waveDebug="false">
