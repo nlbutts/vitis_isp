@@ -1,0 +1,536 @@
+==============================================================
+Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2021.2 (64-bit)
+Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+==============================================================
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 5ns.
+INFO: [HLS 200-1611] Setting target device to 'xcvc1802-viva1596-1MP-e-S'
+INFO: [HLS 200-1505] Using flow_target 'vitis'
+INFO: [HLS 200-1464] Running solution command: config_interface -default_interface=kernel
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_alignment_byte_size=64
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_latency=64
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_max_widen_bitwidth=512
+INFO: [HLS 200-1464] Running solution command: config_rtl -register_reset_num=3
+INFO: [HLS 200-1510] Running: set_part xcvc1802-viva1596-1MP-e-S 
+INFO: [HLS 200-1510] Running: create_clock -period 5 -name default 
+INFO: [HLS 200-1510] Running: config_interface -m_axi_alignment_byte_size 64 -m_axi_latency 64 -m_axi_max_widen_bitwidth 512 
+INFO: [HLS 200-1510] Running: config_rtl -register_reset_num 3 
+INFO: [HLS 200-1510] Running: set_directive_top -name dct dct 
+INFO: [HLS 200-1510] Running: set_directive_pipeline dct 
+INFO: [HLS 200-1510] Running: set_directive_bind_storage -type ram_2p dct buf_2d_in 
+INFO: [HLS 200-1510] Running: set_directive_bind_storage -type ram_2p dct buf_2d_out 
+INFO: [HLS 200-1510] Running: csynth_design 
+INFO: [HLS 200-111] Finished File checks and directory preparation: CPU user time: 0.02 seconds. CPU system time: 0 seconds. Elapsed time: 0.01 seconds; current allocated memory: 1.188 GB.
+INFO: [HLS 200-10] Analyzing design file 'dct.cpp' ... 
+INFO: [HLS 200-111] Finished Source Code Analysis and Preprocessing: CPU user time: 2.45 seconds. CPU system time: 0.38 seconds. Elapsed time: 2.09 seconds; current allocated memory: 279.703 MB.
+INFO: [HLS 200-777] Using interface defaults for 'Vitis' flow target.
+INFO: [HLS 214-284] Auto array partition mode is set into default.
+INFO: [HLS 214-291] Loop 'WR_Loop_Row' is marked as complete unroll implied by the pipeline pragma (dct.cpp:87:4)
+INFO: [HLS 214-291] Loop 'WR_Loop_Col' is marked as complete unroll implied by the pipeline pragma (dct.cpp:89:7)
+INFO: [HLS 214-291] Loop 'Xpose_Col_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:63:4)
+INFO: [HLS 214-291] Loop 'Xpose_Col_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:65:7)
+INFO: [HLS 214-291] Loop 'Col_DCT_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:58:4)
+INFO: [HLS 214-291] Loop 'Xpose_Row_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:52:4)
+INFO: [HLS 214-291] Loop 'Xpose_Row_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:54:7)
+INFO: [HLS 214-291] Loop 'Row_DCT_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:47:4)
+INFO: [HLS 214-291] Loop 'DCT_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:28:4)
+INFO: [HLS 214-291] Loop 'DCT_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:30:7)
+INFO: [HLS 214-291] Loop 'RD_Loop_Row' is marked as complete unroll implied by the pipeline pragma (dct.cpp:74:4)
+INFO: [HLS 214-291] Loop 'RD_Loop_Col' is marked as complete unroll implied by the pipeline pragma (dct.cpp:76:7)
+INFO: [HLS 214-186] Unrolling loop 'WR_Loop_Row' (dct.cpp:87:4) in function 'write_data' completely with a factor of 8 (dct.cpp:83:0)
+INFO: [HLS 214-186] Unrolling loop 'WR_Loop_Col' (dct.cpp:89:7) in function 'write_data' completely with a factor of 8 (dct.cpp:83:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Col_Outer_Loop' (dct.cpp:63:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Col_Inner_Loop' (dct.cpp:65:7) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Col_DCT_Loop' (dct.cpp:58:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Row_Outer_Loop' (dct.cpp:52:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Row_Inner_Loop' (dct.cpp:54:7) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Row_DCT_Loop' (dct.cpp:47:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'DCT_Outer_Loop' (dct.cpp:28:4) in function 'dct_1d' completely with a factor of 8 (dct.cpp:20:0)
+INFO: [HLS 214-186] Unrolling loop 'DCT_Inner_Loop' (dct.cpp:30:7) in function 'dct_1d' completely with a factor of 8 (dct.cpp:20:0)
+INFO: [HLS 214-186] Unrolling loop 'RD_Loop_Row' (dct.cpp:74:4) in function 'read_data' completely with a factor of 8 (dct.cpp:70:0)
+INFO: [HLS 214-186] Unrolling loop 'RD_Loop_Col' (dct.cpp:76:7) in function 'read_data' completely with a factor of 8 (dct.cpp:70:0)
+INFO: [HLS 214-270] Starting automatic array partition analysis...
+INFO: [HLS 214-115] Multiple burst reads of length 2 and bit width 512 has been inferred on bundle 'gmem'. These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings. (dct.cpp:78:13)
+INFO: [HLS 214-115] Multiple burst writes of length 2 and bit width 512 has been inferred on bundle 'gmem'. These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings. (dct.cpp:84:11)
+INFO: [HLS 200-111] Finished Compiling Optimization and Transform: CPU user time: 3.27 seconds. CPU system time: 0.32 seconds. Elapsed time: 3.58 seconds; current allocated memory: 280.176 MB.
+INFO: [HLS 200-111] Finished Checking Pragmas: CPU user time: 0 seconds. CPU system time: 0 seconds. Elapsed time: 0 seconds; current allocated memory: 280.176 MB.
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms: CPU user time: 0.09 seconds. CPU system time: 0 seconds. Elapsed time: 0.1 seconds; current allocated memory: 282.410 MB.
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability: CPU user time: 0.08 seconds. CPU system time: 0 seconds. Elapsed time: 0.08 seconds; current allocated memory: 284.387 MB.
+INFO: [XFORM 203-102] Partitioning array 'row_outbuf' (dct.cpp:41) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'col_outbuf' (dct.cpp:42) in dimension 2 automatically.
+INFO: [XFORM 203-11] Balancing expressions in function 'dct_1d' (dct.cpp:19)...24 expression(s) balanced.
+INFO: [HLS 200-111] Finished Loop, function and other optimizations: CPU user time: 0.28 seconds. CPU system time: 0.02 seconds. Elapsed time: 0.31 seconds; current allocated memory: 309.352 MB.
+INFO: [HLS 200-472] Inferring partial write operation for 'buf' (dct.cpp:78:11)
+INFO: [HLS 200-472] Inferring partial write operation for 'col_inbuf' (dct.cpp:55:26)
+INFO: [HLS 200-472] Inferring partial write operation for 'out_block' (dct.cpp:66:26)
+INFO: [HLS 200-472] Inferring partial write operation for 'dst[0]' (dct.cpp:34:14)
+INFO: [HLS 200-111] Finished Architecture Synthesis: CPU user time: 0.62 seconds. CPU system time: 0.02 seconds. Elapsed time: 0.63 seconds; current allocated memory: 342.602 MB.
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'dct' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'read_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'read_data' (function 'read_data'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between bus read operation ('gmem_addr_read_1', dct.cpp:78) on port 'gmem' (dct.cpp:78) and bus read operation ('gmem_addr_read', dct.cpp:78) on port 'gmem' (dct.cpp:78).
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_addr_64_write_ln78', dct.cpp:78) of variable 'trunc_ln78_1', dct.cpp:78 on array 'buf_r' due to limited memory ports (II = 2). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_addr_65_write_ln78', dct.cpp:78) of variable 'trunc_ln78_2', dct.cpp:78 on array 'buf_r' due to limited memory ports (II = 3). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_addr_66_write_ln78', dct.cpp:78) of variable 'trunc_ln78_3', dct.cpp:78 on array 'buf_r' due to limited memory ports (II = 4). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_addr_97_write_ln78', dct.cpp:78) of variable 'trunc_ln78_34', dct.cpp:78 on array 'buf_r' due to limited memory ports (II = 35). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_addr_113_write_ln78', dct.cpp:78) of variable 'trunc_ln78_50', dct.cpp:78 on array 'buf_r' due to limited memory ports (II = 51). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_addr_121_write_ln78', dct.cpp:78) of variable 'trunc_ln78_58', dct.cpp:78 on array 'buf_r' due to limited memory ports (II = 59). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_addr_125_write_ln78', dct.cpp:78) of variable 'trunc_ln78_62', dct.cpp:78 on array 'buf_r' due to limited memory ports (II = 63). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 64, Depth = 135, function 'read_data'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.08 seconds. CPU system time: 0.03 seconds. Elapsed time: 1.09 seconds; current allocated memory: 345.117 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.71 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.71 seconds; current allocated memory: 345.117 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct_1d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_5) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp59) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_10) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_12) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_13) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_11) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp49) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_4) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_3) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_9) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_6) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_8) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp41) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_7) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_5) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_2) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln22_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp30) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_4) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_3) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp21) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_2) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln22) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp12) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32) to 3 in order to utilize available DSP registers.
+INFO: [SCHED 204-61] Pipelining function 'dct_1d'.
+WARNING: [HLS 200-885] The II Violation in module 'dct_1d' (function 'dct_1d'): Unable to schedule 'load' operation ('src_load_1', dct.cpp:32) on array 'src' due to limited memory ports (II = 1). Please consider using a memory core with more ports or partitioning the array 'src'.
+WARNING: [HLS 200-885] The II Violation in module 'dct_1d' (function 'dct_1d'): Unable to schedule 'load' operation ('src_load', dct.cpp:32) on array 'src' due to limited memory ports (II = 2). Please consider using a memory core with more ports or partitioning the array 'src'.
+WARNING: [HLS 200-885] The II Violation in module 'dct_1d' (function 'dct_1d'): Unable to schedule 'load' operation ('src_load_5', dct.cpp:32) on array 'src' due to limited memory ports (II = 3). Please consider using a memory core with more ports or partitioning the array 'src'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 4, Depth = 11, function 'dct_1d'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.45 seconds. CPU system time: 0.05 seconds. Elapsed time: 0.49 seconds; current allocated memory: 347.488 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.25 seconds. CPU system time: 0.05 seconds. Elapsed time: 0.29 seconds; current allocated memory: 347.488 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct_2d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'dct_2d'.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 4, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf', dct.cpp:42.
+WARNING: [HLS 200-875] II = 5 is infeasible due to multiple pipeline iteration latency = 11 and incompatible II = 4 of 'call' operation ('_ln48', dct.cpp:48) to 'dct_1d'.
+WARNING: [HLS 200-875] II = 6 is infeasible due to multiple pipeline iteration latency = 11 and incompatible II = 4 of 'call' operation ('_ln48', dct.cpp:48) to 'dct_1d'.
+WARNING: [HLS 200-875] II = 7 is infeasible due to multiple pipeline iteration latency = 11 and incompatible II = 4 of 'call' operation ('_ln48', dct.cpp:48) to 'dct_1d'.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 8, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf', dct.cpp:42.
+WARNING: [HLS 200-875] II = 9 is infeasible due to multiple pipeline iteration latency = 11 and incompatible II = 4 of 'call' operation ('_ln48', dct.cpp:48) to 'dct_1d'.
+WARNING: [HLS 200-875] II = 10 is infeasible due to multiple pipeline iteration latency = 11 and incompatible II = 4 of 'call' operation ('_ln48', dct.cpp:48) to 'dct_1d'.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 11, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 12, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf', dct.cpp:42.
+WARNING: [HLS 200-885] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to schedule 'store' operation ('col_inbuf_addr_25_write_ln55', dct.cpp:55) of variable 'row_outbuf_3_load_1', dct.cpp:55 on array 'col_inbuf', dct.cpp:42 due to limited memory ports (II = 134). Please consider using a memory core with more ports or partitioning the array 'col_inbuf'.
+WARNING: [HLS 200-885] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to schedule 'store' operation ('col_inbuf_addr_53_write_ln55', dct.cpp:55) of variable 'row_outbuf_6_load_5', dct.cpp:55 on array 'col_inbuf', dct.cpp:42 due to limited memory ports (II = 149). Please consider using a memory core with more ports or partitioning the array 'col_inbuf'.
+WARNING: [HLS 200-885] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to schedule 'store' operation ('col_inbuf_addr_58_write_ln55', dct.cpp:55) of variable 'row_outbuf_7_load_2', dct.cpp:55 on array 'col_inbuf', dct.cpp:42 due to limited memory ports (II = 150). Please consider using a memory core with more ports or partitioning the array 'col_inbuf'.
+WARNING: [HLS 200-885] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to schedule 'store' operation ('col_inbuf_addr_63_write_ln55', dct.cpp:55) of variable 'row_outbuf_7_load_7', dct.cpp:55 on array 'col_inbuf', dct.cpp:42 due to limited memory ports (II = 151). Please consider using a memory core with more ports or partitioning the array 'col_inbuf'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 152, Depth = 306, function 'dct_2d'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 333.52 seconds. CPU system time: 0.11 seconds. Elapsed time: 334.47 seconds; current allocated memory: 357.285 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+WARNING: [BIND 205-102] The specified resource core for memory 'col_inbuf' will be ignored if a simpler one can be used.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 2.83 seconds. CPU system time: 0.01 seconds. Elapsed time: 2.84 seconds; current allocated memory: 357.285 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'write_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'write_data'.
+WARNING: [HLS 200-880] The II Violation in module 'write_data' (function 'write_data'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between bus write operation ('gmem_addr_write_ln84', dct.cpp:84) on port 'gmem' (dct.cpp:84) and bus write operation ('gmem_addr_write_ln84', dct.cpp:84) on port 'gmem' (dct.cpp:84).
+WARNING: [HLS 200-885] The II Violation in module 'write_data' (function 'write_data'): Unable to schedule 'load' operation ('buf_load_3', dct.cpp:90) on array 'buf_r' due to limited memory ports (II = 2). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+WARNING: [HLS 200-885] The II Violation in module 'write_data' (function 'write_data'): Unable to schedule 'load' operation ('buf_load_5', dct.cpp:90) on array 'buf_r' due to limited memory ports (II = 3). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+WARNING: [HLS 200-885] The II Violation in module 'write_data' (function 'write_data'): Unable to schedule 'load' operation ('buf_load_7', dct.cpp:90) on array 'buf_r' due to limited memory ports (II = 4). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+WARNING: [HLS 200-885] The II Violation in module 'write_data' (function 'write_data'): Unable to schedule 'load' operation ('buf_load_37', dct.cpp:90) on array 'buf_r' due to limited memory ports (II = 19). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+WARNING: [HLS 200-885] The II Violation in module 'write_data' (function 'write_data'): Unable to schedule 'load' operation ('buf_load_53', dct.cpp:90) on array 'buf_r' due to limited memory ports (II = 27). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+WARNING: [HLS 200-885] The II Violation in module 'write_data' (function 'write_data'): Unable to schedule 'load' operation ('buf_load_61', dct.cpp:90) on array 'buf_r' due to limited memory ports (II = 31). Please consider using a memory core with more ports or partitioning the array 'buf_r'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 32, Depth = 102, function 'write_data'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.7 seconds. CPU system time: 0 seconds. Elapsed time: 1.72 seconds; current allocated memory: 357.285 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.61 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.61 seconds; current allocated memory: 357.285 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'dct'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 152, distance = 1, offset = 1) between 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 153 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 154 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 155 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 156 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 157 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 158 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 159 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 160 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 161 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 162 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 163 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 164 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 165 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 166 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 167 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 168 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 169 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 170 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 171 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 172 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 173 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 174 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 175 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 176 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 177 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 178 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 179 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 180 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 181 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 182 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 183 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 184 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 185 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 186 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 187 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 188 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 189 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 190 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 191 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 192 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 193 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 194 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 195 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 196 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 197 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 198 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 199 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 200 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 201 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 202 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 203 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 204 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 205 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 206 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 207 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 208 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 209 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 210 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 211 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 212 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 213 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 214 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 215 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 216 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 217 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 218 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 219 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 220 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 221 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 222 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 223 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 224 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 225 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 226 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 227 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 228 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 229 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 230 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 231 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 232 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 233 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 234 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 235 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 236 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 237 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 238 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 239 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 240 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 241 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 242 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 243 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 244 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 245 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 246 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 247 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 248 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 249 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 250 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 251 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 252 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 253 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 254 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 255 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 256 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 257 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 258 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 259 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 260 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 261 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 262 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 263 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 264 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 265 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 266 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 267 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 268 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 269 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 270 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 271 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 272 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 273 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 274 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 275 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 276 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 277 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 278 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 279 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 280 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 281 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 282 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 283 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 284 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 285 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 286 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 287 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 288 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 289 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 290 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 291 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 292 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 293 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 294 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 295 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 296 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 297 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 298 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 299 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 300 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 301 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 302 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 303 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+INFO: [SCHED 204-61] Unable to satisfy pipeline directive for function 'dct': unable to pipeline.
+INFO: [SCHED 204-61] Pipelining function 'dct'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 152, distance = 1, offset = 1) between 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 153 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 154 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 155 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 156 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 157 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 158 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 159 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 160 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 161 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 162 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 163 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 164 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 165 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 166 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 167 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 168 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 169 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 170 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 171 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 172 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 173 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 174 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 175 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 176 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 177 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 178 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 179 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 180 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 181 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 182 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 183 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 184 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 185 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 186 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 187 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 188 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 189 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 190 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 191 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 192 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 193 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 194 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 195 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 196 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 197 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 198 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 199 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 200 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 201 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 202 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 203 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 204 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 205 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 206 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 207 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 208 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 209 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 210 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 211 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 212 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 213 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 214 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 215 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 216 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 217 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 218 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 219 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 220 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 221 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 222 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 223 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 224 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 225 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 226 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 227 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 228 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 229 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 230 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 231 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 232 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 233 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 234 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 235 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 236 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 237 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 238 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 239 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 240 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 241 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 242 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 243 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 244 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 245 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 246 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 247 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 248 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 249 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 250 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 251 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 252 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 253 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 254 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 255 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 256 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 257 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 258 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 259 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 260 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 261 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 262 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 263 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 264 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 265 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 266 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 267 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 268 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 269 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 270 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 271 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 272 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 273 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 274 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 275 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 276 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 277 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 278 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 279 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 280 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 281 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 282 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 283 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 284 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 285 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 286 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 287 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 288 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 289 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 290 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 291 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 292 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 293 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 294 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 295 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 296 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 297 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 298 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 299 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 300 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 301 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 302 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 303 is infeasible due to multiple pipeline iteration latency = 306 and incompatible II = 152 of 'call' operation ('_ln103', dct.cpp:103) to 'dct_2d'.
+INFO: [SCHED 204-61] Unable to satisfy pipeline directive for function 'dct': unable to pipeline.
+WARNING: [HLS 200-871] Estimated clock period (4.65ns) exceeds the target (target clock period: 5ns, clock uncertainty: 1.35ns, effective delay budget: 3.65ns).
+WARNING: [HLS 200-1016] The critical path in module 'dct' consists of the following:	wire read operation ('output') on port 'output_r' [14]  (1 ns)
+	'call' operation ('_ln107', dct.cpp:107) to 'write_data' [22]  (3.65 ns)
+
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.93 seconds. CPU system time: 0.33 seconds. Elapsed time: 2.27 seconds; current allocated memory: 357.285 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 3.66 seconds. CPU system time: 0.03 seconds. Elapsed time: 3.69 seconds; current allocated memory: 359.520 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'read_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'read_data' pipeline 'read_data' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'read_data'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.06 seconds. CPU system time: 0.03 seconds. Elapsed time: 1.09 seconds; current allocated memory: 362.531 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct_1d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct_1d' pipeline 'dct_1d' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Generating core module 'ama_addmuladd_18s_16s_13ns_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_16s_16s_12ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_16s_16s_13ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_18s_16s_14ns_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_14ns_29ns_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_14ns_29s_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_13ns_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_29s_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_12ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_12ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_13ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_13ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_18s_13ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_18s_14ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_16s_14ns_29_4_1': 3 instance(s).

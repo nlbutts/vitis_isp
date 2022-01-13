@@ -1,0 +1,1340 @@
+==============================================================
+Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2021.2 (64-bit)
+Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+==============================================================
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 5ns.
+INFO: [HLS 200-1611] Setting target device to 'xcvc1802-viva1596-1MP-e-S'
+INFO: [HLS 200-1505] Using flow_target 'vitis'
+INFO: [HLS 200-1464] Running solution command: config_interface -default_interface=kernel
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_alignment_byte_size=64
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_latency=64
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_max_widen_bitwidth=512
+INFO: [HLS 200-1464] Running solution command: config_rtl -register_reset_num=3
+INFO: [HLS 200-1510] Running: set_part xcvc1802-viva1596-1MP-e-S 
+INFO: [HLS 200-1510] Running: create_clock -period 5 -name default 
+INFO: [HLS 200-1510] Running: config_interface -m_axi_alignment_byte_size 64 -m_axi_latency 64 -m_axi_max_widen_bitwidth 512 
+INFO: [HLS 200-1510] Running: config_rtl -register_reset_num 3 
+INFO: [HLS 200-1510] Running: set_directive_top -name dct dct 
+INFO: [HLS 200-1510] Running: set_directive_pipeline dct 
+INFO: [HLS 200-1510] Running: csynth_design 
+INFO: [HLS 200-111] Finished File checks and directory preparation: CPU user time: 0.02 seconds. CPU system time: 0 seconds. Elapsed time: 0.03 seconds; current allocated memory: 1.188 GB.
+INFO: [HLS 200-10] Analyzing design file 'dct.cpp' ... 
+INFO: [HLS 200-111] Finished Source Code Analysis and Preprocessing: CPU user time: 3.59 seconds. CPU system time: 1.19 seconds. Elapsed time: 10.24 seconds; current allocated memory: 279.031 MB.
+INFO: [HLS 200-777] Using interface defaults for 'Vitis' flow target.
+INFO: [HLS 214-284] Auto array partition mode is set into default.
+INFO: [HLS 214-291] Loop 'WR_Loop_Row' is marked as complete unroll implied by the pipeline pragma (dct.cpp:87:4)
+INFO: [HLS 214-291] Loop 'WR_Loop_Col' is marked as complete unroll implied by the pipeline pragma (dct.cpp:89:7)
+INFO: [HLS 214-291] Loop 'Xpose_Col_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:63:4)
+INFO: [HLS 214-291] Loop 'Xpose_Col_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:65:7)
+INFO: [HLS 214-291] Loop 'Col_DCT_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:58:4)
+INFO: [HLS 214-291] Loop 'Xpose_Row_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:52:4)
+INFO: [HLS 214-291] Loop 'Xpose_Row_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:54:7)
+INFO: [HLS 214-291] Loop 'Row_DCT_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:47:4)
+INFO: [HLS 214-291] Loop 'DCT_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:28:4)
+INFO: [HLS 214-291] Loop 'DCT_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:30:7)
+INFO: [HLS 214-291] Loop 'RD_Loop_Row' is marked as complete unroll implied by the pipeline pragma (dct.cpp:74:4)
+INFO: [HLS 214-291] Loop 'RD_Loop_Col' is marked as complete unroll implied by the pipeline pragma (dct.cpp:76:7)
+INFO: [HLS 214-186] Unrolling loop 'WR_Loop_Row' (dct.cpp:87:4) in function 'write_data' completely with a factor of 8 (dct.cpp:83:0)
+INFO: [HLS 214-186] Unrolling loop 'WR_Loop_Col' (dct.cpp:89:7) in function 'write_data' completely with a factor of 8 (dct.cpp:83:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Col_Outer_Loop' (dct.cpp:63:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Col_Inner_Loop' (dct.cpp:65:7) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Col_DCT_Loop' (dct.cpp:58:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Row_Outer_Loop' (dct.cpp:52:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Row_Inner_Loop' (dct.cpp:54:7) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Row_DCT_Loop' (dct.cpp:47:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'DCT_Outer_Loop' (dct.cpp:28:4) in function 'dct_1d' completely with a factor of 8 (dct.cpp:20:0)
+INFO: [HLS 214-186] Unrolling loop 'DCT_Inner_Loop' (dct.cpp:30:7) in function 'dct_1d' completely with a factor of 8 (dct.cpp:20:0)
+INFO: [HLS 214-186] Unrolling loop 'RD_Loop_Row' (dct.cpp:74:4) in function 'read_data' completely with a factor of 8 (dct.cpp:70:0)
+INFO: [HLS 214-186] Unrolling loop 'RD_Loop_Col' (dct.cpp:76:7) in function 'read_data' completely with a factor of 8 (dct.cpp:70:0)
+INFO: [HLS 214-270] Starting automatic array partition analysis...
+INFO: [HLS 214-115] Multiple burst reads of length 2 and bit width 512 has been inferred on bundle 'gmem'. These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings. (dct.cpp:78:13)
+INFO: [HLS 214-115] Multiple burst writes of length 2 and bit width 512 has been inferred on bundle 'gmem'. These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings. (dct.cpp:84:11)
+INFO: [HLS 200-111] Finished Compiling Optimization and Transform: CPU user time: 6.88 seconds. CPU system time: 1.14 seconds. Elapsed time: 16.65 seconds; current allocated memory: 280.078 MB.
+INFO: [HLS 200-111] Finished Checking Pragmas: CPU user time: 0 seconds. CPU system time: 0 seconds. Elapsed time: 0 seconds; current allocated memory: 280.078 MB.
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms: CPU user time: 0.15 seconds. CPU system time: 0.05 seconds. Elapsed time: 0.5 seconds; current allocated memory: 282.293 MB.
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability: CPU user time: 0.14 seconds. CPU system time: 0 seconds. Elapsed time: 0.23 seconds; current allocated memory: 284.258 MB.
+INFO: [XFORM 203-102] Partitioning array 'out_block.0' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.1' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.2' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.3' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.4' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.5' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.6' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.7' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.0' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.1' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.2' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.3' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.4' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.5' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.6' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.7' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out' (dct.cpp:98) in dimension 1 automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.0' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.1' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.2' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.3' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.4' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.5' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.6' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.7' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'row_outbuf' (dct.cpp:41) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'col_outbuf' (dct.cpp:42) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'col_inbuf' (dct.cpp:42) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_in' (dct.cpp:97) in dimension 2 automatically.
+INFO: [XFORM 203-11] Balancing expressions in function 'dct_1d' (dct.cpp:19)...24 expression(s) balanced.
+INFO: [HLS 200-111] Finished Loop, function and other optimizations: CPU user time: 0.52 seconds. CPU system time: 0.08 seconds. Elapsed time: 1.42 seconds; current allocated memory: 309.547 MB.
+INFO: [HLS 200-472] Inferring partial write operation for 'buf[0]' (dct.cpp:78:11)
+INFO: [HLS 200-472] Inferring partial write operation for 'col_inbuf[0]' (dct.cpp:55:26)
+INFO: [HLS 200-472] Inferring partial write operation for 'dst[0]' (dct.cpp:34:14)
+INFO: [HLS 200-111] Finished Architecture Synthesis: CPU user time: 0.22 seconds. CPU system time: 0.06 seconds. Elapsed time: 0.74 seconds; current allocated memory: 343.797 MB.
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'dct' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'read_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'read_data' (function 'read_data'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between bus read operation ('gmem_addr_read_1', dct.cpp:78) on port 'gmem' (dct.cpp:78) and bus read operation ('gmem_addr_read', dct.cpp:78) on port 'gmem' (dct.cpp:78).
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_0_addr_3_write_ln78', dct.cpp:78) of variable 'trunc_ln78_24', dct.cpp:78 on array 'buf_0' due to limited memory ports (II = 2). Please consider using a memory core with more ports or partitioning the array 'buf_0'.
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_0_addr_5_write_ln78', dct.cpp:78) of variable 'trunc_ln78_40', dct.cpp:78 on array 'buf_0' due to limited memory ports (II = 3). Please consider using a memory core with more ports or partitioning the array 'buf_0'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 4, Depth = 75, function 'read_data'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.94 seconds. CPU system time: 0.17 seconds. Elapsed time: 3.16 seconds; current allocated memory: 346.219 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 1.02 seconds. CPU system time: 0.03 seconds. Elapsed time: 3.09 seconds; current allocated memory: 346.219 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct_1d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_5) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp59) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_10) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_12) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_13) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_11) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp49) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_4) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_3) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_9) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_6) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_8) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp41) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_7) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_5) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_2) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln22_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp30) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_4) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_3) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp21) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_2) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln22) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp12) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32) to 3 in order to utilize available DSP registers.
+INFO: [SCHED 204-61] Pipelining function 'dct_1d'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 1, Depth = 7, function 'dct_1d'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.06 seconds. CPU system time: 0.1 seconds. Elapsed time: 3.7 seconds; current allocated memory: 348.242 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.48 seconds. CPU system time: 0.07 seconds. Elapsed time: 2.2 seconds; current allocated memory: 348.242 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct_2d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'dct_2d'.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 2, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 3, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 4, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 35, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 51, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-885] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to schedule 'load' operation ('row_outbuf_0_load_3', dct.cpp:55) on array 'row_outbuf[0]', dct.cpp:41 due to limited memory ports (II = 59). Please consider using a memory core with more ports or partitioning the array 'row_outbuf_0'.
+WARNING: [HLS 200-885] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to schedule 'load' operation ('row_outbuf_0_load_4', dct.cpp:55) on array 'row_outbuf[0]', dct.cpp:41 due to limited memory ports (II = 60). Please consider using a memory core with more ports or partitioning the array 'row_outbuf_0'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 61, Depth = 123, function 'dct_2d'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 11.03 seconds. CPU system time: 0.15 seconds. Elapsed time: 35.98 seconds; current allocated memory: 361.277 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 5.28 seconds. CPU system time: 0.09 seconds. Elapsed time: 16.92 seconds; current allocated memory: 361.277 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'write_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'write_data'.
+WARNING: [HLS 200-880] The II Violation in module 'write_data' (function 'write_data'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between bus write operation ('gmem_addr_write_ln84', dct.cpp:84) on port 'gmem' (dct.cpp:84) and bus write operation ('gmem_addr_write_ln84', dct.cpp:84) on port 'gmem' (dct.cpp:84).
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 2, Depth = 71, function 'write_data'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 2.33 seconds. CPU system time: 0.05 seconds. Elapsed time: 6.73 seconds; current allocated memory: 361.277 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.68 seconds. CPU system time: 0.02 seconds. Elapsed time: 1.12 seconds; current allocated memory: 361.277 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'dct'.
+WARNING: [HLS 200-875] II = 61 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 62 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 63 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 64 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 65 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 66 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 67 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 68 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 69 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 70 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 71 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 72 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 73 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 74 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 75 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 76 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 77 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 78 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 79 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 80 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 81 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 82 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 83 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 84 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 85 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 86 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 87 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 88 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 89 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 90 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 91 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 92 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 93 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 94 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 95 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 96 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 97 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 98 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 99 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 100 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 101 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 102 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 103 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 104 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 105 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 106 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 107 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 108 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 109 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 110 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 111 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 112 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 113 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 114 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 115 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 116 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 117 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 118 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 119 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 120 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 121 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 122, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 123, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 124, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 125, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 191, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+INFO: [HLS 200-876] Unable to schedule the whole 71 cycles 'call' operation ('_ln107', dct.cpp:107) to 'write_data' within the first 198 cycles (II = 199). Simulation mismatch may occur if the input data is modified before this operation completes.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 195, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 197, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+INFO: [HLS 200-876] Unable to schedule the whole 71 cycles 'call' operation ('_ln107', dct.cpp:107) to 'write_data' within the first 197 cycles (II = 198). Simulation mismatch may occur if the input data is modified before this operation completes.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 198, Depth = 269, function 'dct'
+WARNING: [HLS 200-871] Estimated clock period (3.733ns) exceeds the target (target clock period: 5ns, clock uncertainty: 1.35ns, effective delay budget: 3.65ns).
+WARNING: [HLS 200-1016] The critical path in module 'dct' consists of the following:	'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' [25]  (0.083 ns)
+	'call' operation ('_ln107', dct.cpp:107) to 'write_data' [90]  (3.65 ns)
+
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.27 seconds. CPU system time: 0.13 seconds. Elapsed time: 4.05 seconds; current allocated memory: 361.277 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 4.8 seconds. CPU system time: 0.04 seconds. Elapsed time: 8.49 seconds; current allocated memory: 361.277 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'read_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'read_data' pipeline 'read_data' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'read_data'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 2.19 seconds. CPU system time: 0.02 seconds. Elapsed time: 3.22 seconds; current allocated memory: 361.277 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct_1d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct_1d' pipeline 'dct_1d' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Generating core module 'ama_addmuladd_18s_16s_13ns_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_16s_16s_12ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_16s_16s_13ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_18s_16s_14ns_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_14ns_29ns_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_14ns_29s_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_13ns_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_29s_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_12ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_12ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_13ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_13ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_18s_13ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_18s_14ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_16s_14ns_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_16s_15s_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_17s_12ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_17s_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dct_1d'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.11 seconds. CPU system time: 0.08 seconds. Elapsed time: 1.74 seconds; current allocated memory: 364.156 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct_2d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct_2d' pipeline 'dct_2d' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dct_2d'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.75 seconds. CPU system time: 0.1 seconds. Elapsed time: 2.35 seconds; current allocated memory: 387.383 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'write_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'write_data' pipeline 'write_data' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'write_data'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 4.46 seconds. CPU system time: 0.1 seconds. Elapsed time: 6.51 seconds; current allocated memory: 394.297 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Design contains AXI ports. Reset is fixed to synchronous and active low.
+INFO: [RTGEN 206-500] Setting interface mode on port 'dct/gmem' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'dct/input_r' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'dct/output_r' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on function 'dct' to 's_axilite & ap_ctrl_chain'.
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct' pipeline 'dct' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Bundling port 'input_r', 'output_r', 'return' and 'ap_local_deadlock' to AXI-Lite port control.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dct'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.17 seconds. CPU system time: 0.09 seconds. Elapsed time: 2.32 seconds; current allocated memory: 414.508 MB.
+INFO: [RTMG 210-278] Implementing memory 'dct_dct_2d_row_outbuf_0_RAM_AUTO_1R1W_ram (RAM)' using auto RAMs.
+==============================================================
+Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2021.2 (64-bit)
+Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+==============================================================
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 8ns.
+INFO: [HLS 200-1611] Setting target device to 'xcvc1802-viva1596-1MP-e-S'
+INFO: [HLS 200-1505] Using flow_target 'vitis'
+INFO: [HLS 200-1464] Running solution command: config_interface -default_interface=kernel
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_alignment_byte_size=64
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_latency=64
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_max_widen_bitwidth=512
+INFO: [HLS 200-1464] Running solution command: config_rtl -register_reset_num=3
+INFO: [HLS 200-1510] Running: set_part xcvc1802-viva1596-1MP-e-S 
+INFO: [HLS 200-1510] Running: create_clock -period 8 -name default 
+INFO: [HLS 200-1510] Running: config_interface -m_axi_alignment_byte_size 64 -m_axi_latency 64 -m_axi_max_widen_bitwidth 512 
+INFO: [HLS 200-1510] Running: config_rtl -register_reset_num 3 
+INFO: [HLS 200-1510] Running: set_directive_top -name dct dct 
+INFO: [HLS 200-1510] Running: set_directive_pipeline dct 
+INFO: [HLS 200-1510] Running: csynth_design 
+INFO: [HLS 200-111] Finished File checks and directory preparation: CPU user time: 0.02 seconds. CPU system time: 0 seconds. Elapsed time: 0.01 seconds; current allocated memory: 1.188 GB.
+INFO: [HLS 200-10] Analyzing design file 'dct.cpp' ... 
+INFO: [HLS 200-111] Finished Source Code Analysis and Preprocessing: CPU user time: 2.38 seconds. CPU system time: 0.64 seconds. Elapsed time: 2.44 seconds; current allocated memory: 279.039 MB.
+INFO: [HLS 200-777] Using interface defaults for 'Vitis' flow target.
+INFO: [HLS 214-284] Auto array partition mode is set into default.
+INFO: [HLS 214-291] Loop 'WR_Loop_Row' is marked as complete unroll implied by the pipeline pragma (dct.cpp:87:4)
+INFO: [HLS 214-291] Loop 'WR_Loop_Col' is marked as complete unroll implied by the pipeline pragma (dct.cpp:89:7)
+INFO: [HLS 214-291] Loop 'Xpose_Col_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:63:4)
+INFO: [HLS 214-291] Loop 'Xpose_Col_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:65:7)
+INFO: [HLS 214-291] Loop 'Col_DCT_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:58:4)
+INFO: [HLS 214-291] Loop 'Xpose_Row_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:52:4)
+INFO: [HLS 214-291] Loop 'Xpose_Row_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:54:7)
+INFO: [HLS 214-291] Loop 'Row_DCT_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:47:4)
+INFO: [HLS 214-291] Loop 'DCT_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:28:4)
+INFO: [HLS 214-291] Loop 'DCT_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:30:7)
+INFO: [HLS 214-291] Loop 'RD_Loop_Row' is marked as complete unroll implied by the pipeline pragma (dct.cpp:74:4)
+INFO: [HLS 214-291] Loop 'RD_Loop_Col' is marked as complete unroll implied by the pipeline pragma (dct.cpp:76:7)
+INFO: [HLS 214-186] Unrolling loop 'WR_Loop_Row' (dct.cpp:87:4) in function 'write_data' completely with a factor of 8 (dct.cpp:83:0)
+INFO: [HLS 214-186] Unrolling loop 'WR_Loop_Col' (dct.cpp:89:7) in function 'write_data' completely with a factor of 8 (dct.cpp:83:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Col_Outer_Loop' (dct.cpp:63:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Col_Inner_Loop' (dct.cpp:65:7) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Col_DCT_Loop' (dct.cpp:58:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Row_Outer_Loop' (dct.cpp:52:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Row_Inner_Loop' (dct.cpp:54:7) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Row_DCT_Loop' (dct.cpp:47:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'DCT_Outer_Loop' (dct.cpp:28:4) in function 'dct_1d' completely with a factor of 8 (dct.cpp:20:0)
+INFO: [HLS 214-186] Unrolling loop 'DCT_Inner_Loop' (dct.cpp:30:7) in function 'dct_1d' completely with a factor of 8 (dct.cpp:20:0)
+INFO: [HLS 214-186] Unrolling loop 'RD_Loop_Row' (dct.cpp:74:4) in function 'read_data' completely with a factor of 8 (dct.cpp:70:0)
+INFO: [HLS 214-186] Unrolling loop 'RD_Loop_Col' (dct.cpp:76:7) in function 'read_data' completely with a factor of 8 (dct.cpp:70:0)
+INFO: [HLS 214-270] Starting automatic array partition analysis...
+INFO: [HLS 214-115] Multiple burst reads of length 2 and bit width 512 has been inferred on bundle 'gmem'. These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings. (dct.cpp:78:13)
+INFO: [HLS 214-115] Multiple burst writes of length 2 and bit width 512 has been inferred on bundle 'gmem'. These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings. (dct.cpp:84:11)
+INFO: [HLS 200-111] Finished Compiling Optimization and Transform: CPU user time: 3.84 seconds. CPU system time: 0.41 seconds. Elapsed time: 4.25 seconds; current allocated memory: 280.086 MB.
+INFO: [HLS 200-111] Finished Checking Pragmas: CPU user time: 0 seconds. CPU system time: 0 seconds. Elapsed time: 0 seconds; current allocated memory: 280.086 MB.
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms: CPU user time: 0.09 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.1 seconds; current allocated memory: 282.293 MB.
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability: CPU user time: 0.07 seconds. CPU system time: 0 seconds. Elapsed time: 0.07 seconds; current allocated memory: 284.262 MB.
+INFO: [XFORM 203-102] Partitioning array 'out_block.0' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.1' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.2' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.3' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.4' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.5' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.6' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.7' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.0' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.1' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.2' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.3' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.4' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.5' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.6' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.7' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out' (dct.cpp:98) in dimension 1 automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.0' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.1' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.2' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.3' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.4' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.5' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.6' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.7' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'row_outbuf' (dct.cpp:41) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'col_outbuf' (dct.cpp:42) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'col_inbuf' (dct.cpp:42) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_in' (dct.cpp:97) in dimension 2 automatically.
+INFO: [XFORM 203-11] Balancing expressions in function 'dct_1d' (dct.cpp:19)...24 expression(s) balanced.
+INFO: [HLS 200-111] Finished Loop, function and other optimizations: CPU user time: 0.28 seconds. CPU system time: 0.04 seconds. Elapsed time: 0.32 seconds; current allocated memory: 309.547 MB.
+INFO: [HLS 200-472] Inferring partial write operation for 'buf[0]' (dct.cpp:78:11)
+INFO: [HLS 200-472] Inferring partial write operation for 'col_inbuf[0]' (dct.cpp:55:26)
+INFO: [HLS 200-472] Inferring partial write operation for 'dst[0]' (dct.cpp:34:14)
+INFO: [HLS 200-111] Finished Architecture Synthesis: CPU user time: 0.13 seconds. CPU system time: 0.02 seconds. Elapsed time: 0.15 seconds; current allocated memory: 343.613 MB.
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'dct' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'read_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'read_data' (function 'read_data'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between bus read operation ('gmem_addr_read_1', dct.cpp:78) on port 'gmem' (dct.cpp:78) and bus read operation ('gmem_addr_read', dct.cpp:78) on port 'gmem' (dct.cpp:78).
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_0_addr_3_write_ln78', dct.cpp:78) of variable 'trunc_ln78_24', dct.cpp:78 on array 'buf_0' due to limited memory ports (II = 2). Please consider using a memory core with more ports or partitioning the array 'buf_0'.
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_0_addr_5_write_ln78', dct.cpp:78) of variable 'trunc_ln78_40', dct.cpp:78 on array 'buf_0' due to limited memory ports (II = 3). Please consider using a memory core with more ports or partitioning the array 'buf_0'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 4, Depth = 75, function 'read_data'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.51 seconds. CPU system time: 0.05 seconds. Elapsed time: 0.56 seconds; current allocated memory: 346.219 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.51 seconds. CPU system time: 0 seconds. Elapsed time: 0.52 seconds; current allocated memory: 346.219 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct_1d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_5) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp59) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_10) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_12) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_13) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_11) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp49) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_4) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_3) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_9) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_6) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_8) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp41) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_7) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_5) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_2) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln22_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp30) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_4) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_3) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp21) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_2) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln22) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp12) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32) to 3 in order to utilize available DSP registers.
+INFO: [SCHED 204-61] Pipelining function 'dct_1d'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 1, Depth = 7, function 'dct_1d'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.64 seconds. CPU system time: 0.05 seconds. Elapsed time: 0.69 seconds; current allocated memory: 348.215 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.3 seconds. CPU system time: 0.04 seconds. Elapsed time: 0.34 seconds; current allocated memory: 348.215 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct_2d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'dct_2d'.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 2, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 3, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 4, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 35, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 51, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-885] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to schedule 'load' operation ('row_outbuf_0_load_3', dct.cpp:55) on array 'row_outbuf[0]', dct.cpp:41 due to limited memory ports (II = 59). Please consider using a memory core with more ports or partitioning the array 'row_outbuf_0'.
+WARNING: [HLS 200-885] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to schedule 'load' operation ('row_outbuf_0_load_4', dct.cpp:55) on array 'row_outbuf[0]', dct.cpp:41 due to limited memory ports (II = 60). Please consider using a memory core with more ports or partitioning the array 'row_outbuf_0'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 61, Depth = 123, function 'dct_2d'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 6.12 seconds. CPU system time: 0.07 seconds. Elapsed time: 6.21 seconds; current allocated memory: 361.180 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 4.26 seconds. CPU system time: 0.1 seconds. Elapsed time: 4.84 seconds; current allocated memory: 361.180 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'write_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'write_data'.
+WARNING: [HLS 200-880] The II Violation in module 'write_data' (function 'write_data'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between bus write operation ('gmem_addr_write_ln84', dct.cpp:84) on port 'gmem' (dct.cpp:84) and bus write operation ('gmem_addr_write_ln84', dct.cpp:84) on port 'gmem' (dct.cpp:84).
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 2, Depth = 71, function 'write_data'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.87 seconds. CPU system time: 0.02 seconds. Elapsed time: 1.99 seconds; current allocated memory: 361.180 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.37 seconds. CPU system time: 0 seconds. Elapsed time: 0.38 seconds; current allocated memory: 361.180 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'dct'.
+WARNING: [HLS 200-875] II = 61 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 62 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 63 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 64 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 65 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 66 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 67 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 68 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 69 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 70 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 71 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 72 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 73 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 74 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 75 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 76 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 77 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 78 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 79 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 80 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 81 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 82 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 83 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 84 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 85 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 86 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 87 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 88 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 89 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 90 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 91 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 92 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 93 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 94 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 95 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 96 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 97 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 98 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 99 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 100 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 101 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 102 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 103 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 104 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 105 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 106 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 107 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 108 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 109 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 110 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 111 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 112 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 113 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 114 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 115 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 116 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 117 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 118 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 119 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 120 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 121 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 122, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 123, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 124, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 125, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 191, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+INFO: [HLS 200-876] Unable to schedule the whole 71 cycles 'call' operation ('_ln107', dct.cpp:107) to 'write_data' within the first 198 cycles (II = 199). Simulation mismatch may occur if the input data is modified before this operation completes.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 195, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 197, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+INFO: [HLS 200-876] Unable to schedule the whole 71 cycles 'call' operation ('_ln107', dct.cpp:107) to 'write_data' within the first 197 cycles (II = 198). Simulation mismatch may occur if the input data is modified before this operation completes.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 198, Depth = 269, function 'dct'
+WARNING: [HLS 200-871] Estimated clock period (5.923ns) exceeds the target (target clock period: 8ns, clock uncertainty: 2.16ns, effective delay budget: 5.84ns).
+WARNING: [HLS 200-1016] The critical path in module 'dct' consists of the following:	'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' [25]  (0.083 ns)
+	'call' operation ('_ln107', dct.cpp:107) to 'write_data' [90]  (5.84 ns)
+
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 0.89 seconds. CPU system time: 0.11 seconds. Elapsed time: 1 seconds; current allocated memory: 361.180 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 2.65 seconds. CPU system time: 0.01 seconds. Elapsed time: 2.66 seconds; current allocated memory: 361.180 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'read_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'read_data' pipeline 'read_data' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'read_data'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.15 seconds. CPU system time: 0.01 seconds. Elapsed time: 1.16 seconds; current allocated memory: 361.180 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct_1d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct_1d' pipeline 'dct_1d' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Generating core module 'ama_addmuladd_18s_16s_13ns_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_16s_16s_12ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_16s_16s_13ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_18s_16s_14ns_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_14ns_29ns_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_14ns_29s_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_13ns_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_29s_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_12ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_12ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_13ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_13ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_18s_13ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_18s_14ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_16s_14ns_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_16s_15s_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_17s_12ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_17s_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dct_1d'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.59 seconds. CPU system time: 0.04 seconds. Elapsed time: 0.63 seconds; current allocated memory: 364.156 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct_2d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct_2d' pipeline 'dct_2d' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dct_2d'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.83 seconds. CPU system time: 0.06 seconds. Elapsed time: 0.88 seconds; current allocated memory: 385.871 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'write_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'write_data' pipeline 'write_data' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'write_data'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 2.87 seconds. CPU system time: 0.05 seconds. Elapsed time: 2.94 seconds; current allocated memory: 392.820 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Design contains AXI ports. Reset is fixed to synchronous and active low.
+INFO: [RTGEN 206-500] Setting interface mode on port 'dct/gmem' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'dct/input_r' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'dct/output_r' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on function 'dct' to 's_axilite & ap_ctrl_chain'.
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct' pipeline 'dct' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Bundling port 'input_r', 'output_r', 'return' and 'ap_local_deadlock' to AXI-Lite port control.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dct'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.75 seconds. CPU system time: 0.03 seconds. Elapsed time: 0.78 seconds; current allocated memory: 412.996 MB.
+INFO: [RTMG 210-278] Implementing memory 'dct_dct_2d_row_outbuf_0_RAM_AUTO_1R1W_ram (RAM)' using auto RAMs.
+==============================================================
+Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2021.2 (64-bit)
+Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+==============================================================
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 10ns.
+INFO: [HLS 200-1611] Setting target device to 'xcvc1802-viva1596-1MP-e-S'
+INFO: [HLS 200-1505] Using flow_target 'vitis'
+INFO: [HLS 200-1464] Running solution command: config_interface -default_interface=kernel
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_alignment_byte_size=64
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_latency=64
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_max_widen_bitwidth=512
+INFO: [HLS 200-1464] Running solution command: config_rtl -register_reset_num=3
+INFO: [HLS 200-1510] Running: set_part xcvc1802-viva1596-1MP-e-S 
+INFO: [HLS 200-1510] Running: create_clock -period 10 -name default 
+INFO: [HLS 200-1510] Running: config_interface -m_axi_alignment_byte_size 64 -m_axi_latency 64 -m_axi_max_widen_bitwidth 512 
+INFO: [HLS 200-1510] Running: config_rtl -register_reset_num 3 
+INFO: [HLS 200-1510] Running: set_directive_top -name dct dct 
+INFO: [HLS 200-1510] Running: set_directive_pipeline dct 
+INFO: [HLS 200-1510] Running: csynth_design 
+INFO: [HLS 200-111] Finished File checks and directory preparation: CPU user time: 0.03 seconds. CPU system time: 0 seconds. Elapsed time: 0.02 seconds; current allocated memory: 1.188 GB.
+INFO: [HLS 200-10] Analyzing design file 'dct.cpp' ... 
+INFO: [HLS 200-111] Finished Source Code Analysis and Preprocessing: CPU user time: 3.43 seconds. CPU system time: 0.69 seconds. Elapsed time: 6.04 seconds; current allocated memory: 279.039 MB.
+INFO: [HLS 200-777] Using interface defaults for 'Vitis' flow target.
+INFO: [HLS 214-284] Auto array partition mode is set into default.
+INFO: [HLS 214-291] Loop 'WR_Loop_Row' is marked as complete unroll implied by the pipeline pragma (dct.cpp:87:4)
+INFO: [HLS 214-291] Loop 'WR_Loop_Col' is marked as complete unroll implied by the pipeline pragma (dct.cpp:89:7)
+INFO: [HLS 214-291] Loop 'Xpose_Col_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:63:4)
+INFO: [HLS 214-291] Loop 'Xpose_Col_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:65:7)
+INFO: [HLS 214-291] Loop 'Col_DCT_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:58:4)
+INFO: [HLS 214-291] Loop 'Xpose_Row_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:52:4)
+INFO: [HLS 214-291] Loop 'Xpose_Row_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:54:7)
+INFO: [HLS 214-291] Loop 'Row_DCT_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:47:4)
+INFO: [HLS 214-291] Loop 'DCT_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:28:4)
+INFO: [HLS 214-291] Loop 'DCT_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:30:7)
+INFO: [HLS 214-291] Loop 'RD_Loop_Row' is marked as complete unroll implied by the pipeline pragma (dct.cpp:74:4)
+INFO: [HLS 214-291] Loop 'RD_Loop_Col' is marked as complete unroll implied by the pipeline pragma (dct.cpp:76:7)
+INFO: [HLS 214-186] Unrolling loop 'WR_Loop_Row' (dct.cpp:87:4) in function 'write_data' completely with a factor of 8 (dct.cpp:83:0)
+INFO: [HLS 214-186] Unrolling loop 'WR_Loop_Col' (dct.cpp:89:7) in function 'write_data' completely with a factor of 8 (dct.cpp:83:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Col_Outer_Loop' (dct.cpp:63:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Col_Inner_Loop' (dct.cpp:65:7) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Col_DCT_Loop' (dct.cpp:58:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Row_Outer_Loop' (dct.cpp:52:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Row_Inner_Loop' (dct.cpp:54:7) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Row_DCT_Loop' (dct.cpp:47:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'DCT_Outer_Loop' (dct.cpp:28:4) in function 'dct_1d' completely with a factor of 8 (dct.cpp:20:0)
+INFO: [HLS 214-186] Unrolling loop 'DCT_Inner_Loop' (dct.cpp:30:7) in function 'dct_1d' completely with a factor of 8 (dct.cpp:20:0)
+INFO: [HLS 214-186] Unrolling loop 'RD_Loop_Row' (dct.cpp:74:4) in function 'read_data' completely with a factor of 8 (dct.cpp:70:0)
+INFO: [HLS 214-186] Unrolling loop 'RD_Loop_Col' (dct.cpp:76:7) in function 'read_data' completely with a factor of 8 (dct.cpp:70:0)
+INFO: [HLS 214-270] Starting automatic array partition analysis...
+INFO: [HLS 214-115] Multiple burst reads of length 2 and bit width 512 has been inferred on bundle 'gmem'. These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings. (dct.cpp:78:13)
+INFO: [HLS 214-115] Multiple burst writes of length 2 and bit width 512 has been inferred on bundle 'gmem'. These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings. (dct.cpp:84:11)
+INFO: [HLS 200-111] Finished Compiling Optimization and Transform: CPU user time: 7.08 seconds. CPU system time: 0.8 seconds. Elapsed time: 10.34 seconds; current allocated memory: 280.086 MB.
+INFO: [HLS 200-111] Finished Checking Pragmas: CPU user time: 0 seconds. CPU system time: 0 seconds. Elapsed time: 0 seconds; current allocated memory: 280.086 MB.
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms: CPU user time: 0.16 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.19 seconds; current allocated memory: 282.289 MB.
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability: CPU user time: 0.15 seconds. CPU system time: 0 seconds. Elapsed time: 0.19 seconds; current allocated memory: 284.258 MB.
+INFO: [XFORM 203-102] Partitioning array 'out_block.0' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.1' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.2' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.3' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.4' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.5' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.6' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.7' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.0' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.1' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.2' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.3' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.4' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.5' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.6' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.7' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out' (dct.cpp:98) in dimension 1 automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.0' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.1' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.2' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.3' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.4' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.5' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.6' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.7' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'row_outbuf' (dct.cpp:41) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'col_outbuf' (dct.cpp:42) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'col_inbuf' (dct.cpp:42) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_in' (dct.cpp:97) in dimension 2 automatically.
+INFO: [XFORM 203-11] Balancing expressions in function 'dct_1d' (dct.cpp:19)...24 expression(s) balanced.
+INFO: [HLS 200-111] Finished Loop, function and other optimizations: CPU user time: 0.48 seconds. CPU system time: 0.1 seconds. Elapsed time: 0.64 seconds; current allocated memory: 309.547 MB.
+INFO: [HLS 200-472] Inferring partial write operation for 'buf[0]' (dct.cpp:78:11)
+INFO: [HLS 200-472] Inferring partial write operation for 'col_inbuf[0]' (dct.cpp:55:26)
+INFO: [HLS 200-472] Inferring partial write operation for 'dst[0]' (dct.cpp:34:14)
+INFO: [HLS 200-111] Finished Architecture Synthesis: CPU user time: 0.26 seconds. CPU system time: 0.03 seconds. Elapsed time: 0.32 seconds; current allocated memory: 343.797 MB.
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'dct' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'read_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'read_data' (function 'read_data'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between bus read operation ('gmem_addr_read_1', dct.cpp:78) on port 'gmem' (dct.cpp:78) and bus read operation ('gmem_addr_read', dct.cpp:78) on port 'gmem' (dct.cpp:78).
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_0_addr_3_write_ln78', dct.cpp:78) of variable 'trunc_ln78_24', dct.cpp:78 on array 'buf_0' due to limited memory ports (II = 2). Please consider using a memory core with more ports or partitioning the array 'buf_0'.
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_0_addr_5_write_ln78', dct.cpp:78) of variable 'trunc_ln78_40', dct.cpp:78 on array 'buf_0' due to limited memory ports (II = 3). Please consider using a memory core with more ports or partitioning the array 'buf_0'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 4, Depth = 75, function 'read_data'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.01 seconds. CPU system time: 0.08 seconds. Elapsed time: 1.42 seconds; current allocated memory: 346.215 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.99 seconds. CPU system time: 0.02 seconds. Elapsed time: 2.18 seconds; current allocated memory: 346.215 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct_1d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_5) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp59) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_10) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_12) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_13) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_11) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp49) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_4) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_3) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_9) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_6) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_8) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp41) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_7) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_5) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_2) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln22_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp30) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_4) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_3) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp21) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_2) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln22) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp12) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32) to 3 in order to utilize available DSP registers.
+INFO: [SCHED 204-61] Pipelining function 'dct_1d'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 1, Depth = 7, function 'dct_1d'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.04 seconds. CPU system time: 0.1 seconds. Elapsed time: 2.61 seconds; current allocated memory: 348.211 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.45 seconds. CPU system time: 0.07 seconds. Elapsed time: 0.79 seconds; current allocated memory: 348.211 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct_2d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'dct_2d'.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 2, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 3, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 4, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 35, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 51, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-885] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to schedule 'load' operation ('row_outbuf_0_load_3', dct.cpp:55) on array 'row_outbuf[0]', dct.cpp:41 due to limited memory ports (II = 59). Please consider using a memory core with more ports or partitioning the array 'row_outbuf_0'.
+WARNING: [HLS 200-885] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to schedule 'load' operation ('row_outbuf_0_load_4', dct.cpp:55) on array 'row_outbuf[0]', dct.cpp:41 due to limited memory ports (II = 60). Please consider using a memory core with more ports or partitioning the array 'row_outbuf_0'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 61, Depth = 123, function 'dct_2d'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 10.5 seconds. CPU system time: 0.23 seconds. Elapsed time: 18.37 seconds; current allocated memory: 361.188 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 4.84 seconds. CPU system time: 0.13 seconds. Elapsed time: 6.34 seconds; current allocated memory: 361.188 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'write_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'write_data'.
+WARNING: [HLS 200-880] The II Violation in module 'write_data' (function 'write_data'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between bus write operation ('gmem_addr_write_ln84', dct.cpp:84) on port 'gmem' (dct.cpp:84) and bus write operation ('gmem_addr_write_ln84', dct.cpp:84) on port 'gmem' (dct.cpp:84).
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 2, Depth = 71, function 'write_data'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.85 seconds. CPU system time: 0.03 seconds. Elapsed time: 2.1 seconds; current allocated memory: 361.188 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.5 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.51 seconds; current allocated memory: 361.188 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'dct'.
+WARNING: [HLS 200-875] II = 61 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 62 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 63 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 64 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 65 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 66 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 67 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 68 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 69 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 70 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 71 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 72 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 73 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 74 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 75 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 76 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 77 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 78 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 79 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 80 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 81 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 82 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 83 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 84 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 85 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 86 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 87 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 88 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 89 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 90 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 91 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 92 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 93 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 94 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 95 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 96 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 97 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 98 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 99 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 100 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 101 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 102 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 103 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 104 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 105 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 106 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 107 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 108 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 109 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 110 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 111 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 112 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 113 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 114 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 115 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 116 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 117 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 118 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 119 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 120 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 121 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 122, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 123, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 124, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 125, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 191, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+INFO: [HLS 200-876] Unable to schedule the whole 71 cycles 'call' operation ('_ln107', dct.cpp:107) to 'write_data' within the first 198 cycles (II = 199). Simulation mismatch may occur if the input data is modified before this operation completes.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 195, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 197, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+INFO: [HLS 200-876] Unable to schedule the whole 71 cycles 'call' operation ('_ln107', dct.cpp:107) to 'write_data' within the first 197 cycles (II = 198). Simulation mismatch may occur if the input data is modified before this operation completes.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 198, Depth = 269, function 'dct'
+WARNING: [HLS 200-871] Estimated clock period (7.383ns) exceeds the target (target clock period: 10ns, clock uncertainty: 2.7ns, effective delay budget: 7.3ns).
+WARNING: [HLS 200-1016] The critical path in module 'dct' consists of the following:	'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' [25]  (0.083 ns)
+	'call' operation ('_ln107', dct.cpp:107) to 'write_data' [90]  (7.3 ns)
+
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.29 seconds. CPU system time: 0.16 seconds. Elapsed time: 1.58 seconds; current allocated memory: 361.188 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 3.76 seconds. CPU system time: 0.04 seconds. Elapsed time: 3.8 seconds; current allocated memory: 361.188 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'read_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'read_data' pipeline 'read_data' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'read_data'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.62 seconds. CPU system time: 0.03 seconds. Elapsed time: 1.65 seconds; current allocated memory: 361.188 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct_1d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct_1d' pipeline 'dct_1d' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Generating core module 'ama_addmuladd_18s_16s_13ns_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_16s_16s_12ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_16s_16s_13ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_18s_16s_14ns_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_14ns_29ns_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_14ns_29s_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_13ns_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_29s_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_12ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_12ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_13ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_13ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_18s_13ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_18s_14ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_16s_14ns_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_16s_15s_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_17s_12ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_17s_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dct_1d'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 0.77 seconds. CPU system time: 0.04 seconds. Elapsed time: 0.81 seconds; current allocated memory: 364.156 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct_2d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct_2d' pipeline 'dct_2d' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dct_2d'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.56 seconds. CPU system time: 0.16 seconds. Elapsed time: 2.27 seconds; current allocated memory: 385.867 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'write_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'write_data' pipeline 'write_data' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'write_data'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 4.08 seconds. CPU system time: 0.17 seconds. Elapsed time: 5.69 seconds; current allocated memory: 392.668 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Design contains AXI ports. Reset is fixed to synchronous and active low.
+INFO: [RTGEN 206-500] Setting interface mode on port 'dct/gmem' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'dct/input_r' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'dct/output_r' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on function 'dct' to 's_axilite & ap_ctrl_chain'.
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct' pipeline 'dct' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Bundling port 'input_r', 'output_r', 'return' and 'ap_local_deadlock' to AXI-Lite port control.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dct'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.08 seconds. CPU system time: 0.06 seconds. Elapsed time: 1.48 seconds; current allocated memory: 413.000 MB.
+INFO: [RTMG 210-278] Implementing memory 'dct_dct_2d_row_outbuf_0_RAM_AUTO_1R1W_ram (RAM)' using auto RAMs.
+==============================================================
+Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2021.2 (64-bit)
+Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+==============================================================
+INFO: [SYN 201-201] Setting up clock 'default' with a period of 5ns.
+INFO: [HLS 200-1611] Setting target device to 'xcvc1802-viva1596-1MP-e-S'
+INFO: [HLS 200-1505] Using flow_target 'vitis'
+INFO: [HLS 200-1464] Running solution command: config_interface -default_interface=kernel
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_alignment_byte_size=64
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_latency=64
+INFO: [HLS 200-1464] Running solution command: config_interface -m_axi_max_widen_bitwidth=512
+INFO: [HLS 200-1464] Running solution command: config_rtl -register_reset_num=3
+INFO: [HLS 200-1510] Running: set_part xcvc1802-viva1596-1MP-e-S 
+INFO: [HLS 200-1510] Running: create_clock -period 5 -name default 
+INFO: [HLS 200-1510] Running: config_interface -m_axi_alignment_byte_size 64 -m_axi_latency 64 -m_axi_max_widen_bitwidth 512 
+INFO: [HLS 200-1510] Running: config_rtl -register_reset_num 3 
+INFO: [HLS 200-1510] Running: set_directive_top -name dct dct 
+INFO: [HLS 200-1510] Running: set_directive_pipeline dct 
+INFO: [HLS 200-1510] Running: csynth_design 
+INFO: [HLS 200-111] Finished File checks and directory preparation: CPU user time: 0.01 seconds. CPU system time: 0.01 seconds. Elapsed time: 0.05 seconds; current allocated memory: 1.188 GB.
+INFO: [HLS 200-10] Analyzing design file 'dct.cpp' ... 
+INFO: [HLS 200-111] Finished Source Code Analysis and Preprocessing: CPU user time: 3.59 seconds. CPU system time: 1.32 seconds. Elapsed time: 10.3 seconds; current allocated memory: 279.039 MB.
+INFO: [HLS 200-777] Using interface defaults for 'Vitis' flow target.
+INFO: [HLS 214-284] Auto array partition mode is set into default.
+INFO: [HLS 214-291] Loop 'WR_Loop_Row' is marked as complete unroll implied by the pipeline pragma (dct.cpp:87:4)
+INFO: [HLS 214-291] Loop 'WR_Loop_Col' is marked as complete unroll implied by the pipeline pragma (dct.cpp:89:7)
+INFO: [HLS 214-291] Loop 'Xpose_Col_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:63:4)
+INFO: [HLS 214-291] Loop 'Xpose_Col_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:65:7)
+INFO: [HLS 214-291] Loop 'Col_DCT_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:58:4)
+INFO: [HLS 214-291] Loop 'Xpose_Row_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:52:4)
+INFO: [HLS 214-291] Loop 'Xpose_Row_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:54:7)
+INFO: [HLS 214-291] Loop 'Row_DCT_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:47:4)
+INFO: [HLS 214-291] Loop 'DCT_Outer_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:28:4)
+INFO: [HLS 214-291] Loop 'DCT_Inner_Loop' is marked as complete unroll implied by the pipeline pragma (dct.cpp:30:7)
+INFO: [HLS 214-291] Loop 'RD_Loop_Row' is marked as complete unroll implied by the pipeline pragma (dct.cpp:74:4)
+INFO: [HLS 214-291] Loop 'RD_Loop_Col' is marked as complete unroll implied by the pipeline pragma (dct.cpp:76:7)
+INFO: [HLS 214-186] Unrolling loop 'WR_Loop_Row' (dct.cpp:87:4) in function 'write_data' completely with a factor of 8 (dct.cpp:83:0)
+INFO: [HLS 214-186] Unrolling loop 'WR_Loop_Col' (dct.cpp:89:7) in function 'write_data' completely with a factor of 8 (dct.cpp:83:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Col_Outer_Loop' (dct.cpp:63:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Col_Inner_Loop' (dct.cpp:65:7) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Col_DCT_Loop' (dct.cpp:58:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Row_Outer_Loop' (dct.cpp:52:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Xpose_Row_Inner_Loop' (dct.cpp:54:7) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'Row_DCT_Loop' (dct.cpp:47:4) in function 'dct_2d' completely with a factor of 8 (dct.cpp:40:0)
+INFO: [HLS 214-186] Unrolling loop 'DCT_Outer_Loop' (dct.cpp:28:4) in function 'dct_1d' completely with a factor of 8 (dct.cpp:20:0)
+INFO: [HLS 214-186] Unrolling loop 'DCT_Inner_Loop' (dct.cpp:30:7) in function 'dct_1d' completely with a factor of 8 (dct.cpp:20:0)
+INFO: [HLS 214-186] Unrolling loop 'RD_Loop_Row' (dct.cpp:74:4) in function 'read_data' completely with a factor of 8 (dct.cpp:70:0)
+INFO: [HLS 214-186] Unrolling loop 'RD_Loop_Col' (dct.cpp:76:7) in function 'read_data' completely with a factor of 8 (dct.cpp:70:0)
+INFO: [HLS 214-270] Starting automatic array partition analysis...
+INFO: [HLS 214-115] Multiple burst reads of length 2 and bit width 512 has been inferred on bundle 'gmem'. These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings. (dct.cpp:78:13)
+INFO: [HLS 214-115] Multiple burst writes of length 2 and bit width 512 has been inferred on bundle 'gmem'. These burst requests might be further partitioned into multiple requests during RTL generation, based on max_read_burst_length or max_write_burst_length settings. (dct.cpp:84:11)
+INFO: [HLS 200-111] Finished Compiling Optimization and Transform: CPU user time: 7.27 seconds. CPU system time: 0.75 seconds. Elapsed time: 18.77 seconds; current allocated memory: 280.086 MB.
+INFO: [HLS 200-111] Finished Checking Pragmas: CPU user time: 0 seconds. CPU system time: 0 seconds. Elapsed time: 0 seconds; current allocated memory: 280.086 MB.
+INFO: [HLS 200-10] Starting code transformations ...
+INFO: [HLS 200-111] Finished Standard Transforms: CPU user time: 0.16 seconds. CPU system time: 0.02 seconds. Elapsed time: 0.41 seconds; current allocated memory: 282.293 MB.
+INFO: [HLS 200-10] Checking synthesizability ...
+INFO: [HLS 200-111] Finished Checking Synthesizability: CPU user time: 0.15 seconds. CPU system time: 0 seconds. Elapsed time: 0.34 seconds; current allocated memory: 284.258 MB.
+INFO: [XFORM 203-102] Partitioning array 'out_block.0' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.1' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.2' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.3' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.4' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.5' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.6' automatically.
+INFO: [XFORM 203-102] Partitioning array 'out_block.7' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.0' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.1' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.2' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.3' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.4' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.5' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.6' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf.7' automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out' (dct.cpp:98) in dimension 1 automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.0' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.1' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.2' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.3' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.4' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.5' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.6' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_out.7' (dct.cpp:98) automatically.
+INFO: [XFORM 203-102] Partitioning array 'row_outbuf' (dct.cpp:41) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'col_outbuf' (dct.cpp:42) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'col_inbuf' (dct.cpp:42) in dimension 2 automatically.
+INFO: [XFORM 203-102] Partitioning array 'buf_2d_in' (dct.cpp:97) in dimension 2 automatically.
+INFO: [XFORM 203-11] Balancing expressions in function 'dct_1d' (dct.cpp:19)...24 expression(s) balanced.
+INFO: [HLS 200-111] Finished Loop, function and other optimizations: CPU user time: 0.57 seconds. CPU system time: 0.04 seconds. Elapsed time: 1.81 seconds; current allocated memory: 309.547 MB.
+INFO: [HLS 200-472] Inferring partial write operation for 'buf[0]' (dct.cpp:78:11)
+INFO: [HLS 200-472] Inferring partial write operation for 'col_inbuf[0]' (dct.cpp:55:26)
+INFO: [HLS 200-472] Inferring partial write operation for 'dst[0]' (dct.cpp:34:14)
+INFO: [HLS 200-111] Finished Architecture Synthesis: CPU user time: 0.28 seconds. CPU system time: 0.03 seconds. Elapsed time: 0.91 seconds; current allocated memory: 343.797 MB.
+INFO: [HLS 200-10] Starting hardware synthesis ...
+INFO: [HLS 200-10] Synthesizing 'dct' ...
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'read_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'read_data' (function 'read_data'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between bus read operation ('gmem_addr_read_1', dct.cpp:78) on port 'gmem' (dct.cpp:78) and bus read operation ('gmem_addr_read', dct.cpp:78) on port 'gmem' (dct.cpp:78).
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_0_addr_3_write_ln78', dct.cpp:78) of variable 'trunc_ln78_24', dct.cpp:78 on array 'buf_0' due to limited memory ports (II = 2). Please consider using a memory core with more ports or partitioning the array 'buf_0'.
+WARNING: [HLS 200-885] The II Violation in module 'read_data' (function 'read_data'): Unable to schedule 'store' operation ('buf_0_addr_5_write_ln78', dct.cpp:78) of variable 'trunc_ln78_40', dct.cpp:78 on array 'buf_0' due to limited memory ports (II = 3). Please consider using a memory core with more ports or partitioning the array 'buf_0'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 4, Depth = 75, function 'read_data'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.07 seconds. CPU system time: 0.07 seconds. Elapsed time: 3.19 seconds; current allocated memory: 346.219 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 1.06 seconds. CPU system time: 0 seconds. Elapsed time: 3.24 seconds; current allocated memory: 346.219 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct_1d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_5) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp59) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_10) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_12) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_13) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_11) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp49) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_4) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_3) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_9) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_6) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_8) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp41) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_7) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_5) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_2) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln22_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp30) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_4) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_3) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp21) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_2) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32_1) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln22) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=tmp12) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln34) to 3 in order to utilize available DSP registers.
+INFO: [HLS 200-486] Changing DSP latency (root=mul_ln32) to 3 in order to utilize available DSP registers.
+INFO: [SCHED 204-61] Pipelining function 'dct_1d'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 1, Depth = 7, function 'dct_1d'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.02 seconds. CPU system time: 0.11 seconds. Elapsed time: 2.84 seconds; current allocated memory: 348.238 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.49 seconds. CPU system time: 0.07 seconds. Elapsed time: 1.23 seconds; current allocated memory: 348.238 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct_2d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'dct_2d'.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 2, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 3, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 4, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 35, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-880] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to enforce a carried dependence constraint (II = 51, distance = 1, offset = 1) between 'call' operation ('_ln59', dct.cpp:59) to 'dct_1d' and 'store' operation ('col_inbuf_0_addr_write_ln55', dct.cpp:55) of variable 'row_outbuf_0_load', dct.cpp:55 on array 'col_inbuf[0]', dct.cpp:42.
+WARNING: [HLS 200-885] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to schedule 'load' operation ('row_outbuf_0_load_3', dct.cpp:55) on array 'row_outbuf[0]', dct.cpp:41 due to limited memory ports (II = 59). Please consider using a memory core with more ports or partitioning the array 'row_outbuf_0'.
+WARNING: [HLS 200-885] The II Violation in module 'dct_2d' (function 'dct_2d'): Unable to schedule 'load' operation ('row_outbuf_0_load_4', dct.cpp:55) on array 'row_outbuf[0]', dct.cpp:41 due to limited memory ports (II = 60). Please consider using a memory core with more ports or partitioning the array 'row_outbuf_0'.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 61, Depth = 123, function 'dct_2d'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 10.93 seconds. CPU system time: 0.27 seconds. Elapsed time: 25.72 seconds; current allocated memory: 361.203 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 5.07 seconds. CPU system time: 0.06 seconds. Elapsed time: 13.12 seconds; current allocated memory: 361.203 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'write_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'write_data'.
+WARNING: [HLS 200-880] The II Violation in module 'write_data' (function 'write_data'): Unable to enforce a carried dependence constraint (II = 1, distance = 1, offset = 1) between bus write operation ('gmem_addr_write_ln84', dct.cpp:84) on port 'gmem' (dct.cpp:84) and bus write operation ('gmem_addr_write_ln84', dct.cpp:84) on port 'gmem' (dct.cpp:84).
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 2, Depth = 71, function 'write_data'
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 2.35 seconds. CPU system time: 0.07 seconds. Elapsed time: 5.61 seconds; current allocated memory: 361.203 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 0.65 seconds. CPU system time: 0 seconds. Elapsed time: 1.44 seconds; current allocated memory: 361.203 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-42] -- Implementing module 'dct' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [SCHED 204-11] Starting scheduling ...
+INFO: [SCHED 204-61] Pipelining function 'dct'.
+WARNING: [HLS 200-875] II = 61 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 62 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 63 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 64 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 65 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 66 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 67 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 68 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 69 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 70 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 71 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 72 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 73 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 74 is infeasible due to multiple pipeline iteration latency = 75 and incompatible II = 4 of 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-875] II = 75 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 76 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 77 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 78 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 79 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 80 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 81 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 82 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 83 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 84 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 85 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 86 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 87 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 88 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 89 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 90 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 91 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 92 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 93 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 94 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 95 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 96 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 97 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 98 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 99 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 100 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 101 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 102 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 103 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 104 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 105 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 106 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 107 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 108 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 109 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 110 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 111 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 112 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 113 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 114 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 115 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 116 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 117 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 118 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 119 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 120 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-875] II = 121 is infeasible due to multiple pipeline iteration latency = 123 and incompatible II = 61 of 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 122, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 123, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 124, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 125, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 191, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+INFO: [HLS 200-876] Unable to schedule the whole 71 cycles 'call' operation ('_ln107', dct.cpp:107) to 'write_data' within the first 198 cycles (II = 199). Simulation mismatch may occur if the input data is modified before this operation completes.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 195, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+WARNING: [HLS 200-880] The II Violation in module 'dct' (function 'dct'): Unable to enforce a carried dependence constraint (II = 197, distance = 1, offset = 1) between 'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' and 'call' operation ('_ln101', dct.cpp:101) to 'read_data'.
+INFO: [HLS 200-876] Unable to schedule the whole 71 cycles 'call' operation ('_ln107', dct.cpp:107) to 'write_data' within the first 197 cycles (II = 198). Simulation mismatch may occur if the input data is modified before this operation completes.
+INFO: [HLS 200-1470] Pipelining result : Target II = NA, Final II = 198, Depth = 269, function 'dct'
+WARNING: [HLS 200-871] Estimated clock period (3.733ns) exceeds the target (target clock period: 5ns, clock uncertainty: 1.35ns, effective delay budget: 3.65ns).
+WARNING: [HLS 200-1016] The critical path in module 'dct' consists of the following:	'call' operation ('dct_2d_ret', dct.cpp:103) to 'dct_2d' [25]  (0.083 ns)
+	'call' operation ('_ln107', dct.cpp:107) to 'write_data' [90]  (3.65 ns)
+
+INFO: [SCHED 204-11] Finished scheduling.
+INFO: [HLS 200-111] Finished Scheduling: CPU user time: 1.4 seconds. CPU system time: 0.11 seconds. Elapsed time: 4.32 seconds; current allocated memory: 361.203 MB.
+INFO: [BIND 205-100] Starting micro-architecture generation ...
+INFO: [BIND 205-101] Performing variable lifetime analysis.
+INFO: [BIND 205-101] Exploring resource sharing.
+INFO: [BIND 205-101] Binding ...
+INFO: [BIND 205-100] Finished micro-architecture generation.
+INFO: [HLS 200-111] Finished Binding: CPU user time: 4.82 seconds. CPU system time: 0.1 seconds. Elapsed time: 11.31 seconds; current allocated memory: 361.203 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'read_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'read_data' pipeline 'read_data' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'read_data'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 2.32 seconds. CPU system time: 0.07 seconds. Elapsed time: 5.8 seconds; current allocated memory: 361.203 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct_1d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct_1d' pipeline 'dct_1d' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Generating core module 'ama_addmuladd_18s_16s_13ns_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_16s_16s_12ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_16s_16s_13ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'ama_submuladd_18s_16s_14ns_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_14ns_29ns_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_14ns_29s_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_13ns_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_29ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_16s_15s_29s_29_4_1': 2 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_12ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_12ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_13ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_17s_13ns_29s_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_18s_13ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mac_muladd_18s_14ns_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_16s_14ns_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_16s_15s_29_4_1': 3 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_17s_12ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Generating core module 'mul_mul_17s_13ns_29_4_1': 1 instance(s).
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dct_1d'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.14 seconds. CPU system time: 0.07 seconds. Elapsed time: 3.12 seconds; current allocated memory: 364.152 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct_2d' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct_2d' pipeline 'dct_2d' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dct_2d'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.77 seconds. CPU system time: 0.14 seconds. Elapsed time: 4.44 seconds; current allocated memory: 387.379 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'write_data' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'write_data' pipeline 'write_data' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Finished creating RTL model for 'write_data'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 4.69 seconds. CPU system time: 0.14 seconds. Elapsed time: 11.49 seconds; current allocated memory: 394.309 MB.
+INFO: [HLS 200-10] ----------------------------------------------------------------
+INFO: [HLS 200-10] -- Generating RTL for module 'dct' 
+INFO: [HLS 200-10] ----------------------------------------------------------------
+WARNING: [RTGEN 206-101] Design contains AXI ports. Reset is fixed to synchronous and active low.
+INFO: [RTGEN 206-500] Setting interface mode on port 'dct/gmem' to 'm_axi'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'dct/input_r' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on port 'dct/output_r' to 's_axilite & ap_none'.
+INFO: [RTGEN 206-500] Setting interface mode on function 'dct' to 's_axilite & ap_ctrl_chain'.
+INFO: [HLS 200-1030] Apply Unified Pipeline Control on module 'dct' pipeline 'dct' pipeline type 'function pipeline'
+INFO: [RTGEN 206-100] Bundling port 'input_r', 'output_r', 'return' and 'ap_local_deadlock' to AXI-Lite port control.
+INFO: [RTGEN 206-100] Finished creating RTL model for 'dct'.
+INFO: [HLS 200-111] Finished Creating RTL model: CPU user time: 1.3 seconds. CPU system time: 0.06 seconds. Elapsed time: 3.17 seconds; current allocated memory: 414.512 MB.
+INFO: [RTMG 210-278] Implementing memory 'dct_dct_2d_row_outbuf_0_RAM_AUTO_1R1W_ram (RAM)' using auto RAMs.
+==============================================================
+Vitis HLS - High-Level Synthesis from C, C++ and OpenCL v2021.2 (64-bit)
+Copyright 1986-2021 Xilinx, Inc. All Rights Reserved.
+==============================================================
