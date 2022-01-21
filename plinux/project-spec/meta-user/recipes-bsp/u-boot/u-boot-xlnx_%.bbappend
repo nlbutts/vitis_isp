@@ -13,3 +13,5 @@ do_configure_append_microblaze () {
 		install ${WORKDIR}/config.mk ${B}/source/board/xilinx/microblaze-generic/
 	fi
 }
+SRC_URI += "file://user_2022-01-21-14-13-00.cfg"
+
