@@ -126,7 +126,8 @@ int main() {
   fclose(fp);
 
   // Compare the results file with the golden results
-  retval = system("diff --brief -w out.dat out.golden.dat");
+  //retval = system("diff --brief -w out.dat out.golden.dat");
+  retval = system("diff -w -i -B -b -a out.dat out.golden.dat");
   if (retval != 0) {
     std::cout << "Test failed  !!!" << std::endl;
     retval = 1;

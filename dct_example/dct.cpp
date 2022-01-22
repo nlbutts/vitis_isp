@@ -102,9 +102,7 @@ void dct(short input[N_DCT], short output[N_DCT]) {
 
    dct_2d(buf_2d_in, buf_2d_out);
 
-
    // Write out the results.
    write_data(buf_2d_out, output);
-   //write_data(buf_2d_in, output);
 }
 
