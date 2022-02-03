@@ -44,14 +44,14 @@ FPGA image.
 
 Copy the plinux **BOOT.BIN** into the first partition of the SD card.
 
-`
+```
 setenv unzip_addr_r 0x02500000
 setenv loadfpga "fatload mmc 0 '${ramdisk_addr_r}' system.bit.gz;unzip '${ramdisk_addr_r}' '${unzip_addr_r}'; fpga load 0 '${unzip_addr_r}' '${filesize}'"
 saveenv
-`
+```
 
 Create a new boot.scr file based on the following snippet:
-`
+```
 # Generate boot.scr:
 # mkimage -c none -A arm -T script -d boot.txt boot.scr
 #
@@ -72,6 +72,6 @@ fpga load 0 ${unzip_addr} ${filesize}
 
 # fatload ${devtype} ${devnum}:${distro_bootpart} 0x00200000 ${kernel_name};
 # booti 0x00200000 - 0x00100000
-`
+```
 
 Put the generated boot.scr into the boot partition of the SD card.
