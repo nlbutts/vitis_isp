@@ -85,7 +85,7 @@ Next I create a new boot.scr file:
 #
 ################
 #setenv bootargs "rootwait root=/dev/mmcblk0p2 quiet systemd.show_status=0"
-#setenv bootargs "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait"
+setenv bootargs "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait"
 
 fatload mmc 0 0x01000000 Image.gz
 unzip 0x01000000 0x00200000
