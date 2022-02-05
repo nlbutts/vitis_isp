@@ -29,49 +29,96 @@ This will take some time. But it will build the Linux distro, SDK, and install t
 ## Build DCT demo
 Open Vitis_HLS tool and load the dct project.
 
+## Build the Vitis DCT hardware project
+Run the following, you may need to tweak **env.sh** based on the location of
+various components. Refer to **env.sh** for details.
+
+```
+. <xilinx install directory>/Vitis/2021.2/settings64.sh
+. <vitis_isp checkout directory>/scripts/env.sh
+cd <vitis_isp checkout directory>/dct_example
+make all TARGET=hw
+```
+
+This will take some time, but create a sd_card.img file. You can **dd** this
+file onto to an SD card and boot the unit. To run the dct example, do the
+following on the booted unit:
+```
+cd /media/sd-mmcblk0p1
+./run_script.sh
+```
+
+This will load the xclbin file and run the **dct_example** program.
 
 # Y2K22 bug fix
 Xilinx has issues with 2022. See this post for a fix
 https://support.xilinx.com/s/article/76960?language=en_US
 
 
-# Get Linux working
-Use **dd** to copy the sd_card.img to an SD card. But then it won't boot and it
-takes forever. The **BOOT.BIN** file that is created has the **.bit** embedded.
-The FSBL takes a good long forever to load that. So it is better to take the
-output of the plinux build, without the .bit file and then have u-boot load the
-FPGA image.
+# Boot faster
+To boot faster grab the **pmufw**, **system.bit**, **bl31.elf**, and
+**system.dtb** from the Extensible platform design.
+The Petalinux build doesn't work for some reason.
+Then grab the fsbl and u-boot from the Petalinux build.
 
-Copy the plinux **BOOT.BIN** into the first partition of the SD card.
+Normally I copy :
+**pmufw**
+**system.bit**
+**bl31.elf**
+**system.dtb**
 
-`
-setenv unzip_addr_r 0x02500000
-setenv loadfpga "fatload mmc 0 '${ramdisk_addr_r}' system.bit.gz;unzip '${ramdisk_addr_r}' '${unzip_addr_r}'; fpga load 0 '${unzip_addr_r}' '${filesize}'"
-saveenv
-`
+into the <vitis_isp directory>/plinux/images/linux directory, overwritting
+the petalinux builds.
 
-Create a new boot.scr file based on the following snippet:
-`
+Then I run the following:
+```
+petalinux-package --boot --u-boot --fpga system.bit --force
+```
+
+This will create a new BOOT.BIN file that you can copy to the SD card.
+
+Next I create a new boot.scr file:
+
+```
 # Generate boot.scr:
 # mkimage -c none -A arm -T script -d boot.txt boot.scr
 #
 ################
-fitimage_name=image.ub
-kernel_name=Image
-ramdisk_name=ramdisk.cpio.gz.u-boot
-rootfs_name=rootfs.cpio.gz.u-boot
-bit_name=sytem.bit.gz
-unzip_addr=0x02500000
+#setenv bootargs "rootwait root=/dev/mmcblk0p2 quiet systemd.show_status=0"
+#setenv bootargs "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait"
 
-fatload mmc 0 ${ramdisk_addr_r} system.bit.gz
-unzip ${ramdisk_addr_r} ${unzip_addr}
-fpga load 0 ${unzip_addr} ${filesize}
+fatload mmc 0 0x01000000 Image.gz
+unzip 0x01000000 0x00200000
+booti 0x00200000 - 0x00100000
+```
 
-#fatload ${devtype} ${devnum}:${distro_bootpart} 0x10000000 ${fitimage_name};
-#bootm 0x10000000;
+I then compress Image using gzip and copy it to the boot partition on the SD
+card.
+```
+gzip -k Image
+```
 
-# fatload ${devtype} ${devnum}:${distro_bootpart} 0x00200000 ${kernel_name};
-# booti 0x00200000 - 0x00100000
-`
+Put the SD card into the unit and boot. Stop at u-boot and do the following:
+```
+fatload mmc 0 0x80000 BOOT.BIN
+sf probe
+sf update 0x80000 0 ${filesize}
+fatload mmc 0 0x80000 boot.scr
+sf update 0x80000 0x2000000 ${filesize}
+```
 
-Put the generated boot.scr into the boot partition of the SD card.
+Shut the unit off, configure it to boot from QSPI. Then boot. Loading the
+BIT file, u-boot and the kernel should only take a few seconds now.
+
+When u-boot starts up change the bootargs to:
+```
+setenv bootargs "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait quiet systemd.show_status=0"
+saveenv
+```
+
+You can also create a script to do this update:
+```
+setenv update_boot "fatload mmc 0 0x80000 BOOT.BIN;sf probe; sf update 0x80000 0 ${filesize};fatload mmc 0 0x80000 boot.scr;sf update 0x80000 0x2000000 ${filesize}"
+```
+
+The unit should boot within 15-20 seconds.
