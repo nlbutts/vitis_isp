@@ -1,1 +1,1 @@
-#include <configs/xilinx_zynqmp.h>
+#include <configs/xilinx_versal.h>

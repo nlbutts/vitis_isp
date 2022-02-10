@@ -17,22 +17,7 @@
 #include "common/xf_headers.hpp"
 #include "xf_isp_types.h"
 
-//#include "xcl2.hpp"
-
-#include <fstream>
-
-extern "C" {
-void ISPPipeline_accel(ap_uint<INPUT_PTR_WIDTH>* img_inp,
-                       ap_uint<OUTPUT_PTR_WIDTH>* img_out,
-                       int height,
-                       int width,
-                       uint16_t rgain,
-                       uint16_t bgain,
-                       unsigned char gamma_lut[256 * 3],
-                       unsigned char mode_reg,
-                       uint16_t pawb);
-}
-
+#include "xcl2.hpp"
 
 void compute_gamma(float r_g, float g_g, float b_g, uchar gamma_lut[256 * 3]) {
     float gamma_inv[256] = {
@@ -98,20 +83,6 @@ void compute_gamma(float r_g, float g_g, float b_g, uchar gamma_lut[256 * 3]) {
         gamma_lut[i + 512] = gam_b;
     }
 }
-
-void saveGamma(unsigned char * gamma, int gammaSize)
-{
-    auto ofs = std::ofstream("gamma.csv");
-    if (ofs.good())
-    {
-        for (int i = 0; i < gammaSize; i++)
-        {
-            ofs << (int)gamma[i] << ',';
-        }
-    }
-}
-
-
 int main(int argc, char** argv) {
     if (argc != 2) {
         fprintf(stderr, "Invalid Number of Arguments!\nUsage:\n");
@@ -166,25 +137,12 @@ int main(int argc, char** argv) {
     uint32_t hist0_awb[3][HIST_SIZE] = {0};
     uint32_t hist1_awb[3][HIST_SIZE] = {0};
 
-    //float gamma_val_r = 0.5f, gamma_val_g = 0.8f, gamma_val_b = 0.8f;
-    float gamma_val_r = 0.45f, gamma_val_g = 0.45f, gamma_val_b = 0.45f;
+    float gamma_val_r = 0.5f, gamma_val_g = 0.8f, gamma_val_b = 0.8f;
 
     compute_gamma(gamma_val_r, gamma_val_g, gamma_val_b, gamma_lut);
-    saveGamma(gamma_lut, 768);
 
     // int channels=out_img.channels();
-#ifdef HOST_SIM
-    ISPPipeline_accel((ap_uint<INPUT_PTR_WIDTH>*)in_img.data,
-                      (ap_uint<OUTPUT_PTR_WIDTH>*)out_img.data,
-                      height,
-                      width,
-                      rgain,
-                      bgain,
-                      gamma_lut,
-                      mode_reg,
-                      pawb);
 
-#else
     cl_int err;
     std::cout << "INFO: Running OpenCL section." << std::endl;
 
@@ -246,7 +204,7 @@ int main(int argc, char** argv) {
     }
 
     q.finish();
-#endif
+
     /////////////////////////////////////// end of CL ////////////////////////
 
     // Write output image

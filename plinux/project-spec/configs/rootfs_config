@@ -2,7 +2,7 @@
 # Automatically generated file; DO NOT EDIT.
 # Configuration
 #
-CONFIG_system-zynqmp=y
+CONFIG_system-versal=y
 
 #
 # Filesystem Packages 
@@ -1591,13 +1591,6 @@ CONFIG_run-postinsts=y
 # CONFIG_libjpeg-turbo-dev is not set
 
 #
-# libmali-xlnx 
-#
-# CONFIG_libmali-xlnx is not set
-# CONFIG_libmali-xlnx-dbg is not set
-# CONFIG_libmali-xlnx-dev is not set
-
-#
 # libmetal 
 #
 # CONFIG_libmetal is not set
@@ -1944,6 +1937,13 @@ CONFIG_run-postinsts=y
 # CONFIG_lzo-dev is not set
 
 #
+# ai-engine
+#
+# CONFIG_ai-engine-driver is not set
+# CONFIG_ai-engine-driver-dbg is not set
+# CONFIG_ai-engine-driver-dev is not set
+
+#
 # mtdev 
 #
 # CONFIG_mtdev is not set
@@ -2172,7 +2172,7 @@ CONFIG_run-postinsts=y
 # xrt
 #
 CONFIG_xrt=y
-# CONFIG_xrt-dev is not set
+CONFIG_xrt-dev=y
 # CONFIG_xrt-dbg is not set
 
 #
@@ -2336,13 +2336,6 @@ CONFIG_xrt=y
 # CONFIG_encodings is not set
 # CONFIG_encodings-dev is not set
 # CONFIG_encodings-dbg is not set
-
-#
-# epiphany 
-#
-# CONFIG_epiphany is not set
-# CONFIG_epiphany-dev is not set
-# CONFIG_epiphany-dbg is not set
 
 #
 # eudev 
@@ -2590,13 +2583,11 @@ CONFIG_udev-extraconf=y
 #
 # mesa-gl 
 #
-# CONFIG_mesa-gl-dev is not set
 # CONFIG_libgl-mesa is not set
 # CONFIG_mesa-megadriver is not set
 # CONFIG_libglapi-dev is not set
 # CONFIG_libglapi is not set
 # CONFIG_libgl-mesa-dev is not set
-# CONFIG_mesa-gl-dbg is not set
 
 #
 # mkfontdir 
@@ -3271,11 +3262,6 @@ CONFIG_tcf-agent=y
 # CONFIG_watchdog-config-dev is not set
 
 #
-# watchdog-init
-#
-CONFIG_watchdog-init=y
-
-#
 # webkitgtk 
 #
 # CONFIG_webkitgtk is not set
@@ -3609,11 +3595,6 @@ CONFIG_bridge-utils=y
 # CONFIG_mtools is not set
 # CONFIG_mtools-dev is not set
 # CONFIG_mtools-dbg is not set
-
-#
-# power management 
-#
-CONFIG_hellopm=y
 
 #
 # utils 
@@ -3995,7 +3976,7 @@ CONFIG_u-boot-tools=y
 #
 # packagegroup-petalinux 
 #
-# CONFIG_packagegroup-petalinux is not set
+CONFIG_packagegroup-petalinux=y
 # CONFIG_packagegroup-petalinux-dbg is not set
 # CONFIG_packagegroup-petalinux-dev is not set
 
@@ -4023,16 +4004,16 @@ CONFIG_u-boot-tools=y
 #
 # packagegroup-petalinux-gstreamer 
 #
-# CONFIG_packagegroup-petalinux-gstreamer is not set
-# CONFIG_packagegroup-petalinux-gstreamer-dev is not set
+CONFIG_packagegroup-petalinux-gstreamer=y
+CONFIG_packagegroup-petalinux-gstreamer-dev=y
 # CONFIG_packagegroup-petalinux-gstreamer-dbg is not set
 
 #
 # packagegroup-petalinux-lmsensors 
 #
-# CONFIG_packagegroup-petalinux-lmsensors is not set
+CONFIG_packagegroup-petalinux-lmsensors=y
 # CONFIG_packagegroup-petalinux-lmsensors-dbg is not set
-# CONFIG_packagegroup-petalinux-lmsensors-dev is not set
+CONFIG_packagegroup-petalinux-lmsensors-dev=y
 
 #
 # packagegroup-petalinux-matchbox 
@@ -4087,15 +4068,15 @@ CONFIG_u-boot-tools=y
 # packagegroup-petalinux-opencv 
 #
 CONFIG_packagegroup-petalinux-opencv=y
-# CONFIG_packagegroup-petalinux-opencv-dev is not set
+CONFIG_packagegroup-petalinux-opencv-dev=y
 # CONFIG_packagegroup-petalinux-opencv-dbg is not set
 
 #
 # packagegroup-petalinux-python-modules 
 #
-# CONFIG_packagegroup-petalinux-python-modules is not set
+CONFIG_packagegroup-petalinux-python-modules=y
 # CONFIG_packagegroup-petalinux-python-modules-dbg is not set
-# CONFIG_packagegroup-petalinux-python-modules-dev is not set
+CONFIG_packagegroup-petalinux-python-modules-dev=y
 
 #
 # packagegroup-petalinux-qt 
@@ -4122,23 +4103,16 @@ CONFIG_packagegroup-petalinux-opencv=y
 #
 # packagegroup-petalinux-utils 
 #
-# CONFIG_packagegroup-petalinux-utils is not set
+CONFIG_packagegroup-petalinux-utils=y
 # CONFIG_packagegroup-petalinux-utils-dbg is not set
-# CONFIG_packagegroup-petalinux-utils-dev is not set
+CONFIG_packagegroup-petalinux-utils-dev=y
 
 #
 # packagegroup-petalinux-v4lutils 
 #
-# CONFIG_packagegroup-petalinux-v4lutils is not set
+CONFIG_packagegroup-petalinux-v4lutils=y
 # CONFIG_packagegroup-petalinux-v4lutils-dbg is not set
-# CONFIG_packagegroup-petalinux-v4lutils-dev is not set
-
-#
-# packagegroup-petalinux-weston 
-#
-# CONFIG_packagegroup-petalinux-weston is not set
-# CONFIG_packagegroup-petalinux-weston-dbg is not set
-# CONFIG_packagegroup-petalinux-weston-dev is not set
+CONFIG_packagegroup-petalinux-v4lutils-dev=y
 
 #
 # packagegroup-petalinux-x11 
