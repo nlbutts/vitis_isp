@@ -87,7 +87,9 @@ Next I create a new boot.scr file:
 #setenv bootargs "rootwait root=/dev/mmcblk0p2 quiet systemd.show_status=0"
 setenv bootargs "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait"
 
-fatload mmc 0 0x01000000 Image.gz
+#fatload mmc 0 0x01000000 Image.gz
+sf probe
+sf read 0x01000000 0x1420000 0x989680
 unzip 0x01000000 0x00200000
 booti 0x00200000 - 0x00100000
 ```
@@ -98,11 +100,14 @@ card.
 gzip -k Image
 ```
 
-Put the SD card into the unit and boot. Stop at u-boot and do the following:
+We now put the **BOOT.BIN** and the **Image.gz** in the QSPI flash. Use
+the commands below in U-boot
 ```
 fatload mmc 0 0x80000 BOOT.BIN
 sf probe
 sf update 0x80000 0 ${filesize}
+fatload mmc 0 0x80000 Image.gz
+sf update 0x80000 0x1420000 ${filesize}
 fatload mmc 0 0x80000 boot.scr
 sf update 0x80000 0x2000000 ${filesize}
 ```
@@ -112,7 +117,7 @@ BIT file, u-boot and the kernel should only take a few seconds now.
 
 When u-boot starts up change the bootargs to:
 ```
-setenv bootargs "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait quiet systemd.show_status=0"
+setenv bootargs "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait quiet systemd.show_status=0 init=/sbin/bootchartd"
 saveenv
 ```
 
@@ -122,3 +127,33 @@ setenv update_boot "fatload mmc 0 0x80000 BOOT.BIN;sf probe; sf update 0x80000 0
 ```
 
 The unit should boot within 15-20 seconds.
+
+## U-boot changes
+Remove as many drivers as possible.
+
+Set this guy:
+CONFIG_SYS_MALLOC_CLEAR_ON_INIT=n
+
+## Profile
+
+I can't get boot chart to work. It will generate a bootchart.tgz, but pybootchartgui.py doesn't work.
+`setenv bootargs "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=1536M quiet systemd.show_status=0 init=/sbin/bootchartd"`
+
+
+To profile kernel calls do the following:
+Change the kernel config **CONFIG_LOG_BUF_SHIFT** and increase it by one.
+Boot to u-boot and type the following then boot
+`setenv bootargs "earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait cma=1536M quiet systemd.show_status=0 initcall_debug"`
+
+One the unit is booted type:
+`dmesg > boot.log`
+
+Copy that file to the PC and in the kernel source tree run:
+`scripts/bootgraph.pl boot.log > boot.svg`
+
+# Start GStreamer app on startup
+Petalinux uses SysV, which is terrible.
+
+To start Gstreamer on the host use the following:
+`gst-launch-1.0 udpsrc port=5000 ! 'application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)JPEG, a-framerate=(string)30.000000, payload=(int)26, ssrc=(uint)3167073459, timestamp-offset=(uint)2147749579, seqnum-offset=(uint)3676' ! rtpjitterbuffer latency=50 ! rtpjpegdepay ! jpegdec ! glimagesink`
+

@@ -1651,7 +1651,7 @@ CONFIG_libgpiod=y
 #
 # libomxil 
 #
-# CONFIG_libomxil is not set
+CONFIG_libomxil=y
 # CONFIG_libomxil-dev is not set
 # CONFIG_libomxil-dbg is not set
 
@@ -2172,25 +2172,25 @@ CONFIG_libgpiod=y
 # xrt
 #
 CONFIG_xrt=y
-# CONFIG_xrt-dev is not set
+CONFIG_xrt-dev=y
 # CONFIG_xrt-dbg is not set
 
 #
 # zocl
 #
-# CONFIG_zocl is not set
-# CONFIG_zocl-dev is not set
+CONFIG_zocl=y
+CONFIG_zocl-dev=y
 # CONFIG_zocl-dbg is not set
 
 #
 # opencl-clhpp
 #
-# CONFIG_opencl-clhpp-dev is not set
+CONFIG_opencl-clhpp-dev=y
 
 #
 # opencl-headers
 #
-# CONFIG_opencl-headers is not set
+CONFIG_opencl-headers=y
 
 #
 # protobuf
@@ -2412,7 +2412,7 @@ CONFIG_udev-extraconf=y
 # CONFIG_glibc is not set
 # CONFIG_glibc-dev is not set
 # CONFIG_glibc-dbg is not set
-# CONFIG_ldd is not set
+CONFIG_ldd=y
 
 #
 # gnome-desktop-testing 
@@ -2540,7 +2540,7 @@ CONFIG_udev-extraconf=y
 #
 # json-c 
 #
-# CONFIG_json-c is not set
+CONFIG_json-c=y
 # CONFIG_json-c-dev is not set
 # CONFIG_json-c-dbg is not set
 
@@ -3112,7 +3112,7 @@ CONFIG_packagegroup-core-ssh-dropbear=y
 #
 # rpm 
 #
-# CONFIG_rpm is not set
+CONFIG_rpm=y
 # CONFIG_rpm-build is not set
 # CONFIG_rpm-dbg is not set
 # CONFIG_rpm-dev is not set
@@ -3507,7 +3507,7 @@ CONFIG_watchdog-init=y
 #
 # gstreamer1.0-omx 
 #
-# CONFIG_gstreamer1.0-omx is not set
+CONFIG_gstreamer1.0-omx=y
 # CONFIG_gstreamer1.0-omx-dbg is not set
 # CONFIG_gstreamer1.0-omx-dev is not set
 
@@ -4023,16 +4023,16 @@ CONFIG_u-boot-tools=y
 #
 # packagegroup-petalinux-gstreamer 
 #
-# CONFIG_packagegroup-petalinux-gstreamer is not set
-# CONFIG_packagegroup-petalinux-gstreamer-dev is not set
+CONFIG_packagegroup-petalinux-gstreamer=y
+CONFIG_packagegroup-petalinux-gstreamer-dev=y
 # CONFIG_packagegroup-petalinux-gstreamer-dbg is not set
 
 #
 # packagegroup-petalinux-lmsensors 
 #
-# CONFIG_packagegroup-petalinux-lmsensors is not set
+CONFIG_packagegroup-petalinux-lmsensors=y
 # CONFIG_packagegroup-petalinux-lmsensors-dbg is not set
-# CONFIG_packagegroup-petalinux-lmsensors-dev is not set
+CONFIG_packagegroup-petalinux-lmsensors-dev=y
 
 #
 # packagegroup-petalinux-matchbox 
@@ -4051,21 +4051,21 @@ CONFIG_u-boot-tools=y
 #
 # packagegroup-petalinux-multimedia 
 #
-# CONFIG_packagegroup-petalinux-multimedia is not set
+CONFIG_packagegroup-petalinux-multimedia=y
 # CONFIG_packagegroup-petalinux-multimedia-dbg is not set
-# CONFIG_packagegroup-petalinux-multimedia-dev is not set
+CONFIG_packagegroup-petalinux-multimedia-dev=y
 
 #
 # packagegroup-petalinux-networking-debug
 #
-# CONFIG_packagegroup-petalinux-networking-debug is not set
+CONFIG_packagegroup-petalinux-networking-debug=y
 # CONFIG_packagegroup-petalinux-networking-debug-dbg is not set
 # CONFIG_packagegroup-petalinux-networking-debug-dev is not set
 
 #
 # packagegroup-petalinux-networking-stack 
 #
-# CONFIG_packagegroup-petalinux-networking-stack is not set
+CONFIG_packagegroup-petalinux-networking-stack=y
 # CONFIG_packagegroup-petalinux-networking-stack-dbg is not set
 # CONFIG_packagegroup-petalinux-networking-stack-dev is not set
 
@@ -4087,7 +4087,7 @@ CONFIG_u-boot-tools=y
 # packagegroup-petalinux-opencv 
 #
 CONFIG_packagegroup-petalinux-opencv=y
-# CONFIG_packagegroup-petalinux-opencv-dev is not set
+CONFIG_packagegroup-petalinux-opencv-dev=y
 # CONFIG_packagegroup-petalinux-opencv-dbg is not set
 
 #
@@ -4122,16 +4122,16 @@ CONFIG_packagegroup-petalinux-opencv=y
 #
 # packagegroup-petalinux-utils 
 #
-# CONFIG_packagegroup-petalinux-utils is not set
+CONFIG_packagegroup-petalinux-utils=y
 # CONFIG_packagegroup-petalinux-utils-dbg is not set
-# CONFIG_packagegroup-petalinux-utils-dev is not set
+CONFIG_packagegroup-petalinux-utils-dev=y
 
 #
 # packagegroup-petalinux-v4lutils 
 #
-# CONFIG_packagegroup-petalinux-v4lutils is not set
+CONFIG_packagegroup-petalinux-v4lutils=y
 # CONFIG_packagegroup-petalinux-v4lutils-dbg is not set
-# CONFIG_packagegroup-petalinux-v4lutils-dev is not set
+CONFIG_packagegroup-petalinux-v4lutils-dev=y
 
 #
 # packagegroup-petalinux-weston 
@@ -4173,7 +4173,10 @@ CONFIG_gpio-demo=y
 #
 # user packages 
 #
-CONFIG_bootchart2=y
+# CONFIG_bootchart2 is not set
+# CONFIG_packagegroup is not set
+CONFIG_systemd=y
+CONFIG_systemd-bootchart=y
 
 #
 # PetaLinux RootFS Settings

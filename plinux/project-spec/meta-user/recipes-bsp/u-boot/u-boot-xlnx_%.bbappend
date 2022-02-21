@@ -15,5 +15,6 @@ do_configure_append_microblaze () {
 }
 
 SRC_URI += "file://user_2022-01-21-14-13-00.cfg \
+            file://user_2022-02-17-03-23-00.cfg \
             "
 
