@@ -1,6 +1,6 @@
 PETALINUX_VER=2021.2
 VALIDATE_HW_CHKSUM=1
-HARDWARE_PATH=/home/nlbutts/projects/xilinx/nlb_zcu104/zcu104_platform/zcu104_platform_wrapper.xsa
-HARDWARE_CHECKSUM=bfe9701548d2ae9564443d25975b2b65
+HARDWARE_PATH=/home/nlbutts/projects/vitis_isp/platform/system_wrapper.xsa
+HARDWARE_CHECKSUM=bafb650452c98e84d07b1e60e78abb98
 YOCTO_SDK=895fbcce2f0a15ac1ff1fbc579359da1
-RFSCONFIG_CHKSUM=df6ce58f42ee1060385b76dd60c16a96
+RFSCONFIG_CHKSUM=0492dbc63deedd2395e9722b55c093a4

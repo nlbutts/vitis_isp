@@ -4175,8 +4175,8 @@ CONFIG_gpio-demo=y
 #
 # CONFIG_bootchart2 is not set
 # CONFIG_packagegroup is not set
-CONFIG_systemd=y
-CONFIG_systemd-bootchart=y
+# CONFIG_systemd is not set
+# CONFIG_systemd-bootchart is not set
 
 #
 # PetaLinux RootFS Settings
