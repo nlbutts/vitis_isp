@@ -4,7 +4,6 @@
 CONFIG_gpio-demo
 CONFIG_peekpoke
 CONFIG_bootchart2
-CONFIG_packagegroup_petalinux_vitisai
 CONFIG_systemd
 CONFIG_systemd-bootchart
 

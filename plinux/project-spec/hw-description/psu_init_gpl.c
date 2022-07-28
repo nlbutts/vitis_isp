@@ -11392,6 +11392,149 @@ unsigned long psu_ddr_init_data(void)
 unsigned long psu_ddr_qos_init_data(void)
 {
     /*
+    * DDR QOS PORT CLASSIFICATION
+    */
+    /*
+    * Register : PORT_TYPE @ 0XFD090000
+
+    * Set Port 5 Type 00 - Best Effort 01 - Low Latency 10 - Video traffic 11
+    * - Reserved
+    *  PSU_DDR_QOS_CTRL_PORT_TYPE_PORT5_TYPE                       0
+
+    * Set Port 4 Type 00 - Best Effort 01 - Low Latency 10 - Video traffic 11
+    * - Reserved
+    *  PSU_DDR_QOS_CTRL_PORT_TYPE_PORT4_TYPE                       0
+
+    * Set Port 3 Type 00 - Best Effort 01 - Low Latency 10 - Video traffic 11
+    * - Reserved
+    *  PSU_DDR_QOS_CTRL_PORT_TYPE_PORT3_TYPE                       2
+
+    * Set Port 2 Blue Queue Type 00 - Best Effort 01 - Low Latency 10 - Video
+    * traffic 11 - Reserved
+    *  PSU_DDR_QOS_CTRL_PORT_TYPE_PORT2B_TYPE                      0
+
+    * Set Port 2 Red Queue Type 00 - Best Effort 01 - Low Latency 10 - Video t
+    * raffic 11 - Reserved
+    *  PSU_DDR_QOS_CTRL_PORT_TYPE_PORT2R_TYPE                      1
+
+    * Set Port 1 Blue Queue Type 00 - Best Effort 01 - Low Latency 10 - Video
+    * traffic 11 - Reserved
+    *  PSU_DDR_QOS_CTRL_PORT_TYPE_PORT1B_TYPE                      0
+
+    * Set Port 1 Red Queue Type 00 - Best Effort 01 - Low Latency 10 - Video t
+    * raffic 11 - Reserved
+    *  PSU_DDR_QOS_CTRL_PORT_TYPE_PORT1R_TYPE                      1
+
+    * Set Port 0 Type 00 - Best Effort 01 - Low Latency 10 - Video traffic 11
+    * - Reserved
+    *  PSU_DDR_QOS_CTRL_PORT_TYPE_PORT0_TYPE                       1
+
+    * Set Port Type Register
+    * (OFFSET, MASK, VALUE)      (0XFD090000, 0x0000FFFFU ,0x00000845U)
+    */
+	PSU_Mask_Write(DDR_QOS_CTRL_PORT_TYPE_OFFSET,
+		0x0000FFFFU, 0x00000845U);
+/*##################################################################### */
+
+    /*
+    * Register : QOS_CTRL @ 0XFD090004
+
+    * Port 5 QoS throttle Control on Write channel 0 - Disable 1 - Enable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT5_WR_CTRL                     1
+
+    * Port 5 QoS throttle Control on Read LPR channel 0 - Disable 1 - Enable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT5_LPR_CTRL                    1
+
+    * Port 4 QoS throttle Control on Write channel 0 - Disable 1 - Enable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT4_WR_CTRL                     1
+
+    * Port 4 QoS throttle Control on Read LPR channel 0 - Disable 1 - Enable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT4_LPR_CTRL                    1
+
+    * Port 3 QoS throttle Control on Write channel 0 - Disable 1 - Enable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT3_WR_CTRL                     1
+
+    * Port 3 QoS throttle Control on Read LPR channel 0 - Disable 1 - Enable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT3_LPR_CTRL                    1
+
+    * Port 2 QoS throttle Control on Write channel 0 - Disable 1 - Enable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT2_WR_CTRL                     1
+
+    * Port 2 Blue Queue throttle Control on Read LPR channel 0 - Disable 1 - E
+    * nable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT2B_LPR_CTRL                   1
+
+    * Port 2 Red Queue QoS throttle Control on Read LPR channel 0 - Disable 1
+    * - Enable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT2R_LPR_CTRL                   1
+
+    * Port 1 QoS throttle Control on Write channel 0 - Disable 1 - Enable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT1_WR_CTRL                     1
+
+    * Port 1 Blue Queue throttle Control on Read LPR channel 0 - Disable 1 - E
+    * nable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT1B_LPR_CTRL                   1
+
+    * Port 1 Red Queue QoS throttle Control on Read LPR channel 0 - Disable 1
+    * - Enable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT1R_LPR_CTRL                   1
+
+    * Port 0 QoS throttle Control on Write channel 0 - Disable 1 - Enable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT0_WR_CTRL                     1
+
+    * Port 0 QoS throttle Control on Read LPR channel 0 - Disable 1 - Enable
+    *  PSU_DDR_QOS_CTRL_QOS_CTRL_PORT0_LPR_CTRL                    1
+
+    * Set Port Type Register
+    * (OFFSET, MASK, VALUE)      (0XFD090004, 0x002DB5ADU ,0x002DB5ADU)
+    */
+	PSU_Mask_Write(DDR_QOS_CTRL_QOS_CTRL_OFFSET,
+		0x002DB5ADU, 0x002DB5ADU);
+/*##################################################################### */
+
+    /*
+    * Register : DDR_QOS_ECO @ 0XFD090800
+
+    * ECO
+    *  PSU_DDR_QOS_CTRL_DDR_QOS_ECO_VAL                            1
+
+    * ECO Register
+    * (OFFSET, MASK, VALUE)      (0XFD090800, 0xFFFFFFFFU ,0x00000001U)
+    */
+	PSU_Mask_Write(DDR_QOS_CTRL_DDR_QOS_ECO_OFFSET,
+		0xFFFFFFFFU, 0x00000001U);
+/*##################################################################### */
+
+    /*
+    * DDR QOS CAM THRESHOLD LEVEL
+    */
+    /*
+    * Register : RD_LPR_THRSLD @ 0XFD09000C
+
+    * Read LPR CAM Threshold Level
+    *  PSU_DDR_QOS_CTRL_RD_LPR_THRSLD_VALUE                        16
+
+    * Set Value for Read LPR (Low Priority Read) CAM Threshold
+    * (OFFSET, MASK, VALUE)      (0XFD09000C, 0x0000007FU ,0x00000010U)
+    */
+	PSU_Mask_Write(DDR_QOS_CTRL_RD_LPR_THRSLD_OFFSET,
+		0x0000007FU, 0x00000010U);
+/*##################################################################### */
+
+    /*
+    * Register : WR_THRSLD @ 0XFD090010
+
+    * Write CAM Threshold Level
+    *  PSU_DDR_QOS_CTRL_WR_THRSLD_VALUE                            16
+
+    * Set Value for Write CAM Threshold
+    * (OFFSET, MASK, VALUE)      (0XFD090010, 0x0000007FU ,0x00000010U)
+    */
+	PSU_Mask_Write(DDR_QOS_CTRL_WR_THRSLD_OFFSET,
+		0x0000007FU, 0x00000010U);
+/*##################################################################### */
+
+    /*
     * AFI INTERCONNECT QOS CONFIGURATION
     */
     /*
@@ -11451,12 +11594,12 @@ unsigned long psu_ddr_qos_init_data(void)
 
     * Sets the level of the QoS field to be used for the read channel 4'b0000:
     *  Lowest Priority' ' '4'b1111: Highest Priority
-    *  PSU_AFIFM2_AFIFM_RDQOS_VALUE                                0
+    *  PSU_AFIFM2_AFIFM_RDQOS_VALUE                                7
 
     * QoS Read Channel Register
-    * (OFFSET, MASK, VALUE)      (0XFD380008, 0x0000000FU ,0x00000000U)
+    * (OFFSET, MASK, VALUE)      (0XFD380008, 0x0000000FU ,0x00000007U)
     */
-	PSU_Mask_Write(AFIFM2_AFIFM_RDQOS_OFFSET, 0x0000000FU, 0x00000000U);
+	PSU_Mask_Write(AFIFM2_AFIFM_RDQOS_OFFSET, 0x0000000FU, 0x00000007U);
 /*##################################################################### */
 
     /*
@@ -11464,12 +11607,12 @@ unsigned long psu_ddr_qos_init_data(void)
 
     * Sets the level of the QoS field to be used for the write channel 4'b0000
     * : Lowest Priority' ' '4'b1111: Highest Priority
-    *  PSU_AFIFM2_AFIFM_WRQOS_VALUE                                0
+    *  PSU_AFIFM2_AFIFM_WRQOS_VALUE                                15
 
     * QoS Write Channel Register
-    * (OFFSET, MASK, VALUE)      (0XFD38001C, 0x0000000FU ,0x00000000U)
+    * (OFFSET, MASK, VALUE)      (0XFD38001C, 0x0000000FU ,0x0000000FU)
     */
-	PSU_Mask_Write(AFIFM2_AFIFM_WRQOS_OFFSET, 0x0000000FU, 0x00000000U);
+	PSU_Mask_Write(AFIFM2_AFIFM_WRQOS_OFFSET, 0x0000000FU, 0x0000000FU);
 /*##################################################################### */
 
     /*
@@ -11477,12 +11620,12 @@ unsigned long psu_ddr_qos_init_data(void)
 
     * Sets the level of the QoS field to be used for the read channel 4'b0000:
     *  Lowest Priority' ' '4'b1111: Highest Priority
-    *  PSU_AFIFM3_AFIFM_RDQOS_VALUE                                0
+    *  PSU_AFIFM3_AFIFM_RDQOS_VALUE                                3
 
     * QoS Read Channel Register
-    * (OFFSET, MASK, VALUE)      (0XFD390008, 0x0000000FU ,0x00000000U)
+    * (OFFSET, MASK, VALUE)      (0XFD390008, 0x0000000FU ,0x00000003U)
     */
-	PSU_Mask_Write(AFIFM3_AFIFM_RDQOS_OFFSET, 0x0000000FU, 0x00000000U);
+	PSU_Mask_Write(AFIFM3_AFIFM_RDQOS_OFFSET, 0x0000000FU, 0x00000003U);
 /*##################################################################### */
 
     /*
@@ -11490,12 +11633,12 @@ unsigned long psu_ddr_qos_init_data(void)
 
     * Sets the level of the QoS field to be used for the write channel 4'b0000
     * : Lowest Priority' ' '4'b1111: Highest Priority
-    *  PSU_AFIFM3_AFIFM_WRQOS_VALUE                                0
+    *  PSU_AFIFM3_AFIFM_WRQOS_VALUE                                3
 
     * QoS Write Channel Register
-    * (OFFSET, MASK, VALUE)      (0XFD39001C, 0x0000000FU ,0x00000000U)
+    * (OFFSET, MASK, VALUE)      (0XFD39001C, 0x0000000FU ,0x00000003U)
     */
-	PSU_Mask_Write(AFIFM3_AFIFM_WRQOS_OFFSET, 0x0000000FU, 0x00000000U);
+	PSU_Mask_Write(AFIFM3_AFIFM_WRQOS_OFFSET, 0x0000000FU, 0x00000003U);
 /*##################################################################### */
 
     /*
@@ -11503,12 +11646,12 @@ unsigned long psu_ddr_qos_init_data(void)
 
     * Sets the level of the QoS field to be used for the read channel 4'b0000:
     *  Lowest Priority' ' '4'b1111: Highest Priority
-    *  PSU_AFIFM4_AFIFM_RDQOS_VALUE                                0
+    *  PSU_AFIFM4_AFIFM_RDQOS_VALUE                                3
 
     * QoS Read Channel Register
-    * (OFFSET, MASK, VALUE)      (0XFD3A0008, 0x0000000FU ,0x00000000U)
+    * (OFFSET, MASK, VALUE)      (0XFD3A0008, 0x0000000FU ,0x00000003U)
     */
-	PSU_Mask_Write(AFIFM4_AFIFM_RDQOS_OFFSET, 0x0000000FU, 0x00000000U);
+	PSU_Mask_Write(AFIFM4_AFIFM_RDQOS_OFFSET, 0x0000000FU, 0x00000003U);
 /*##################################################################### */
 
     /*
@@ -11516,12 +11659,12 @@ unsigned long psu_ddr_qos_init_data(void)
 
     * Sets the level of the QoS field to be used for the write channel 4'b0000
     * : Lowest Priority' ' '4'b1111: Highest Priority
-    *  PSU_AFIFM4_AFIFM_WRQOS_VALUE                                0
+    *  PSU_AFIFM4_AFIFM_WRQOS_VALUE                                3
 
     * QoS Write Channel Register
-    * (OFFSET, MASK, VALUE)      (0XFD3A001C, 0x0000000FU ,0x00000000U)
+    * (OFFSET, MASK, VALUE)      (0XFD3A001C, 0x0000000FU ,0x00000003U)
     */
-	PSU_Mask_Write(AFIFM4_AFIFM_WRQOS_OFFSET, 0x0000000FU, 0x00000000U);
+	PSU_Mask_Write(AFIFM4_AFIFM_WRQOS_OFFSET, 0x0000000FU, 0x00000003U);
 /*##################################################################### */
 
     /*
@@ -11529,12 +11672,12 @@ unsigned long psu_ddr_qos_init_data(void)
 
     * Sets the level of the QoS field to be used for the read channel 4'b0000:
     *  Lowest Priority' ' '4'b1111: Highest Priority
-    *  PSU_AFIFM5_AFIFM_RDQOS_VALUE                                0
+    *  PSU_AFIFM5_AFIFM_RDQOS_VALUE                                3
 
     * QoS Read Channel Register
-    * (OFFSET, MASK, VALUE)      (0XFD3B0008, 0x0000000FU ,0x00000000U)
+    * (OFFSET, MASK, VALUE)      (0XFD3B0008, 0x0000000FU ,0x00000003U)
     */
-	PSU_Mask_Write(AFIFM5_AFIFM_RDQOS_OFFSET, 0x0000000FU, 0x00000000U);
+	PSU_Mask_Write(AFIFM5_AFIFM_RDQOS_OFFSET, 0x0000000FU, 0x00000003U);
 /*##################################################################### */
 
     /*
@@ -11542,12 +11685,12 @@ unsigned long psu_ddr_qos_init_data(void)
 
     * Sets the level of the QoS field to be used for the write channel 4'b0000
     * : Lowest Priority' ' '4'b1111: Highest Priority
-    *  PSU_AFIFM5_AFIFM_WRQOS_VALUE                                0
+    *  PSU_AFIFM5_AFIFM_WRQOS_VALUE                                3
 
     * QoS Write Channel Register
-    * (OFFSET, MASK, VALUE)      (0XFD3B001C, 0x0000000FU ,0x00000000U)
+    * (OFFSET, MASK, VALUE)      (0XFD3B001C, 0x0000000FU ,0x00000003U)
     */
-	PSU_Mask_Write(AFIFM5_AFIFM_WRQOS_OFFSET, 0x0000000FU, 0x00000000U);
+	PSU_Mask_Write(AFIFM5_AFIFM_WRQOS_OFFSET, 0x0000000FU, 0x00000003U);
 /*##################################################################### */
 
     /*
@@ -20097,16 +20240,77 @@ unsigned long psu_afi_config(void)
     *  width 11: reserved
     *  PSU_FPD_SLCR_AFI_FS_DW_SS0_SEL                              0x2
 
-    * Select the 32/64/128-bit data width selection for the Slave 1 00: 32-bit
-    *  AXI data width (default) 01: 64-bit AXI data width 10: 128-bit AXI data
-    *  width 11: reserved
-    *  PSU_FPD_SLCR_AFI_FS_DW_SS1_SEL                              0x2
-
     * afi fs SLCR control register. This register is static and should not be
     * modified during operation.
-    * (OFFSET, MASK, VALUE)      (0XFD615000, 0x00000F00U ,0x00000A00U)
+    * (OFFSET, MASK, VALUE)      (0XFD615000, 0x00000300U ,0x00000200U)
     */
-	PSU_Mask_Write(FPD_SLCR_AFI_FS_OFFSET, 0x00000F00U, 0x00000A00U);
+	PSU_Mask_Write(FPD_SLCR_AFI_FS_OFFSET, 0x00000300U, 0x00000200U);
+/*##################################################################### */
+
+    /*
+    * Register : afi_fs @ 0XFF419000
+
+    * Select the 32/64/128-bit data width selection for the Slave 0 00: 32-bit
+    *  AXI data width (default) 01: 64-bit AXI data width 10: 128-bit AXI data
+    *  width 11: reserved
+    *  PSU_LPD_SLCR_AFI_FS_DW_SS2_SEL                              0x0
+
+    * afi fs SLCR control register. Do not change the bits durin
+    * (OFFSET, MASK, VALUE)      (0XFF419000, 0x00000300U ,0x00000000U)
+    */
+	PSU_Mask_Write(LPD_SLCR_AFI_FS_OFFSET, 0x00000300U, 0x00000000U);
+/*##################################################################### */
+
+    /*
+    * Register : AFIFM_RDCTRL @ 0XFD360000
+
+    * Configures the Read Channel Fabric interface width. 2'b11 : Reserved 2'b
+    * 10 : 32-bit Fabric 2'b01 : 64-bit enabled 2'b00 : 128-bit enabled
+    *  PSU_AFIFM0_AFIFM_RDCTRL_FABRIC_WIDTH                        0x2
+
+    * Read Channel Control Register
+    * (OFFSET, MASK, VALUE)      (0XFD360000, 0x00000003U ,0x00000002U)
+    */
+	PSU_Mask_Write(AFIFM0_AFIFM_RDCTRL_OFFSET, 0x00000003U, 0x00000002U);
+/*##################################################################### */
+
+    /*
+    * Register : AFIFM_RDCTRL @ 0XFD3B0000
+
+    * Configures the Read Channel Fabric interface width. 2'b11 : Reserved 2'b
+    * 10 : 32-bit Fabric 2'b01 : 64-bit enabled 2'b00 : 128-bit enabled
+    *  PSU_AFIFM5_AFIFM_RDCTRL_FABRIC_WIDTH                        0x0
+
+    * Read Channel Control Register
+    * (OFFSET, MASK, VALUE)      (0XFD3B0000, 0x00000003U ,0x00000000U)
+    */
+	PSU_Mask_Write(AFIFM5_AFIFM_RDCTRL_OFFSET, 0x00000003U, 0x00000000U);
+/*##################################################################### */
+
+    /*
+    * Register : AFIFM_WRCTRL @ 0XFD360014
+
+    * Configures the Write Channel Fabric interface width. 2'b11 : Reserved 2'
+    * b10 : 32-bit Fabric 2'b01 : 64-bit enabled 2'b00 : 128-bit enabled
+    *  PSU_AFIFM0_AFIFM_WRCTRL_FABRIC_WIDTH                        0x2
+
+    * Write Channel Control Register
+    * (OFFSET, MASK, VALUE)      (0XFD360014, 0x00000003U ,0x00000002U)
+    */
+	PSU_Mask_Write(AFIFM0_AFIFM_WRCTRL_OFFSET, 0x00000003U, 0x00000002U);
+/*##################################################################### */
+
+    /*
+    * Register : AFIFM_WRCTRL @ 0XFD3B0014
+
+    * Configures the Write Channel Fabric interface width. 2'b11 : Reserved 2'
+    * b10 : 32-bit Fabric 2'b01 : 64-bit enabled 2'b00 : 128-bit enabled
+    *  PSU_AFIFM5_AFIFM_WRCTRL_FABRIC_WIDTH                        0x0
+
+    * Write Channel Control Register
+    * (OFFSET, MASK, VALUE)      (0XFD3B0014, 0x00000003U ,0x00000000U)
+    */
+	PSU_Mask_Write(AFIFM5_AFIFM_WRCTRL_OFFSET, 0x00000003U, 0x00000000U);
 /*##################################################################### */
 
 
