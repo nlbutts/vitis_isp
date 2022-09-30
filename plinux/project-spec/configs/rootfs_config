@@ -160,6 +160,13 @@ CONFIG_e2fsprogs-mke2fs=y
 CONFIG_fpga-manager-script=y
 
 #
+# dfx-mgr
+#
+# CONFIG_dfx-mgr is not set
+# CONFIG_dfx-mgr-dbg is not set
+# CONFIG_dfx-mgr-dev is not set
+
+#
 # haveged 
 #
 CONFIG_haveged=y
@@ -534,7 +541,7 @@ CONFIG_can-utils=y
 #
 # nfs-utils 
 #
-# CONFIG_nfs-utils is not set
+CONFIG_nfs-utils=y
 # CONFIG_nfs-utils-stats is not set
 # CONFIG_nfs-utils-dbg is not set
 # CONFIG_nfs-utils-dev is not set
@@ -546,7 +553,7 @@ CONFIG_can-utils=y
 # CONFIG_openssh is not set
 # CONFIG_openssh-ssh is not set
 # CONFIG_openssh-sftp is not set
-CONFIG_openssh-sftp-server=y
+# CONFIG_openssh-sftp-server is not set
 # CONFIG_openssh-keygen is not set
 # CONFIG_openssh-dbg is not set
 # CONFIG_openssh-dev is not set
@@ -1028,82 +1035,6 @@ CONFIG_pciutils=y
 # CONFIG_perl-dev is not set
 
 #
-# python 
-#
-
-#
-# python 
-#
-# CONFIG_python is not set
-# CONFIG_python-terminal is not set
-# CONFIG_python-mailbox is not set
-# CONFIG_python-logging is not set
-# CONFIG_python-xml is not set
-# CONFIG_python-hotshot is not set
-# CONFIG_python-multiprocessing is not set
-# CONFIG_python-threading is not set
-# CONFIG_python-curses is not set
-# CONFIG_python-mime is not set
-# CONFIG_python-netclient is not set
-# CONFIG_python-netserver is not set
-# CONFIG_python-image is not set
-# CONFIG_python-unixadmin is not set
-# CONFIG_python-sqlite3 is not set
-# CONFIG_python-pprint is not set
-# CONFIG_python-contextlib is not set
-# CONFIG_python-idle is not set
-# CONFIG_python-pkgutil is not set
-# CONFIG_python-crypt is not set
-# CONFIG_python-zlib is not set
-# CONFIG_python-fcntl is not set
-# CONFIG_python-stringold is not set
-# CONFIG_python-dev is not set
-# CONFIG_libpython2 is not set
-# CONFIG_python-smtpd is not set
-# CONFIG_python-core is not set
-# CONFIG_python-tkinter is not set
-# CONFIG_python-codecs is not set
-# CONFIG_python-compression is not set
-# CONFIG_python-bsddb is not set
-# CONFIG_python-subprocess is not set
-# CONFIG_python-io is not set
-# CONFIG_python-numbers is not set
-# CONFIG_python-unittest is not set
-# CONFIG_python-json is not set
-# CONFIG_python-html is not set
-# CONFIG_python-lang is not set
-# CONFIG_python-compiler is not set
-# CONFIG_python-shell is not set
-# CONFIG_python-datetime is not set
-# CONFIG_python-email is not set
-# CONFIG_python-misc is not set
-# CONFIG_python-resource is not set
-# CONFIG_python-distutils is not set
-# CONFIG_python-syslog is not set
-# CONFIG_python-2to3 is not set
-# CONFIG_python-pydoc is not set
-# CONFIG_python-tests is not set
-# CONFIG_python-modules is not set
-# CONFIG_python-db is not set
-# CONFIG_python-ctypes is not set
-# CONFIG_python-re is not set
-# CONFIG_python-audio is not set
-# CONFIG_python-profile is not set
-# CONFIG_python-dbg is not set
-# CONFIG_python-mmap is not set
-# CONFIG_python-compile is not set
-# CONFIG_python-difflib is not set
-# CONFIG_python-xmlrpc is not set
-# CONFIG_python-argparse is not set
-# CONFIG_python-math is not set
-# CONFIG_python-robotparser is not set
-# CONFIG_python-pickle is not set
-# CONFIG_python-debugger is not set
-# CONFIG_python-plistlib is not set
-# CONFIG_python-gdbm is not set
-# CONFIG_python-textutils is not set
-
-#
 # python3-nose 
 #
 # CONFIG_python3-nose is not set
@@ -1444,6 +1375,13 @@ CONFIG_run-postinsts=y
 # CONFIG_libdmx-dev is not set
 
 #
+# libdfx 
+#
+CONFIG_libdfx=y
+# CONFIG_libdfx-dbg is not set
+# CONFIG_libdfx-dev is not set
+
+#
 # libeigen 
 #
 # CONFIG_libeigen-dev is not set
@@ -1526,7 +1464,7 @@ CONFIG_run-postinsts=y
 #
 # libgpiod
 #
-CONFIG_libgpiod=y
+# CONFIG_libgpiod is not set
 # CONFIG_libgpiod-dev is not set
 # CONFIG_libgpiod-dbg is not set
 
@@ -1536,14 +1474,6 @@ CONFIG_libgpiod=y
 # CONFIG_libgudev is not set
 # CONFIG_libgudev-dev is not set
 # CONFIG_libgudev-dbg is not set
-
-#
-# libhugetlbfs 
-#
-# CONFIG_libhugetlbfs is not set
-# CONFIG_libhugetlbfs-tests is not set
-# CONFIG_libhugetlbfs-dbg is not set
-# CONFIG_libhugetlbfs-dev is not set
 
 #
 # libical 
@@ -1651,7 +1581,7 @@ CONFIG_libgpiod=y
 #
 # libomxil 
 #
-CONFIG_libomxil=y
+# CONFIG_libomxil is not set
 # CONFIG_libomxil-dev is not set
 # CONFIG_libomxil-dbg is not set
 
@@ -2178,19 +2108,19 @@ CONFIG_xrt-dev=y
 #
 # zocl
 #
-CONFIG_zocl=y
-CONFIG_zocl-dev=y
+# CONFIG_zocl is not set
+# CONFIG_zocl-dev is not set
 # CONFIG_zocl-dbg is not set
 
 #
 # opencl-clhpp
 #
-CONFIG_opencl-clhpp-dev=y
+# CONFIG_opencl-clhpp-dev is not set
 
 #
 # opencl-headers
 #
-CONFIG_opencl-headers=y
+# CONFIG_opencl-headers is not set
 
 #
 # protobuf
@@ -2345,13 +2275,9 @@ CONFIG_opencl-headers=y
 # CONFIG_epiphany-dbg is not set
 
 #
-# eudev 
+# libudev 
 #
-# CONFIG_eudev is not set
 # CONFIG_libudev is not set
-# CONFIG_eudev-hwdb is not set
-# CONFIG_eudev-dev is not set
-# CONFIG_eudev-dbg is not set
 CONFIG_udev-extraconf=y
 
 #
@@ -2412,7 +2338,7 @@ CONFIG_udev-extraconf=y
 # CONFIG_glibc is not set
 # CONFIG_glibc-dev is not set
 # CONFIG_glibc-dbg is not set
-CONFIG_ldd=y
+# CONFIG_ldd is not set
 
 #
 # gnome-desktop-testing 
@@ -2540,7 +2466,7 @@ CONFIG_ldd=y
 #
 # json-c 
 #
-CONFIG_json-c=y
+# CONFIG_json-c is not set
 # CONFIG_json-c-dev is not set
 # CONFIG_json-c-dbg is not set
 
@@ -3112,7 +3038,7 @@ CONFIG_packagegroup-core-ssh-dropbear=y
 #
 # rpm 
 #
-CONFIG_rpm=y
+# CONFIG_rpm is not set
 # CONFIG_rpm-build is not set
 # CONFIG_rpm-dbg is not set
 # CONFIG_rpm-dev is not set
@@ -3507,7 +3433,7 @@ CONFIG_watchdog-init=y
 #
 # gstreamer1.0-omx 
 #
-CONFIG_gstreamer1.0-omx=y
+# CONFIG_gstreamer1.0-omx is not set
 # CONFIG_gstreamer1.0-omx-dbg is not set
 # CONFIG_gstreamer1.0-omx-dev is not set
 
@@ -3591,6 +3517,13 @@ CONFIG_bridge-utils=y
 # CONFIG_wpa-supplicant-dev is not set
 # CONFIG_wpa-supplicant-dbg is not set
 # CONFIG_wpa-supplicant-cli is not set
+
+#
+# ntp
+#
+# CONFIG_ntp is not set
+# CONFIG_ntp-dev is not set
+# CONFIG_ntp-dbg is not set
 
 #
 # optional 
@@ -4023,16 +3956,16 @@ CONFIG_u-boot-tools=y
 #
 # packagegroup-petalinux-gstreamer 
 #
-CONFIG_packagegroup-petalinux-gstreamer=y
-CONFIG_packagegroup-petalinux-gstreamer-dev=y
+# CONFIG_packagegroup-petalinux-gstreamer is not set
+# CONFIG_packagegroup-petalinux-gstreamer-dev is not set
 # CONFIG_packagegroup-petalinux-gstreamer-dbg is not set
 
 #
 # packagegroup-petalinux-lmsensors 
 #
-CONFIG_packagegroup-petalinux-lmsensors=y
+# CONFIG_packagegroup-petalinux-lmsensors is not set
 # CONFIG_packagegroup-petalinux-lmsensors-dbg is not set
-CONFIG_packagegroup-petalinux-lmsensors-dev=y
+# CONFIG_packagegroup-petalinux-lmsensors-dev is not set
 
 #
 # packagegroup-petalinux-matchbox 
@@ -4051,21 +3984,21 @@ CONFIG_packagegroup-petalinux-lmsensors-dev=y
 #
 # packagegroup-petalinux-multimedia 
 #
-CONFIG_packagegroup-petalinux-multimedia=y
+# CONFIG_packagegroup-petalinux-multimedia is not set
 # CONFIG_packagegroup-petalinux-multimedia-dbg is not set
-CONFIG_packagegroup-petalinux-multimedia-dev=y
+# CONFIG_packagegroup-petalinux-multimedia-dev is not set
 
 #
 # packagegroup-petalinux-networking-debug
 #
-CONFIG_packagegroup-petalinux-networking-debug=y
+# CONFIG_packagegroup-petalinux-networking-debug is not set
 # CONFIG_packagegroup-petalinux-networking-debug-dbg is not set
 # CONFIG_packagegroup-petalinux-networking-debug-dev is not set
 
 #
 # packagegroup-petalinux-networking-stack 
 #
-CONFIG_packagegroup-petalinux-networking-stack=y
+# CONFIG_packagegroup-petalinux-networking-stack is not set
 # CONFIG_packagegroup-petalinux-networking-stack-dbg is not set
 # CONFIG_packagegroup-petalinux-networking-stack-dev is not set
 
@@ -4122,16 +4055,16 @@ CONFIG_packagegroup-petalinux-opencv-dev=y
 #
 # packagegroup-petalinux-utils 
 #
-CONFIG_packagegroup-petalinux-utils=y
+# CONFIG_packagegroup-petalinux-utils is not set
 # CONFIG_packagegroup-petalinux-utils-dbg is not set
-CONFIG_packagegroup-petalinux-utils-dev=y
+# CONFIG_packagegroup-petalinux-utils-dev is not set
 
 #
 # packagegroup-petalinux-v4lutils 
 #
-CONFIG_packagegroup-petalinux-v4lutils=y
+# CONFIG_packagegroup-petalinux-v4lutils is not set
 # CONFIG_packagegroup-petalinux-v4lutils-dbg is not set
-CONFIG_packagegroup-petalinux-v4lutils-dev=y
+# CONFIG_packagegroup-petalinux-v4lutils-dev is not set
 
 #
 # packagegroup-petalinux-weston 
@@ -4161,25 +4094,20 @@ CONFIG_imagefeature-ssh-server-dropbear=y
 # CONFIG_imagefeature-ssh-server-openssh is not set
 CONFIG_imagefeature-hwcodecs=y
 # CONFIG_imagefeature-package-management is not set
-CONFIG_imagefeature-debug-tweaks=y
-CONFIG_auto-login=y
-
-#
-# apps 
-#
-CONFIG_gpio-demo=y
-# CONFIG_peekpoke is not set
+# CONFIG_imagefeature-debug-tweaks is not set
+# CONFIG_auto-login is not set
+CONFIG_Init-manager-systemd=y
+# CONFIG_Init-manager-sysvinit is not set
 
 #
 # user packages 
 #
-# CONFIG_bootchart2 is not set
-# CONFIG_packagegroup is not set
-# CONFIG_systemd is not set
-# CONFIG_systemd-bootchart is not set
+# CONFIG_gpio-demo is not set
+# CONFIG_peekpoke is not set
 
 #
 # PetaLinux RootFS Settings
 #
-CONFIG_ROOTFS_ROOT_PASSWD="root"
-CONFIG_ADD_EXTRA_USERS="petalinux:petalinux;"
+CONFIG_ADD_EXTRA_USERS="root:root;petalinux::passwd-expire;"
+CONFIG_ADD_USERS_TO_GROUPS="petalinux:audio,video;"
+CONFIG_ADD_USERS_TO_SUDOERS="petalinux"
