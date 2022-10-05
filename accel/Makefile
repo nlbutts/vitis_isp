@@ -113,6 +113,7 @@ CXXFLAGS += -D__SDSVHLS__
 CXXFLAGS += -I$(VISLIB_DIR)/L3/examples/isppipeline_rgbir/build
 CXXFLAGS += -I$(VISLIB_DIR)/ext/xcl2/
 CXXFLAGS += -I$(VISLIB_DIR)/L1/include
+CXXFLAGS += -I$(OPENCV_INCLUDE)
 
 LDFLAGS += -lopencv_videoio -lopencv_imgcodecs -lopencv_core -lopencv_imgproc -lopencv_features2d -lopencv_flann -lopencv_video -lopencv_calib3d -lopencv_highgui
 
@@ -191,7 +192,7 @@ endif
 # ##################### Kernel compiler global settings ##########################
 VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps --optimize 2
 #VPP_FLAGS += --hls.jobs 8
-VPP_LDFLAGS += --vivado.synth.jobs 8 --vivado.impl.jobs 8
+VPP_LDFLAGS += --vivado.synth.jobs 24 --vivado.impl.jobs 24
 VPP_FLAGS += -I$(VISLIB_DIR)/L1/include/
 
 VPP_FLAGS +=
@@ -208,10 +209,8 @@ else
 BINARY_CONTAINERS += $(BUILD_DIR)/krnl_ISPPipeline_xo.xclbin
 BINARY_CONTAINERS_PKG += $(BUILD_DIR)/krnl_ISPPipeline.xclbin
 endif
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/ISPPipeline_accel.xo
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/Stereo_accel.xo
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilLz4Compress.xo
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilLz4Decompress.xo
+VPP_LDFLAGS_compress_decompress_streaming_temp := --config $(CUR_DIR)/connectivity.cfg
+VPP_LDFLAGS_krnl_ISPPipeline += $(VPP_LDFLAGS_compress_decompress_streaming_temp)
 
 # ######################### Setting Targets of Makefile ################################
 DATA_FILE +=
@@ -256,6 +255,7 @@ $(TEMP_DIR)/ISPPipeline_accel.xo: $(VISLIB_DIR)/L3/examples/isppipeline_rgbir/xf
 	mkdir -p $(TEMP_DIR)
 	echo $(VISLIB_DIR)
 	$(VPP) -c $(ISPPipeline_accel_VPP_FLAGS) $(VPP_FLAGS) -k ISPPipeline_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' $^
+BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/ISPPipeline_accel.xo
 
 Stereo_accel_VPP_FLAGS += -I $(VISLIB_DIR)/L3/examples/stereopipeline -I $(VISLIB_DIR)/L3/examples/stereopipeline/build
 $(TEMP_DIR)/Stereo_accel.xo: $(VISLIB_DIR)/L3/examples/stereopipeline/xf_stereo_pipeline_accel.cpp
@@ -263,17 +263,21 @@ $(TEMP_DIR)/Stereo_accel.xo: $(VISLIB_DIR)/L3/examples/stereopipeline/xf_stereo_
 	mkdir -p $(TEMP_DIR)
 	echo $(VISLIB_DIR)
 	$(VPP) -c $(Stereo_accel_VPP_FLAGS) $(VPP_FLAGS) -k stereopipeline_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' $^
+BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/Stereo_accel.xo
 
 VPP_FLAGS_xilLz4CompDecomp += -I $(COMP_DIR)/L2/include -I $(COMP_DIR)/L1/include/hw -I $(SEC_DIR)/L1/include
-$(TEMP_DIR)/xilLz4Compress.xo: $(COMP_DIR)/L2/src/lz4_compress_mm.cpp
-	$(ECHO) "Compiling Kernel: xilLz4Compress"
+$(TEMP_DIR)/xilLz4CompressStream.xo: $(COMP_DIR)/L2/src/lz4_compress_stream.cpp
+	$(ECHO) "Compiling Kernel: xilLz4CompressStream"
 	mkdir -p $(TEMP_DIR)
-	$(VPP) -c $(VPP_FLAGS_xilLz4CompDecomp) $(VPP_FLAGS) -k xilLz4Compress -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' '$<'
-$(TEMP_DIR)/xilLz4Decompress.xo: $(COMP_DIR)/L2/src/lz4_multibyte_decompress_mm.cpp
-	$(ECHO) "Compiling Kernel: xilLz4Decompress"
-	mkdir -p $(TEMP_DIR)
-	$(VPP) -c $(VPP_FLAGS_xilLz4CompDecomp) $(VPP_FLAGS) -k xilLz4Decompress -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' '$<'
+	$(VPP) -c $(VPP_FLAGS_xilLz4CompDecomp) $(VPP_FLAGS) -k xilLz4CompressStream -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' '$<'
+BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilLz4CompressStream.xo
 
+VPP_FLAGS_xilCompDatamover += -I $(COMP_DIR)/L2/include -I $(COMP_DIR)/L1/include/hw -I $(SEC_DIR)/L1/include
+$(TEMP_DIR)/xilCompDatamover.xo: $(COMP_DIR)/L2/tests/src/block_comp_dm.cpp
+	$(ECHO) "Compiling Kernel: xilCompDatamover"
+	mkdir -p $(TEMP_DIR)
+	$(VPP) -c $(VPP_FLAGS_xilCompDatamover) $(VPP_FLAGS) -k xilCompDatamover -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
+BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilCompDatamover.xo
 
 $(BINARY_CONTAINERS): $(BINARY_CONTAINER_krnl_ISPPipeline_OBJS)
 	mkdir -p $(BUILD_DIR)

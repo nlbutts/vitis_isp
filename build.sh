@@ -20,6 +20,12 @@ verify_build_system() {
     fi
 }
 
+patch_files() {
+    cd Vitis_Libraries
+    patch -p1 --forward < ../patches/0001_use_uram.patch || true
+    cd ..
+}
+
 build_xsa() {
     cd jd106_extend
     if [[ $1 -eq 1 ]]; then
@@ -70,7 +76,7 @@ build_vitis() {
     export DEVICE=$ROOTDIR/platform/jd106/export/jd106/jd106.xpfm
     export SYSROOT=/opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux
     export HOST_ARCH=aarch64
-    export OPENCV_INCLUDE=/opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/include/opencv4
+    export OPENCV_INCLUDE=/opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/usr/include/opencv4
     export OPENCV_LIB=/opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/lib
     export TARGET=hw
 
@@ -92,6 +98,7 @@ if [[ $# -eq 1 ]]; then
 fi
 
 verify_build_system
+patch_files
 build_xsa $CLEAN
 build_linux $CLEAN
 build_platform $CLEAN
