@@ -107,12 +107,14 @@ int main(int argc, char** argv) {
     std::cout << "NPPC:" << XF_NPPC1 << std::endl;
 
     // Load binary:
-    std::string binaryFile = xcl::find_binary_file(device_name, "krnl_stereopipeline");
+    std::cout << "Loading krnl_ISPPipeline.xclbin" << std::endl;
+    std::string binaryFile = xcl::find_binary_file(device_name, "krnl_ISPPipeline");
     cl::Program::Binaries bins = xcl::import_binary_file(binaryFile);
     devices.resize(1);
     OCL_CHECK(err, cl::Program program(context, devices, bins, NULL, &err));
 
     // Create a kernel:
+    std::cout << "Loading kernel: stereopipeline_accel" << std::endl;
     OCL_CHECK(err, cl::Kernel krnl(program, "stereopipeline_accel", &err));
 
     // Allocate the buffers:

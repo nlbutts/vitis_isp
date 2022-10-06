@@ -21,7 +21,7 @@
 int main(int argc, char* argv[]) {
     bool enable_profile = true;
     bool lz4_stream = true;
-    compressBase::State flow = compressBase::BOTH;
+    compressBase::State flow = compressBase::COMPRESS;
     compressBase::Level lflow = compressBase::SEQ;
     // Driver class object
     lz4App d(argc, argv, lflow);

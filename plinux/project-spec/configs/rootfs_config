@@ -4104,6 +4104,7 @@ CONFIG_Init-manager-systemd=y
 #
 # CONFIG_gpio-demo is not set
 CONFIG_htop=y
+CONFIG_lz4=y
 CONFIG_nano=y
 # CONFIG_peekpoke is not set
 

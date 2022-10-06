@@ -5,3 +5,4 @@ CONFIG_gpio-demo
 CONFIG_peekpoke
 CONFIG_htop
 CONFIG_nano
+CONFIG_lz4

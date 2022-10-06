@@ -157,6 +157,7 @@ int main(int argc, char** argv) {
     std::cout << "NPPC:" << XF_NPPC << std::endl;
 
     std::string device_name = device.getInfo<CL_DEVICE_NAME>();
+    std::cout << "Loading xclbin file" << std::endl;
     std::string binaryFile = xcl::find_binary_file(device_name, "krnl_ISPPipeline");
     cl::Program::Binaries bins = xcl::import_binary_file(binaryFile);
     devices.resize(1);
@@ -164,6 +165,7 @@ int main(int argc, char** argv) {
     OCL_CHECK(err, cl::Program program(context, devices, bins, NULL, &err));
 
     // Create a kernel:
+    std::cout << "Creating the kernel: ISPPipeline_accel" << std::endl;
     OCL_CHECK(err, cl::Kernel kernel(program, "ISPPipeline_accel", &err));
 
     std::vector<cl::Memory> inBufVec, outBufVec;
