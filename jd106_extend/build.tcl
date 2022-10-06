@@ -14,3 +14,4 @@ set_property platform.extensible {true} [current_project]
 set_property platform.description {Vitis design for ZCU-106 board} [current_project]
 set_property platform.uses_pr {false} [current_project]
 write_hw_platform -force -file MPSoC_ext_platform_wrapper.xsa
+

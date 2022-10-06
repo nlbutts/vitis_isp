@@ -49,14 +49,18 @@ help::
 	$(ECHO) "       export PERL=<path-to-perl-installation-location >"
 	$(ECHO) ""
 
-# ##################### Setting up default value of TARGET ##########################
-TARGET ?= sw_emu
 
-# ################### Setting up default value of DEVICE ##############################
-DEVICE ?= xilinx_u200_xdma_201830_2
-
-# ###################### Setting up default value of HOST_ARCH #######################
-HOST_ARCH ?= x86
+ROOT_DIR=$(shell git rev-parse --show-toplevel)
+OPENCV_INCLUDE = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/usr/include/opencv4
+OPENCV_LIB = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/usr/lib
+SYSROOT = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux
+DEVICE = $(ROOT_DIR)/platform/jd106/export/jd106/jd106.xpfm
+EDGE_COMMON_SW = $(ROOT_DIR)/plinux/images/linux
+XSA_FILE = $(ROOT_DIR)/jd106_extend/MPSoC_ext_platform_wrapper.xsa
+DEVICE = $(ROOT_DIR)/platform/jd106/export/jd106/jd106.xpfm
+SYSROOT = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux
+TARGET ?= hw
+HOST_ARCH ?= aarch64
 
 # #################### Checking if DEVICE in blacklist #############################
 ifeq ($(findstring u280, $(DEVICE)), u280)
@@ -81,9 +85,9 @@ endif
 MK_PATH := $(abspath $(lastword $(MAKEFILE_LIST)))
 XF_PROJ_ROOT ?= $(shell bash -c 'export MK_PATH=$(MK_PATH); echo $${MK_PATH%/L3/*}')
 CUR_DIR := $(patsubst %/,%,$(dir $(MK_PATH)))
-VISLIB_DIR = $(ROOTDIR)/Vitis_Libraries/vision
-COMP_DIR = $(ROOTDIR)/Vitis_Libraries/data_compression
-SEC_DIR = $(ROOTDIR)/Vitis_Libraries/security
+VISLIB_DIR = $(ROOT_DIR)/Vitis_Libraries/vision
+COMP_DIR = $(ROOT_DIR)/Vitis_Libraries/data_compression
+SEC_DIR = $(ROOT_DIR)/Vitis_Libraries/security
 
 # ######################### Include environment variables in utils.mk ####################
 include ./utils.mk
@@ -106,14 +110,17 @@ endif
 
 # ######################### Setting up Host Variables #########################
 #Include Required Host Source Files
-HOST_SRCS += $(VISLIB_DIR)/L3/examples/isppipeline_rgbir/xf_isp_tb.cpp
-HOST_SRCS += $(VISLIB_DIR)/ext/xcl2/xcl2.cpp
-
 CXXFLAGS += -D__SDSVHLS__
-CXXFLAGS += -I$(VISLIB_DIR)/L3/examples/isppipeline_rgbir/build
-CXXFLAGS += -I$(VISLIB_DIR)/ext/xcl2/
-CXXFLAGS += -I$(VISLIB_DIR)/L1/include
-CXXFLAGS += -I$(OPENCV_INCLUDE)
+CXXFLAGS_VIS += -I$(VISLIB_DIR)/L3/examples/isppipeline/build
+CXXFLAGS_VIS += -I$(VISLIB_DIR)/ext/xcl2/
+CXXFLAGS_VIS += -I$(VISLIB_DIR)/L1/include
+
+CXXFLAGS_COMP += -I$(COMP_DIR)/common/libs/xcl2/
+CXXFLAGS_COMP += -I$(COMP_DIR)/common/libs/compress
+CXXFLAGS_COMP += -I$(COMP_DIR)/common/libs/cmdparser
+CXXFLAGS_COMP += -I$(COMP_DIR)/common/libs/logger
+CXXFLAGS_COMP += -I$(COMP_DIR)/L1/include/hw
+CXXFLAGS_COMP += -I$(COMP_DIR)/common/thirdParty/xxhash
 
 LDFLAGS += -lopencv_videoio -lopencv_imgcodecs -lopencv_core -lopencv_imgproc -lopencv_features2d -lopencv_flann -lopencv_video -lopencv_calib3d -lopencv_highgui
 
@@ -152,7 +159,7 @@ LDFLAGS += -L${SYSROOT}/opt/xilinx/xrt/lib
 else ifneq (,$(shell echo $(XPLATFORM) | awk '/u50/'))
 CXXFLAGS += -I$(OPENCV_INCLUDE)
 LDFLAGS += -L$o(OPENCV_LIB)
-else ifneq (,$(shell echo $(XPLATFORM) | awk '/zcu104/'))
+else ifneq (,$(shell echo $(XPLATFORM) | awk '/jd106/'))
 CXXFLAGS += -I$(SYSROOT)/usr/include
 CXXFLAGS += -I$(SYSROOT)/usr/include/opencv4
 CXXFLAGS += --sysroot=$(SYSROOT)
@@ -168,8 +175,6 @@ else
 K_IMAGE := $(EDGE_COMMON_SW)/Image
 endif
 
-EXE_NAME := isppipeline
-EXE_FILE := $(BUILD_DIR)/$(EXE_NAME)
 ifeq ($(TARGET),$(filter $(TARGET),sw_emu))
 HOST_ARGS :=
 
@@ -192,7 +197,7 @@ endif
 # ##################### Kernel compiler global settings ##########################
 VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps --optimize 2
 #VPP_FLAGS += --hls.jobs 8
-VPP_LDFLAGS += --vivado.synth.jobs 24 --vivado.impl.jobs 24
+VPP_LDFLAGS += --vivado.synth.jobs 12 --vivado.impl.jobs 12
 VPP_FLAGS += -I$(VISLIB_DIR)/L1/include/
 
 VPP_FLAGS +=
@@ -200,15 +205,20 @@ VPP_FLAGS +=
 
 # Kernel args
 
+
+# ############################ Host applications ###############################
+EXE_NAME1 := isppipeline
+EXE_FILE1 := $(BUILD_DIR)/$(EXE_NAME1)
+EXE_NAME2 := lz4_comp
+EXE_FILE2 := $(BUILD_DIR)/$(EXE_NAME2)
+EXE_NAME3 := stereopipe
+EXE_FILE3 := $(BUILD_DIR)/$(EXE_NAME3)
+
 # ############################ Declaring Binary Containers ##########################
 
-ifeq ($(HOST_ARCH), x86)
-BINARY_CONTAINERS += $(BUILD_DIR)/krnl_ISPPipeline.xclbin
-BINARY_CONTAINERS_PKG += $(BUILD_DIR)/krnl_ISPPipeline.xclbin
-else
 BINARY_CONTAINERS += $(BUILD_DIR)/krnl_ISPPipeline_xo.xclbin
 BINARY_CONTAINERS_PKG += $(BUILD_DIR)/krnl_ISPPipeline.xclbin
-endif
+
 VPP_LDFLAGS_compress_decompress_streaming_temp := --config $(CUR_DIR)/connectivity.cfg
 VPP_LDFLAGS_krnl_ISPPipeline += $(VPP_LDFLAGS_compress_decompress_streaming_temp)
 
@@ -235,7 +245,7 @@ endif
 ifeq ($(HOST_ARCH), x86)
 host:  check_env check_xrt $(EXE_FILE)
 else
-host:  check_env check_sysroot $(EXE_FILE)
+host:  check_env check_sysroot $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3)
 endif
 
 .PHONY: xclbin
@@ -249,16 +259,16 @@ endif
 build: xclbin
 
 # ################ Setting Rules for Binary Containers (Building Kernels) ################
-ISPPipeline_accel_VPP_FLAGS += -I $(VISLIB_DIR)/L3/examples/isppipeline_rgbir -I $(VISLIB_DIR)/L3/examples/isppipeline_rgbir/build
-$(TEMP_DIR)/ISPPipeline_accel.xo: $(VISLIB_DIR)/L3/examples/isppipeline_rgbir/xf_isp_accel.cpp
+ISPPipeline_accel_VPP_FLAGS += -I config
+$(TEMP_DIR)/ISPPipeline_accel.xo: xf_isp_accel.cpp
 	$(ECHO) "Compiling Kernel: ISPPipeline_accel"
 	mkdir -p $(TEMP_DIR)
 	echo $(VISLIB_DIR)
 	$(VPP) -c $(ISPPipeline_accel_VPP_FLAGS) $(VPP_FLAGS) -k ISPPipeline_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' $^
 BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/ISPPipeline_accel.xo
 
-Stereo_accel_VPP_FLAGS += -I $(VISLIB_DIR)/L3/examples/stereopipeline -I $(VISLIB_DIR)/L3/examples/stereopipeline/build
-$(TEMP_DIR)/Stereo_accel.xo: $(VISLIB_DIR)/L3/examples/stereopipeline/xf_stereo_pipeline_accel.cpp
+Stereo_accel_VPP_FLAGS += -I config
+$(TEMP_DIR)/Stereo_accel.xo: xf_stereo_pipeline_accel.cpp
 	$(ECHO) "Compiling Kernel: Stereo_accel"
 	mkdir -p $(TEMP_DIR)
 	echo $(VISLIB_DIR)
@@ -285,14 +295,33 @@ $(BINARY_CONTAINERS): $(BINARY_CONTAINER_krnl_ISPPipeline_OBJS)
 
 
 # ################# Setting Rules for Host (Building Host Executable) ################
-ifeq ($(HOST_ARCH), x86)
-$(EXE_FILE):  $(HOST_SRCS) | check_xrt check_env
-else
-$(EXE_FILE):  $(HOST_SRCS) | check_sysroot check_env
-endif
+HOST_SRCS1 += xf_isp_tb.cpp
+HOST_SRCS1 += $(VISLIB_DIR)/ext/xcl2/xcl2.cpp
 
+HOST_SRCS2 += lz4.cpp
+HOST_SRCS2 += $(COMP_DIR)/common/libs/compress/lz4OCLHost.cpp
+HOST_SRCS2 += $(COMP_DIR)/common/libs/compress/lz4Base.cpp
+HOST_SRCS2 += $(COMP_DIR)/common/libs/compress/lz4App.cpp
+HOST_SRCS2 += $(COMP_DIR)/common/libs/compress/compressApp.cpp
+HOST_SRCS2 += $(COMP_DIR)/common/libs/xcl2/xcl2.cpp
+HOST_SRCS2 += $(COMP_DIR)/common/libs/cmdparser/cmdlineparser.cpp
+HOST_SRCS2 += $(COMP_DIR)/common/libs/logger/logger.cpp
+HOST_SRCS2 += $(COMP_DIR)/common/thirdParty/xxhash/xxhash.c
+
+HOST_SRCS3 += xf_stereo_pipeline_tb.cpp
+HOST_SRCS3 += $(VISLIB_DIR)/ext/xcl2/xcl2.cpp
+
+$(EXE_FILE1):  $(HOST_SRCS1) | check_sysroot check_env
 	mkdir -p $(BUILD_DIR)
-	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(CXXFLAGS_VIS) $(LDFLAGS)
+
+$(EXE_FILE2):  $(HOST_SRCS2) | check_sysroot check_env
+	mkdir -p $(BUILD_DIR)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(CXXFLAGS_COMP) $(LDFLAGS)
+
+$(EXE_FILE3):  $(HOST_SRCS3) | check_sysroot check_env
+	mkdir -p $(BUILD_DIR)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(CXXFLAGS_VIS) $(LDFLAGS)
 
 emconfig:$(EMCONFIG_DIR)/emconfig.json
 $(EMCONFIG_DIR)/emconfig.json:
