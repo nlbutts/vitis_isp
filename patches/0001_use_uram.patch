@@ -1,0 +1,26 @@
+diff --git a/vision/L3/examples/isppipeline_rgbir/build/xf_config_params.h b/vision/L3/examples/isppipeline_rgbir/build/xf_config_params.h
+index 2054991ef..ee2740dd2 100755
+--- a/vision/L3/examples/isppipeline_rgbir/build/xf_config_params.h
++++ b/vision/L3/examples/isppipeline_rgbir/build/xf_config_params.h
+@@ -67,7 +67,7 @@
+ #define INPUT_PTR_WIDTH 64
+ #define OUTPUT_PTR_WIDTH 32
+ 
+-#define XF_USE_URAM 0 // uram enable
++#define XF_USE_URAM 1 // uram enable
+ #define XF_CV_DEPTH_3XWIDTH 3 * XF_WIDTH
+ #define XF_CV_DEPTH_imgInput 3
+ #define XF_CV_DEPTH_imgInputCopy1 3
+diff --git a/vision/L3/examples/stereopipeline/build/xf_config_params.h b/vision/L3/examples/stereopipeline/build/xf_config_params.h
+index e50ae7285..021fdad38 100644
+--- a/vision/L3/examples/stereopipeline/build/xf_config_params.h
++++ b/vision/L3/examples/stereopipeline/build/xf_config_params.h
+@@ -30,7 +30,7 @@
+ #define INPUT_PTR_WIDTH 32
+ #define OUTPUT_PTR_WIDTH 32
+ 
+-#define XF_USE_URAM false
++#define XF_USE_URAM true
+ #define XF_CV_DEPTH_MAT_L 3
+ #define XF_CV_DEPTH_MAT_R 3
+ #define XF_CV_DEPTH_MAT_DISP 3
