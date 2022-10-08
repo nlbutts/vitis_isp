@@ -53,11 +53,12 @@ help::
 ROOT_DIR=$(shell git rev-parse --show-toplevel)
 OPENCV_INCLUDE = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/usr/include/opencv4
 OPENCV_LIB = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/usr/lib
-SYSROOT = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux
+#SYSROOT = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux
+# When we source the SDK we get the ENV SDKTARGETSYSROOT which is the sysroot
+SYSROOT = $(SDKTARGETSYSROOT)
 DEVICE = $(ROOT_DIR)/platform/jdboard/export/jdboard/jdboard.xpfm
 EDGE_COMMON_SW = $(ROOT_DIR)/plinux/images/linux
-XSA_FILE = $(ROOT_DIR)/jd106_extend/MPSoC_ext_platform_wrapper.xsa
-SYSROOT = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux
+XSA_FILE = $(ROOT_DIR)/board/MPSoC_ext_platform_wrapper.xsa
 TARGET ?= hw
 HOST_ARCH ?= aarch64
 
@@ -95,13 +96,13 @@ TEMP_DIR := _x_temp.$(TARGET).$(XDEVICE)
 TEMP_REPORT_DIR := $(CUR_DIR)/reports/_x.$(TARGET).$(XDEVICE)
 BUILD_DIR := build_dir.$(TARGET).$(XDEVICE)
 BUILD_REPORT_DIR := $(CUR_DIR)/reports/_build.$(TARGET).$(XDEVICE)
-EMCONFIG_DIR := $(BUILD_DIR)
+EMCONFIG := $(BUILD_DIR)/emconfig.json
 XCLBIN_DIR := $(CUR_DIR)/$(BUILD_DIR)
 export XCL_BINDIR = $(XCLBIN_DIR)
 
 # ####################### Setting environment variables for embedded #####################
 ifneq ($(HOST_ARCH), x86)
-SYSROOT := $(SYSROOT)
+SYSROOT := $(SDKTARGETSYSROOT)
 PERL ?= perl
 SDCARD := sd_card
 EMU_DIR := $(SDCARD)/data/emulation
@@ -158,7 +159,7 @@ LDFLAGS += -L${SYSROOT}/opt/xilinx/xrt/lib
 else ifneq (,$(shell echo $(XPLATFORM) | awk '/u50/'))
 CXXFLAGS += -I$(OPENCV_INCLUDE)
 LDFLAGS += -L$o(OPENCV_LIB)
-else ifneq (,$(shell echo $(XPLATFORM) | awk '/jd106/'))
+else ifneq (,$(shell echo $(XPLATFORM) | awk '/jdboard/'))
 CXXFLAGS += -I$(SYSROOT)/usr/include
 CXXFLAGS += -I$(SYSROOT)/usr/include/opencv4
 CXXFLAGS += --sysroot=$(SYSROOT)
@@ -196,7 +197,7 @@ endif
 # ##################### Kernel compiler global settings ##########################
 VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps --optimize 2
 #VPP_FLAGS += --hls.jobs 8
-VPP_LDFLAGS += --vivado.synth.jobs 12 --vivado.impl.jobs 12
+VPP_LDFLAGS += --vivado.synth.jobs 8 --vivado.impl.jobs 8
 VPP_FLAGS += -I$(VISLIB_DIR)/L1/include/
 
 VPP_FLAGS +=
@@ -239,6 +240,9 @@ endif
 ifeq (,$(OPENCV_LIB))
 	@echo "Cannot find Opencv lib path. Please set OPENCV_LIB variable" && false
 endif
+
+.PHONY: clean cleanall emconfig
+emconfig: $(EMCONFIG)
 
 .PHONY: host
 ifeq ($(HOST_ARCH), x86)
@@ -286,7 +290,7 @@ $(TEMP_DIR)/xilCompDatamover.xo: $(COMP_DIR)/L2/tests/src/block_comp_dm.cpp
 	$(ECHO) "Compiling Kernel: xilCompDatamover"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_xilCompDatamover) $(VPP_FLAGS) -k xilCompDatamover -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilCompDatamover.xo
+#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilCompDatamover.xo
 
 $(BINARY_CONTAINERS): $(BINARY_CONTAINER_krnl_ISPPipeline_OBJS)
 	mkdir -p $(BUILD_DIR)
@@ -322,66 +326,68 @@ $(EXE_FILE3):  $(HOST_SRCS3) | check_sysroot check_env
 	mkdir -p $(BUILD_DIR)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(CXXFLAGS_VIS) $(LDFLAGS)
 
-emconfig:$(EMCONFIG_DIR)/emconfig.json
-$(EMCONFIG_DIR)/emconfig.json:
-	emconfigutil --platform $(XPLATFORM) --od $(EMCONFIG_DIR)
 
-
-# ###############Setting Essential Checks And Running Rules For Vitis Flow #############
-# Setting default value for vitis flow
-RESULT_VAL ?=
-RUN_LEVEL ?= 7
-run: all
-ifeq ($(TARGET),$(filter $(TARGET),sw_emu hw_emu))
-ifeq ($(HOST_ARCH), x86)
-	$(CP) $(EMCONFIG_DIR)/emconfig.json .
-	LD_LIBRARY_PATH=$(LIBRARY_PATH) XCL_EMULATION_MODE=$(TARGET) $(EXE_FILE) $(HOST_ARGS)
-else
-	$(PERL) $(XF_PROJ_ROOT)/ext/make_utility/embedded_run_emulation.pl "./$(EMBEDDED_PACKAGE_OUT)/launch_$(TARGET).sh -no-reboot" "./run_script.sh" "$(RESULT_VAL)" "$(RUN_LEVEL)" | tee embedded_run.log
-endif
-else
-	LD_LIBRARY_PATH=$(LIBRARY_PATH)
-ifeq ($(HOST_ARCH), x86)
-	$(EXE_FILE) $(HOST_ARGS)
-else
-	$(ECHO) "Please copy the content of sd_card folder and data to an SD Card and run on the board"
-endif
-endif
-
-# ######################### Preparing sdcard folder ##############################
-EMBEDDED_EXEC_SCRIPT = run_script.sh
-PACKAGE_FILES += $(EMBEDDED_EXEC_SCRIPT)
-PACKAGE_FILES += $(EXE_FILE)
-PACKAGE_FILES += emconfig.json
-PACKAGE_FILES += $(DATA_FILE)
-SD_FILES_WITH_PREFIX = $(foreach sd_file,$(PACKAGE_FILES),--package.sd_file $(sd_file))
-SD_DIRS_WITH_PREFIX = $(foreach sd_dir,$(DATA_DIR),--package.sd_dir $(sd_dir))
-sd_card: host xclbin emconfig
+$(EMCONFIG):
+	emconfigutil --platform $(XPLATFORM) --od $(BUILD_DIR)
+############################## Preparing sdcard folder ##############################
 ifneq ($(HOST_ARCH), x86)
-	@echo "Generating sd_card folder...."
-	mkdir -p $(EMBEDDED_PACKAGE_OUT)
-	rm -rf run_script.sh
-	@echo 'export LD_LIBRARY_PATH=/mnt:/tmp:$$LD_LIBRARY_PATH' >> run_script.sh
-ifeq ($(TARGET), $(filter $(TARGET),sw_emu hw_emu))
-	@echo 'export XCL_EMULATION_MODE=$(TARGET)' >> run_script.sh
+RUN_SCRIPT := $(BUILD_DIR)/run_script.sh
+$(RUN_SCRIPT):
+	rm -rf $(RUN_SCRIPT)
+	@echo 'export LD_LIBRARY_PATH=/mnt:/tmp:$(LIBRARY_PATH)' >> $(RUN_SCRIPT)
+ifneq ($(filter sw_emu hw_emu, $(TARGET)),)
+	@echo 'export XCL_EMULATION_MODE=$(TARGET)' >> $(RUN_SCRIPT)
 endif
-	@echo 'export XILINX_VITIS=/mnt' >> run_script.sh
-	@echo 'export XILINX_XRT=/usr' >> run_script.sh
-	@echo 'if [ -f platform_desc.txt  ]; then' >> run_script.sh
-	@echo '         cp platform_desc.txt /etc/xocl.txt' >> run_script.sh
-	@echo 'fi'  >> run_script.sh
-	emconfigutil --platform $(DEVICE) --nd 1;
-	@echo './$(EXE_NAME) $(PKG_HOST_ARGS)' >> run_script.sh
-	@echo 'return_code=$$?' >> run_script.sh
-	@echo 'if [ $$return_code -ne 0 ]; then' >> run_script.sh
-	@echo '         echo "ERROR: Embedded host run failed, RC=$$return_code"' >> run_script.sh
-	@echo 'fi' >> run_script.sh
-	@echo 'echo "INFO: Embedded host run completed."' >> run_script.sh
-	@echo 'exit $$return_code' >> run_script.sh
-	chmod a+rx run_script.sh
-	$(VPP) -t $(TARGET) --platform $(DEVICE) -o $(BINARY_CONTAINERS_PKG) -p $(BINARY_CONTAINERS) --package.out_dir $(EMBEDDED_PACKAGE_OUT) --package.rootfs $(EDGE_COMMON_SW)/rootfs.ext4 --package.sd_file $(K_IMAGE) $(SD_FILES_WITH_PREFIX) $(SD_DIRS_WITH_PREFIX)
+	@echo 'export XILINX_VITIS=/mnt' >> $(RUN_SCRIPT)
+	@echo 'export XILINX_XRT=/usr' >> $(RUN_SCRIPT)
+	@echo 'if [ -f platform_desc.txt  ]; then' >> $(RUN_SCRIPT)
+	@echo '        cp platform_desc.txt /etc/xocl.txt' >> $(RUN_SCRIPT)
+	@echo 'fi' >> $(RUN_SCRIPT)
+	@echo './$(EXE_NAME) $(PKG_HOST_ARGS)' >> $(RUN_SCRIPT)
+	@echo 'return_code=$$?' >> $(RUN_SCRIPT)
+	@echo 'if [ $$return_code -ne 0 ]; then' >> $(RUN_SCRIPT)
+	@echo '        echo "ERROR: Embedded host run failed, RC=$$return_code"' >> $(RUN_SCRIPT)
+	@echo 'else' >> $(RUN_SCRIPT)
+	@echo '        echo "INFO: TEST PASSED, RC=0"' >> $(RUN_SCRIPT)
+	@echo 'fi' >> $(RUN_SCRIPT)
+	@echo 'echo "INFO: Embedded host run completed."' >> $(RUN_SCRIPT)
+	@echo 'exit $$return_code' >> $(RUN_SCRIPT)
+DATA_FILE := $(XFLIB_DIR)/data/16bit.png
+DATA_DIR :=
+SD_FILES += $(RUN_SCRIPT)
+SD_FILES += $(EXE_FILE)
+SD_FILES += $(EMCONFIG)
+SD_FILES += xrt.ini
+SD_FILES += $(DATA_FILE)# where define DATAFILE in json
+SD_FILES_WITH_PREFIX = $(foreach sd_file,$(SD_FILES), $(if $(filter $(sd_file),$(wildcard $(sd_file))), --package.sd_file $(sd_file)))
+SD_DIRS_WITH_PREFIX = $(foreach sd_dir,$(DATA_DIR),--package.sd_dir $(sd_dir))
+PACKAGE_FILES := $(BINARY_CONTAINERS)
+PACKAGE_FILES += $(AIE_CONTAINER)
+SD_CARD := $(CUR_DIR)/package_$(TARGET)
+dfx_hw := off
+$(SD_CARD): $(EXE_FILE) $(BINARY_CONTAINERS) $(RUN_SCRIPT) $(EMCONFIG) check_kimage check_rootfs
+	@echo "Generating sd_card folder...."
+	mkdir -p $(SD_CARD)
+	chmod a+rx $(BUILD_DIR)/run_script.sh
+ifeq ($(findstring _dfx_, $(PLATFORM_NAME)),_dfx_)
+ifeq ($(TARGET),hw)
+	$(VPP) -t $(TARGET) --platform $(XPLATFORM) -p $(PACKAGE_FILES) $(VPP_PACKAGE) -o $(BINARY_CONTAINERS_PKG)
+	$(VPP) -t $(TARGET) --platform $(XPLATFORM) -p --package.out_dir  $(SD_CARD) --package.rootfs $(ROOTFS) --package.kernel_image $(K_IMAGE)  $(SD_FILES_WITH_PREFIX) $(SD_DIRS_WITH_PREFIX) --package.sd_file $(BINARY_CONTAINERS_PKG)
+	@echo "### ***** sd_card generation done! ***** ###"
+dfx_hw := on
+endif
+endif
+ifeq ($(dfx_hw), off)
+	$(VPP) -t $(TARGET) --platform $(XPLATFORM) -o $(BINARY_CONTAINERS_PKG) -p $(PACKAGE_FILES) $(VPP_PACKAGE) --package.out_dir  $(SD_CARD) --package.rootfs $(ROOTFS) --package.kernel_image $(K_IMAGE)  $(SD_FILES_WITH_PREFIX) $(SD_DIRS_WITH_PREFIX)
 	@echo "### ***** sd_card generation done! ***** ###"
 endif
+
+.PHONY: sd_card
+sd_card: $(SD_CARD)
+endif
+############################## Setting Essential Checks and Building Rules ##############################
+RUN_DEPS += $(EXE_FILE) $(BINARY_CONTAINERS) $(EMCONFIG)
+RUN_DEPS += $(SD_CARD)
 
 # ################################# Cleaning Rules ##################################
 cleanh:
