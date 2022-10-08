@@ -8,7 +8,7 @@
 # To create the platform in a different location, modify the -out option of "platform create" command.
 # -out option specifies the output directory of the platform project.
 
-createdts -hw /home/nlbutts/projects/vitis_isp/jd106_extend/MPSoC_ext_platform_wrapper.xsa -out . -zocl -platform-name jd106 -git-branch xlnx_rel_v2022.1 -compile
+createdts -hw ../board/MPSoC_ext_platform_wrapper.xsa -out . -zocl -platform-name jdboard -git-branch xlnx_rel_v2022.1 -compile
 
 # platform create -name {jd106}\
 # -hw {/home/nlbutts/projects/vitis_isp/jd106_extend/MPSoC_ext_platform_wrapper.xsa}\
