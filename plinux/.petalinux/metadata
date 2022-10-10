@@ -1,6 +1,6 @@
 PETALINUX_VER=2022.1
 VALIDATE_HW_CHKSUM=1
-HARDWARE_PATH=/home/nlbutts/projects/vitis_isp/jd106_extend/MPSoC_ext_platform_wrapper.xsa
-HARDWARE_CHECKSUM=f3c241a692210d4ef50faef8ab85f332
+HARDWARE_PATH=/home/nlbutts/projects/vitis_isp/board/MPSoC_ext_platform_wrapper.xsa
+HARDWARE_CHECKSUM=2b5f3b4a198f3f1ffd32647634a9f719
 YOCTO_SDK=1dd2a216cb40dc0b474883920ea91cc6
 RFSCONFIG_CHKSUM=5647b3d794d8c2b7b55acdb6d5004a6a

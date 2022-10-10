@@ -18,17 +18,7 @@ ROOT_DIR=$(shell git rev-parse --show-toplevel)
 GIT_COMMITTER_EMAIL=$(shell git config user.email)
 GIT_COMMITTER_NAME=$(shell git config user.name)
 
-EDGE_COMMON_SW = $(ROOT_DIR)/plinux/images/linux
-XSA_FILE = $(ROOT_DIR)/board/MPSoC_ext_platform_wrapper.xsa
-DEVICE = $(ROOT_DIR)/platform/jd106/export/jd106/jd106.xpfm
-SYSROOT = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux
-HOST_ARCH = aarch64
-OPENCV_INCLUDE = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/usr/include/opencv4
-OPENCV_LIB = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/lib
 TARGET = hw
-ROOT_TAR = $(ROOTDIR)/plinux/images/linux/rootfs.tar.gz
-SDK = $(ROOTDIR)/plinux/images/linux/sdk.sh
-XCLBIN = $(ROOTDIR)/accel/build_dir.hw.MPSoC_ext_platform_wrapper/krnl_ISPPipeline_xo.xclbin
 BOARD = zcu104
 
 # Check to make sure the ssh agent is running with a key
@@ -53,7 +43,6 @@ patch-files:
 # Check that the ssh-agent is running and the submodules are updated
 .PHONY: board
 board:
-#$(XSA_FILE): board/build.tcl board/zcu104.tcl
 	cd board; \
 	rm -rf $(BOARD); \
 	vivado -source $(BOARD).tcl -mode batch; \
@@ -61,23 +50,19 @@ board:
 
 .PHONY: platform
 platform:
-#$(DEVICE): $(XSA_FILE)
 	cd platform; xsct build.tcl
 
 .PHONY: linux
 linux:
-#$(ROOT_TAR): $(XSA_FILE)
 	cd plinux; petalinux-config --get-hw-description $(XSA_FILE) --silentconfig; \
 	petalinux-build
 
 .PHONY: sdk
 sdk:
-#$(SDK):
 	cd plinux; petalinux-build --sdk
 
 .PHONY: accel
 accel:
-#$(XCLBIN):
 	make -C accel all
 
 .PHONY: host

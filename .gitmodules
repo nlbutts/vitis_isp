@@ -1,3 +1,6 @@
 [submodule "Vitis_Libraries"]
 	path = Vitis_Libraries
 	url = https://github.com/Xilinx/Vitis_Libraries.git
+[submodule "XRT"]
+	path = XRT
+	url = https://github.com/Xilinx/XRT.git
