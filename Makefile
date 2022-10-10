@@ -19,7 +19,7 @@ GIT_COMMITTER_EMAIL=$(shell git config user.email)
 GIT_COMMITTER_NAME=$(shell git config user.name)
 
 TARGET = hw
-BOARD = zcu104
+BOARD = zcu106
 
 # Check to make sure the ssh agent is running with a key
 .PHONY: check-env
@@ -63,7 +63,8 @@ sdk:
 
 .PHONY: accel
 accel:
-	make -C accel all
+	make -C accel xclbin
+	make -C accel host
 
 .PHONY: host
 host:

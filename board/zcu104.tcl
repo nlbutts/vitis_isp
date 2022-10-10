@@ -23,7 +23,7 @@
 # 2. The following source(s) files that were local or imported into the original project.
 #    (Please see the '$orig_proj_dir' and '$origin_dir' variable setting below at the start of the script)
 #
-#    "/home/nlbutts/projects/vitis_isp/zcu104/zcu104.srcs/sources_1/imports/hdl/MPSoC_ext_platform_wrapper.v"
+#    "/home/nlbutts/projects/vitis_isp/board/zcu104/zcu104.srcs/sources_1/imports/hdl/MPSoC_ext_platform_wrapper.v"
 #
 # 3. The following remote source files that were added to the original project:-
 #

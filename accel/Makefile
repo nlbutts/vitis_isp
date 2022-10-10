@@ -61,8 +61,7 @@ OPENCV_INCLUDE = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux
 OPENCV_LIB = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/usr/lib
 # When we source the SDK we get the ENV SDKTARGETSYSROOT which is the sysroot
 SYSROOT = $(SDKTARGETSYSROOT)
-#DEVICE = $(ROOT_DIR)/platform/jdboard/export/jdboard/jdboard.xpfm
-DEVICE = $(ROOT_DIR)/platform3/jdboard/export/jdboard/jdboard.xpfm
+DEVICE = $(ROOT_DIR)/platform/jdboard/export/jdboard/jdboard.xpfm
 XSA_FILE = $(ROOT_DIR)/board/MPSoC_ext_platform_wrapper.xsa
 TARGET ?= hw
 HOST_ARCH ?= aarch64
