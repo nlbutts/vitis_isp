@@ -84,9 +84,9 @@ void compute_gamma(float r_g, float g_g, float b_g, uchar gamma_lut[256 * 3]) {
     }
 }
 int main(int argc, char** argv) {
-    if (argc != 2) {
+    if (argc != 4) {
         fprintf(stderr, "Invalid Number of Arguments!\nUsage:\n");
-        fprintf(stderr, "<Executable Name> <input image path> \n");
+        fprintf(stderr, "<Executable Name> <input image path> <pawb> <mode>\n");
         return -1;
     }
 
@@ -131,9 +131,10 @@ int main(int argc, char** argv) {
     unsigned short rgain = 256;
     unsigned short bgain = 256;
 
-    unsigned char mode_reg = 1;
+    unsigned char mode_reg = atoi(argv[3]);
 
-    unsigned short pawb = 128;
+    unsigned short pawb = atoi(argv[2]);
+    printf("pawb: %d  mode: %d\n", (int)pawb, (int)mode_reg);
 
     unsigned char gamma_lut[256 * 3];
     uint32_t hist0_awb[3][HIST_SIZE] = {0};
