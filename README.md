@@ -1,59 +1,64 @@
 # vitis_isp
 Vitis ISP Tests
 
-This repo has a simple DCT test showing the GUI flow for HLS development.
-
-I then took the isppipeline and made it into a HLS sim so a person could
-quickly develop on the host. You can go to <vitis_library>/vision/L3/examples/isppipeline
-and run their make file to re-create the ISP on hardware. There is a handy
-script to source all of the environment variables.
+This repo attempts to demostrate a complete development pipeline for Vitis
+accelerated flows.
 
 # Build
 Install Vitis and Petalilnux (see Xilinx docs)
 
 Checkout this repo.
 
+## Source the tools
+Source Vitis and Petalinux:
+`. <install dir>/Vitis/2022.1/settings64.sh`
+`. <install dir>/Petalinux/2022.1/settings.sh`
+
+## Configure for your board
+By default the makefile will use the ZCU106 board. But you can override
+it by:
+`export BOARD=<board name>`
+
+To create new boards you need to have a tcl script that can re-create the board
+design. See the **board** directory for examples
+
+## Build the Board
+`make board`
+
+This will create the Vivado XSA board file. It does NOT generate a bitstream
+
 ## Build Linux
-Source the petalinux **settings.sh** file. In my installation it is:
-`
-. ~/xilinx/Petalinux/2021.2/settings.sh
-cd <vitis_isp>/plinux
-petalinux-build
-petalinuxbuild -s
-cd images/linux
-./sdk.sh
-`
+`make linux`
 
-This will take some time. But it will build the Linux distro, SDK, and install the SDK.
+Will pull in the XSA file and build the main Linux distro. This will take
+some time depending on the speed of your computer.
 
-## Build DCT demo
-Open Vitis_HLS tool and load the dct project.
+## Build the SDK
+`make sdk`
 
-## Build the Vitis DCT hardware project
-Run the following, you may need to tweak **env.sh** based on the location of
-various components. Refer to **env.sh** for details.
+This will build the Linux SDK. This will also take some time. Once the sdk
+has been built you need to install it.
 
-```
-. <xilinx install directory>/Vitis/2021.2/settings64.sh
-. <vitis_isp checkout directory>/scripts/env.sh
-cd <vitis_isp checkout directory>/dct_example
-make all TARGET=hw
-```
+`sudo plinux/images/linux/sdk.sh`
 
-This will take some time, but create a sd_card.img file. You can **dd** this
-file onto to an SD card and boot the unit. To run the dct example, do the
-following on the booted unit:
-```
-cd /media/sd-mmcblk0p1
-./run_script.sh
-```
+You can choose where to install it. Now source the SDK
+`. <install directory>/environment-setup-cortexa72-cortexa53-xilinx-linux`
 
-This will load the xclbin file and run the **dct_example** program.
+This will define the SYSROOT and other ENV parameters
 
-# Y2K22 bug fix
-Xilinx has issues with 2022. See this post for a fix
-https://support.xilinx.com/s/article/76960?language=en_US
+## Create the platform
+`build platform`
 
+This will create the Vitis Platform. This is still a bit of a WIP. It does create
+a linux platform and attempts to create the new device tree, but that is
+currently failing.
+
+## Create the accelerators
+`make accel`
+
+This will built the SD card image. You don't have to override your SD image
+every time. You really only need the BOOT.BIN, xclbin files, and any userspace
+programs that use those accelerators.
 
 # Boot faster
 To boot faster grab the **pmufw**, **system.bit**, **bl31.elf**, and
