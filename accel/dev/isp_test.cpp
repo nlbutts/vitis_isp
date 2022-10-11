@@ -94,9 +94,9 @@ void compute_gamma(float r_g, float g_g, float b_g, uchar gamma_lut[256 * 3]) {
     }
 }
 int main(int argc, char** argv) {
-    if (argc != 4) {
+    if (argc != 6) {
         fprintf(stderr, "Invalid Number of Arguments!\nUsage:\n");
-        fprintf(stderr, "<Executable Name> <input image path> <pawb> <mode>\n");
+        fprintf(stderr, "<Executable Name> <input image path> <pawb> <mode> <rgain> <bgain>\n");
         return -1;
     }
 
@@ -122,7 +122,7 @@ int main(int argc, char** argv) {
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned char);
     size_t image_out_size_bytes = in_img.rows * in_img.cols * 1 * sizeof(unsigned short);
 #else
-    out_img.create(in_img.rows, in_img.cols, CV_16UC1);
+    out_img.create(in_img.rows, in_img.cols, CV_16UC3);
     size_t vec_in_size_bytes = 256 * 3 * sizeof(unsigned char);
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned short);
     size_t image_out_size_bytes = in_img.rows * in_img.cols * 1 * sizeof(unsigned short);
@@ -138,13 +138,16 @@ int main(int argc, char** argv) {
     std::cout << "Input image height : " << height << std::endl;
     std::cout << "Input image width  : " << width << std::endl;
 
-    unsigned short rgain = 256;
-    unsigned short bgain = 256;
-
-    unsigned char mode_reg = atoi(argv[3]);
-
     unsigned short pawb = atoi(argv[2]);
-    printf("pawb: %d  mode: %d\n", (int)pawb, (int)mode_reg);
+    unsigned char mode_reg = atoi(argv[3]);
+    unsigned short rgain = atoi(argv[4]);
+    unsigned short bgain = atoi(argv[5]);
+
+    printf("pawb: %d  mode: %d  rgain: %d  bgain: %d\n",
+            (int)pawb,
+            (int)mode_reg,
+            (int)rgain,
+            (int)bgain);
 
     unsigned char gamma_lut[256 * 3];
     uint32_t hist0_awb[3][HIST_SIZE] = {0};
@@ -161,6 +164,15 @@ int main(int argc, char** argv) {
                       rgain, bgain,
                       gamma_lut,
                       mode_reg, pawb);
+
+    ISPPipeline_accel((ap_uint<INPUT_PTR_WIDTH>*)in_img.data,
+                      (ap_uint<OUTPUT_PTR_WIDTH>*)out_img.data,
+                      height, width,
+                      rgain, bgain,
+                      gamma_lut,
+                      mode_reg, pawb);
+
+    printf("Foobar\n");
 
     // Write output image
     imwrite("hls_out.png", out_img);
