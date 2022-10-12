@@ -15,12 +15,12 @@ platform create -name {jdboard}\
 platform write
 platform active {jdboard}
 domain config -display-name {xrt}
-platform write
-domain config -generate-bif
-platform write
 domain config -boot {../plinux/images/linux}
 platform write
-platform generate
+domain config -qemu-data {jdboard/export/jdboard/sw/jdboard/boot}
+domain config -generate-bif
+platform write
+platform generate -domains
 
-createdts -hw ../board/MPSoC_ext_platform_wrapper.xsa -out . -zocl -platform-name jdboard\
- -git-branch xlnx_rel_v2022.1 -compile
+#createdts -hw ../board/MPSoC_ext_platform_wrapper.xsa -out . -zocl -platform-name jdboard\
+# -git-branch xlnx_rel_v2022.1 -compile

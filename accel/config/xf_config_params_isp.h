@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define XF_NPPC XF_NPPC1 // XF_NPPC1 --1PIXEL , XF_NPPC2--2PIXEL ,XF_NPPC4--4 and XF_NPPC8--8PIXEL
+#define XF_NPPC XF_NPPC2 // XF_NPPC1 --1PIXEL , XF_NPPC2--2PIXEL ,XF_NPPC4--4 and XF_NPPC8--8PIXEL
 
 #define XF_WIDTH 1920  // MAX_COLS
 #define XF_HEIGHT 1080 // MAX_ROWS

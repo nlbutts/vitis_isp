@@ -61,7 +61,7 @@ OPENCV_INCLUDE = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux
 OPENCV_LIB = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/usr/lib
 # When we source the SDK we get the ENV SDKTARGETSYSROOT which is the sysroot
 SYSROOT = $(SDKTARGETSYSROOT)
-DEVICE = $(ROOT_DIR)/platform/jdboard/export/jdboard/jdboard.xpfm
+DEVICE = $(ROOT_DIR)/platform3/jdboard/export/jdboard/jdboard.xpfm
 XSA_FILE = $(ROOT_DIR)/board/MPSoC_ext_platform_wrapper.xsa
 TARGET ?= hw
 HOST_ARCH ?= aarch64
@@ -196,21 +196,21 @@ $(TEMP_DIR)/Stereo_accel.xo: xf_stereo_pipeline_accel.cpp
 	$(ECHO) "Compiling Kernel: Stereo_accel"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k stereopipeline_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' $^
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/Stereo_accel.xo
+#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/Stereo_accel.xo
 
 VPP_FLAGS_xilLz4CompDecomp += -I $(COMP_DIR)/L2/include -I $(COMP_DIR)/L1/include/hw -I $(SEC_DIR)/L1/include
 $(TEMP_DIR)/xilLz4CompressStream.xo: $(COMP_DIR)/L2/src/lz4_compress_stream.cpp
 	$(ECHO) "Compiling Kernel: xilLz4CompressStream"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_xilLz4CompDecomp) $(VPP_FLAGS) -k xilLz4CompressStream -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' '$<'
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilLz4CompressStream.xo
+#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilLz4CompressStream.xo
 
 VPP_FLAGS_xilCompDatamover += -I $(COMP_DIR)/L2/include -I $(COMP_DIR)/L1/include/hw -I $(SEC_DIR)/L1/include
 $(TEMP_DIR)/xilCompDatamover.xo: $(COMP_DIR)/L2/tests/src/block_comp_dm.cpp
 	$(ECHO) "Compiling Kernel: xilCompDatamover"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_xilCompDatamover) $(VPP_FLAGS) -k xilCompDatamover -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilCompDatamover.xo
+#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilCompDatamover.xo
 
 
 BINARY_CONTAINERS_DEPS += $(BINARY_CONTAINER_krnl_ISPPipeline_OBJS)
@@ -274,6 +274,8 @@ SD_FILES += $(EXE_FILE1)
 SD_FILES += $(EXE_FILE2)
 SD_FILES += $(EXE_FILE3)
 SD_FILES += $(EMCONFIG)
+SD_FILES += system.dtb
+SD_FILES += boot.scr
 SD_FILES += xrt.ini
 SD_FILES += $(DATA_FILE)# where define DATAFILE in json
 SD_FILES_WITH_PREFIX = $(foreach sd_file,$(SD_FILES), $(if $(filter $(sd_file),$(wildcard $(sd_file))), --package.sd_file $(sd_file)))

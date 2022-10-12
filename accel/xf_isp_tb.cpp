@@ -112,10 +112,10 @@ int main(int argc, char** argv) {
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned char);
     size_t image_out_size_bytes = in_img.rows * in_img.cols * 1 * sizeof(unsigned short);
 #else
-    out_img.create(in_img.rows, in_img.cols, CV_16UC1);
+    out_img.create(in_img.rows, in_img.cols, CV_16UC3);
     size_t vec_in_size_bytes = 256 * 3 * sizeof(unsigned char);
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned short);
-    size_t image_out_size_bytes = in_img.rows * in_img.cols * 1 * sizeof(unsigned short);
+    size_t image_out_size_bytes = in_img.rows * in_img.cols * 3 * sizeof(unsigned short);
 #endif
 
     // Write input image
@@ -216,7 +216,7 @@ int main(int argc, char** argv) {
     /////////////////////////////////////// end of CL ////////////////////////
 
     // Write output image
-    imwrite("hls_out.png", out_img);
+    imwrite("img.png", out_img);
 
     return 0;
 }
