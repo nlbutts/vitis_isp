@@ -20,7 +20,7 @@
 
 #include "xcl2.hpp"
 
-#define _PROFILE_ 0
+#define _PROFILE_ 1
 
 using namespace std;
 
@@ -189,7 +189,7 @@ int main(int argc, char** argv) {
     // Write output image
     cv::Mat out_disp_img(rows, cols, CV_8UC1);
     disp_img.convertTo(out_disp_img, CV_8U, (256.0 / NO_OF_DISPARITIES) / (16.));
-    cv::imwrite("hls_output.png", out_disp_img);
+    cv::imwrite("disparity.png", out_disp_img);
     printf("run complete !\n");
 
     return 0;
