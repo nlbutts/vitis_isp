@@ -69,7 +69,7 @@ VISLIB_DIR = $(ROOT_DIR)/Vitis_Libraries/vision
 COMP_DIR = $(ROOT_DIR)/Vitis_Libraries/data_compression
 SEC_DIR = $(ROOT_DIR)/Vitis_Libraries/security
 K_IMAGE = $(ROOT_DIR)/plinux/images/linux/Image
-ROOTFS = $(ROOT_DIR)/plinux/images/linux/rootfs.tar.gz
+ROOTFS = $(ROOT_DIR)/plinux/images/linux/rootfs.ext4
 XILINX_XRT = $(ROOT_DIR)/XRT
 
 #setting PLATFORM

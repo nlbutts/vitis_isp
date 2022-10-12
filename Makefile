@@ -63,6 +63,7 @@ sdk:
 
 .PHONY: accel
 accel:
+	cp plinux/images/linux/system.dtb accel
 	make -C accel xclbin
 	make -C accel host
 	make -C accel sd_card
