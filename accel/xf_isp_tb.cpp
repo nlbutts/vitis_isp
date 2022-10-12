@@ -84,9 +84,9 @@ void compute_gamma(float r_g, float g_g, float b_g, uchar gamma_lut[256 * 3]) {
     }
 }
 int main(int argc, char** argv) {
-    if (argc != 4) {
+    if (argc != 5) {
         fprintf(stderr, "Invalid Number of Arguments!\nUsage:\n");
-        fprintf(stderr, "<Executable Name> <input image path> <pawb> <mode>\n");
+        fprintf(stderr, "<Executable Name> <input image path> <pawb> <mode> <gamma>\n");
         return -1;
     }
 
@@ -132,17 +132,18 @@ int main(int argc, char** argv) {
     unsigned short bgain = 256;
 
     unsigned char mode_reg = atoi(argv[3]);
-
     unsigned short pawb = atoi(argv[2]);
-    printf("pawb: %d  mode: %d\n", (int)pawb, (int)mode_reg);
+    float gamma_val;
+    sscanf(argv[4], "%f", &gamma_val);
+    printf("pawb: %d  mode: %d gamma: %f\n", (int)pawb, (int)mode_reg, gamma_val);
 
     unsigned char gamma_lut[256 * 3];
     uint32_t hist0_awb[3][HIST_SIZE] = {0};
     uint32_t hist1_awb[3][HIST_SIZE] = {0};
 
-    float gamma_val_r = 0.5f, gamma_val_g = 0.8f, gamma_val_b = 0.8f;
+    //float gamma_val_r = 0.5f, gamma_val_g = 0.8f, gamma_val_b = 0.8f;
 
-    compute_gamma(gamma_val_r, gamma_val_g, gamma_val_b, gamma_lut);
+    compute_gamma(gamma_val, gamma_val, gamma_val, gamma_lut);
 
     // int channels=out_img.channels();
 

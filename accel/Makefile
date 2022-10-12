@@ -63,7 +63,7 @@ OPENCV_LIB = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/usr
 SYSROOT = $(SDKTARGETSYSROOT)
 DEVICE = $(ROOT_DIR)/platform/jdboard/export/jdboard/jdboard.xpfm
 XSA_FILE = $(ROOT_DIR)/board/MPSoC_ext_platform_wrapper.xsa
-TARGET ?= sw_emu
+TARGET ?= hw
 HOST_ARCH ?= aarch64
 VISLIB_DIR = $(ROOT_DIR)/Vitis_Libraries/vision
 COMP_DIR = $(ROOT_DIR)/Vitis_Libraries/data_compression
@@ -111,6 +111,7 @@ CXXFLAGS += -I$(CUR_DIR)/src/ -fmessage-length=0 --sysroot=$(SYSROOT)  -I$(SYSRO
 LDFLAGS += -pthread -L$(SYSROOT)/usr/lib -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o -Wl,--as-needed -lxilinxopencl -lxrt_coreutil
 VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps
 VPP_LDFLAGS += --optimize 2 -R 2
+VPP_LDFLAGS_krnl_ISPPipeline += --profile.data:all:all:all
 endif
 CXXFLAGS += $(EXTRA_CXXFLAGS)
 VPP_FLAGS += $(EXTRA_VPP_FLAGS)
@@ -124,7 +125,6 @@ CXXFLAGS += -D HW_EMU_TEST
 endif
 
 #Inclue Required Host Source Files
-#HOST_SRCS += xf_isp_tb.cpp $(VISLIB_DIR)/ext/xcl2/xcl2.cpp
 HOST_SRCS1 += xf_isp_tb.cpp $(VISLIB_DIR)/ext/xcl2/xcl2.cpp
 
 HOST_SRCS2 += lz4.cpp
@@ -148,7 +148,6 @@ CXXFLAGS_VIS += -I$(VISLIB_DIR)/L1/include
 CXXFLAGS_VIS += -I$(VISLIB_DIR)/ext/xcl2/
 
 CXXFLAGS +=  -D __SDSVHLS__
-#CXXFLAGS +=  -I $(SYSROOT)/usr/include -I $(SYSROOT)/usr/include/opencv4 -I $(VISLIB_DIR)/L3/examples/isppipeline/build -I $(VISLIB_DIR)/ext/xcl2/ -I $(VISLIB_DIR)/L1/include
 CXXFLAGS +=  -I $(SYSROOT)/usr/include -I $(SYSROOT)/usr/include/opencv4
 CXXFLAGS += --sysroot=$(SYSROOT)
 LDFLAGS +=  -L $(SYSROOT)/usr/lib -L ${SYSROOT}/opt/xilinx/xrt/lib
@@ -313,7 +312,8 @@ mkflag:
 	mkdir -p $(BUILD_DIR)
 	rm -rf $(BUILD_DIR)/makefile_args.txt
 	@for var in $(MAKEFLAGS); do echo $$var >> $(BUILD_DIR)/makefile_args.txt; done
-all: check_device  check_vpp check_platform mkflag $(RUN_DEPS)
+#all: check_device  check_vpp check_platform mkflag $(RUN_DEPS)
+all: check_vpp check_platform mkflag $(RUN_DEPS)
 run: all
 #hw_emu
 ifneq (,$(filter hw_emu, $(TARGET)))

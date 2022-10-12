@@ -27,3 +27,7 @@ isp_test: $(OBJS)
 
 .PHONY: all
 all: isp_test
+
+clean:
+	rm isp_test
+	rm *.o

@@ -94,9 +94,9 @@ void compute_gamma(float r_g, float g_g, float b_g, uchar gamma_lut[256 * 3]) {
     }
 }
 int main(int argc, char** argv) {
-    if (argc != 6) {
+    if (argc != 5) {
         fprintf(stderr, "Invalid Number of Arguments!\nUsage:\n");
-        fprintf(stderr, "<Executable Name> <input image path> <pawb> <mode> <rgain> <bgain>\n");
+        fprintf(stderr, "<Executable Name> <input image path> <pawb> <mode> <gamma>\n");
         return -1;
     }
 
@@ -125,7 +125,7 @@ int main(int argc, char** argv) {
     out_img.create(in_img.rows, in_img.cols, CV_16UC3);
     size_t vec_in_size_bytes = 256 * 3 * sizeof(unsigned char);
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned short);
-    size_t image_out_size_bytes = in_img.rows * in_img.cols * 1 * sizeof(unsigned short);
+    size_t image_out_size_bytes = in_img.rows * in_img.cols * 3 * sizeof(unsigned short);
 #endif
 
     // Write input image
@@ -140,22 +140,23 @@ int main(int argc, char** argv) {
 
     unsigned short pawb = atoi(argv[2]);
     unsigned char mode_reg = atoi(argv[3]);
-    unsigned short rgain = atoi(argv[4]);
-    unsigned short bgain = atoi(argv[5]);
+    float gamma_val;
+    sscanf(argv[4], "%f", &gamma_val);
+    unsigned short rgain = 128;
+    unsigned short bgain = 128;
 
-    printf("pawb: %d  mode: %d  rgain: %d  bgain: %d\n",
+    printf("pawb: %d  mode: %d  gamma: %f\n",
             (int)pawb,
             (int)mode_reg,
-            (int)rgain,
-            (int)bgain);
+            gamma_val);
 
     unsigned char gamma_lut[256 * 3];
     uint32_t hist0_awb[3][HIST_SIZE] = {0};
     uint32_t hist1_awb[3][HIST_SIZE] = {0};
 
-    float gamma_val_r = 0.5f, gamma_val_g = 0.8f, gamma_val_b = 0.8f;
+    //float gamma_val_r = 0.5f, gamma_val_g = 0.5f, gamma_val_b = 0.5f;
 
-    compute_gamma(gamma_val_r, gamma_val_g, gamma_val_b, gamma_lut);
+    compute_gamma(gamma_val, gamma_val, gamma_val, gamma_lut);
 
     // int channels=out_img.channels();
     ISPPipeline_accel((ap_uint<INPUT_PTR_WIDTH>*)in_img.data,
@@ -172,10 +173,8 @@ int main(int argc, char** argv) {
                       gamma_lut,
                       mode_reg, pawb);
 
-    printf("Foobar\n");
-
     // Write output image
-    imwrite("hls_out.png", out_img);
+    imwrite("img.png", out_img);
 
     return 0;
 }
