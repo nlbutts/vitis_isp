@@ -20,6 +20,7 @@ GIT_COMMITTER_NAME=$(shell git config user.name)
 
 TARGET = hw
 BOARD ?= zcu106
+XSA_FILE = $(ROOT_DIR)/board/MPSoC_ext_platform_wrapper.xsa
 
 # Check to make sure the ssh agent is running with a key
 .PHONY: check-env
@@ -71,6 +72,22 @@ accel:
 .PHONY: host
 host:
 	make -C accel host
+
+.PHONY: cleanall
+cleanall:
+	echo "Nuking everything"
+	make -C accel cleanall
+	rm -rf board/$(BOARD)
+	rm -rf board/MPSoC_ext_platform_wrapper.xsa
+	rm -rf board/vivado*
+	rm -rf board/psu*
+
+	rm -rf platform/jdboard
+	rm -rf platform/device-tree-xlnx
+
+	rm -rf plinux/build
+
+
 
 all: check-env patch-files board linux sdk platform accel
 

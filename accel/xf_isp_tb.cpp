@@ -90,7 +90,7 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    cv::Mat in_img, out_img, ocv_ref, in_gray, diff;
+    cv::Mat in_img, out_img, ocv_ref, in_gray, diff, out_yuv;
 
     unsigned short in_width, in_height;
 
@@ -112,10 +112,10 @@ int main(int argc, char** argv) {
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned char);
     size_t image_out_size_bytes = in_img.rows * in_img.cols * 1 * sizeof(unsigned short);
 #else
-    out_img.create(in_img.rows, in_img.cols, CV_8UC3);
+    out_img.create(in_img.rows, in_img.cols, CV_16UC3);
     size_t vec_in_size_bytes = 256 * 3 * sizeof(unsigned char);
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned short);
-    size_t image_out_size_bytes = in_img.rows * in_img.cols * 3 * sizeof(unsigned char);
+    size_t image_out_size_bytes = in_img.rows * in_img.cols * 3 * sizeof(unsigned short);
 #endif
 
     // Write input image
@@ -214,10 +214,46 @@ int main(int argc, char** argv) {
 
     q.finish();
 
+    // /////////////////////////////////////// RGB2YUV ////////////////////////
+    // out_yuv.create(in_img.rows, in_img.cols, CV_16UC1);
+    // size_t yuv_out_size_bytes = in_img.rows * in_img.cols * 1 * sizeof(unsigned short);
+
+    // std::cout << "Creating the kernel: RGB2YUV_accel" << std::endl;
+    // OCL_CHECK(err, cl::Kernel kernel2(program, "RGB2YUV_accel", &err));
+
+    // OCL_CHECK(err, cl::Buffer imageFromDevice2(context, CL_MEM_WRITE_ONLY, yuv_out_size_bytes, NULL, &err));
+    // // Set the kernel arguments
+    // OCL_CHECK(err, err = kernel2.setArg(0, imageFromDevice));
+    // OCL_CHECK(err, err = kernel2.setArg(1, imageFromDevice2));
+    // OCL_CHECK(err, err = kernel2.setArg(2, height));
+    // OCL_CHECK(err, err = kernel2.setArg(3, width));
+
+    // // Profiling Objects
+    // cl_ulong start = 0;
+    // cl_ulong end = 0;
+    // double diff_prof = 0.0f;
+    // cl::Event event_sp;
+
+    // // Launch the kernel
+    // OCL_CHECK(err, err = q.enqueueTask(kernel2, NULL, &event_sp));
+    // clWaitForEvents(1, (const cl_event*)&event_sp);
+
+    // event_sp.getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
+    // event_sp.getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
+    // diff_prof = end - start;
+    // std::cout << (diff_prof / 1000000) << "ms" << std::endl;
+
+    // // Copying Device result data to Host memory
+    // q.enqueueReadBuffer(imageFromDevice2, CL_TRUE, 0, yuv_out_size_bytes, out_yuv.data);
+
+    // q.finish();
+
+
     /////////////////////////////////////// end of CL ////////////////////////
 
     // Write output image
     imwrite("img.png", out_img);
+    //imwrite("yuv.png", out_yuv);
 
     return 0;
 }

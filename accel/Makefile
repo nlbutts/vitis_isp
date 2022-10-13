@@ -62,7 +62,6 @@ OPENCV_LIB = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/usr
 # When we source the SDK we get the ENV SDKTARGETSYSROOT which is the sysroot
 SYSROOT = $(SDKTARGETSYSROOT)
 DEVICE = $(ROOT_DIR)/platform/jdboard/export/jdboard/jdboard.xpfm
-XSA_FILE = $(ROOT_DIR)/board/MPSoC_ext_platform_wrapper.xsa
 TARGET ?= hw
 HOST_ARCH ?= aarch64
 VISLIB_DIR = $(ROOT_DIR)/Vitis_Libraries/vision
@@ -110,8 +109,9 @@ else ifeq ($(HOST_ARCH), aarch64)
 CXXFLAGS += -I$(CUR_DIR)/src/ -fmessage-length=0 --sysroot=$(SYSROOT)  -I$(SYSROOT)/usr/include/xrt -I$(XILINX_HLS)/include -std=c++14 -O3 -Wall -Wno-unknown-pragmas -Wno-unused-label
 LDFLAGS += -pthread -L$(SYSROOT)/usr/lib -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o -Wl,--as-needed -lxilinxopencl -lxrt_coreutil
 VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps
-VPP_LDFLAGS += --optimize 2 -R 2
-VPP_LDFLAGS_krnl_ISPPipeline += --profile.data all:all:all
+#VPP_LDFLAGS += --optimize 2 -R 2
+VPP_LDFLAGS += --optimize 0 -R 2
+#VPP_LDFLAGS_krnl_ISPPipeline += --profile.data all:all:all
 endif
 CXXFLAGS += $(EXTRA_CXXFLAGS)
 VPP_FLAGS += $(EXTRA_VPP_FLAGS)
@@ -195,7 +195,7 @@ $(TEMP_DIR)/RGB2YUV_accel.xo: RGB2YUV_accel.cpp
 	$(ECHO) "Compiling Kernel: RGB2YUV_accel"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k RGB2YUV_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/RGB2YUV_accel.xo
+#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/RGB2YUV_accel.xo
 
 $(TEMP_DIR)/Stereo_accel.xo: xf_stereo_pipeline_accel.cpp
 	$(ECHO) "Compiling Kernel: Stereo_accel"
