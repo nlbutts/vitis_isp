@@ -111,7 +111,7 @@ CXXFLAGS += -I$(CUR_DIR)/src/ -fmessage-length=0 --sysroot=$(SYSROOT)  -I$(SYSRO
 LDFLAGS += -pthread -L$(SYSROOT)/usr/lib -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o -Wl,--as-needed -lxilinxopencl -lxrt_coreutil
 VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps
 VPP_LDFLAGS += --optimize 2 -R 2
-VPP_LDFLAGS_krnl_ISPPipeline += --profile.data:all:all:all
+VPP_LDFLAGS_krnl_ISPPipeline += --profile.data all:all:all
 endif
 CXXFLAGS += $(EXTRA_CXXFLAGS)
 VPP_FLAGS += $(EXTRA_VPP_FLAGS)
@@ -190,6 +190,12 @@ $(TEMP_DIR)/ISPPipeline_accel.xo: xf_isp_accel.cpp
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k ISPPipeline_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
 BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/ISPPipeline_accel.xo
+
+$(TEMP_DIR)/RGB2YUV_accel.xo: RGB2YUV_accel.cpp
+	$(ECHO) "Compiling Kernel: RGB2YUV_accel"
+	mkdir -p $(TEMP_DIR)
+	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k RGB2YUV_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
+BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/RGB2YUV_accel.xo
 
 $(TEMP_DIR)/Stereo_accel.xo: xf_stereo_pipeline_accel.cpp
 	$(ECHO) "Compiling Kernel: Stereo_accel"

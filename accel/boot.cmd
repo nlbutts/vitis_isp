@@ -4,5 +4,5 @@
 ################
 fatload mmc 0 ${loadaddr} Image
 fatload mmc 0 ${fdt_addr_r} system.dtb
-setenv bootargs earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait
+setenv bootargs earlycon console=ttyPS0,115200 clk_ignore_unused root=/dev/mmcblk0p2 rw rootwait quiet
 booti ${loadaddr} - ${fdt_addr_r}
