@@ -62,11 +62,11 @@
 
 #define XF_AXI_GBR 1
 
-#define INPUT_PTR_WIDTH 16
-#define OUTPUT_PTR_WIDTH 32
-#define OUTPUT_PTR_WIDTH2 16
+#define INPUT_PTR_WIDTH 512
+#define OUTPUT_PTR_WIDTH 512
+#define OUTPUT_PTR_WIDTH2 512
 
-#define XF_USE_URAM 0 // uram enable
+#define XF_USE_URAM 1 // uram enable
 
 #define XF_CV_DEPTH_IN_0 2
 #define XF_CV_DEPTH_IN_1 2

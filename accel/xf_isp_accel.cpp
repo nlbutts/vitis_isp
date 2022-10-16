@@ -163,7 +163,7 @@ void ISPpipeline(ap_uint<INPUT_PTR_WIDTH>* img_inp,
     // xf::cv::gaincontrol<XF_BAYER_PATTERN, XF_SRC_T, XF_HEIGHT, XF_WIDTH, XF_NPPC, XF_CV_DEPTH_IN_1, XF_CV_DEPTH_IN_3>(
     //     imgInput1, gain_out, rgain, bgain);
     xf::cv::demosaicing<XF_BAYER_PATTERN, XF_SRC_T, XF_DST_T, XF_HEIGHT, XF_WIDTH, XF_NPPC, XF_CV_DEPTH_IN_0,
-                        XF_CV_DEPTH_OUT_0, 0>(imgInput1, demosaic_out);
+                        XF_CV_DEPTH_OUT_0, XF_USE_URAM>(imgInput1, demosaic_out);
 
     function_awb<XF_DST_T, XF_DST_T, XF_HEIGHT, XF_WIDTH, XF_NPPC, XF_CV_DEPTH_OUT_0, XF_CV_DEPTH_OUT_1>(
         demosaic_out, lsc_out, hist0, hist1, gain0, gain1, height, width, mode_reg, thresh);
