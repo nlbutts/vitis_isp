@@ -36,40 +36,40 @@ else
 endif
 
 .PHONY: patch-files
-patch-files:
+patch-files: ## Apply patches to the Vitis Library
 	$(E)cd Vitis_Libraries; pwd; \
 	$(E)patch -p1 --forward < ../patches/0001_use_uram.patch || true
 
 # Check that the ssh-agent is running and the submodules are updated
 .PHONY: board
-board:
+board: ## Create the Vivado board design
 	cd board; \
 	rm -rf $(BOARD); \
 	vivado -source $(BOARD).tcl -mode batch; \
 	vivado -source build.tcl -mode batch -project $(BOARD)/$(BOARD).xpr
 
 .PHONY: platform
-platform:
+platform: ## Create the Vitis platform
 	cd platform; xsct build.tcl
 
 .PHONY: linux
-linux:
+linux: ## Configure and build Linux
 	cd plinux; petalinux-config --get-hw-description $(XSA_FILE) --silentconfig; \
 	petalinux-build
 
 .PHONY: sdk
-sdk:
+sdk: ## Create the Linux SDK
 	cd plinux; petalinux-build --sdk
 
 .PHONY: accel
-accel:
+accel: ## Build the XCLBin, host files, and the SD Card image
 	cp plinux/images/linux/system.dtb accel
 	make -C accel xclbin
 	make -C accel host
 	make -C accel sd_card
 
 .PHONY: host
-host:
+host: ## Build the host accelerator code
 	make -C accel host
 
 all: check-env patch-files board linux sdk platform accel

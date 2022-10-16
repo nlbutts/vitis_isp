@@ -14,13 +14,11 @@ LDFLAGS += -l opencv_features2d -l opencv_flann -l opencv_video -l opencv_calib3
 LDFLAGS += -l opencv_highgui -lopencv_core
 LDFLAGS += -L/usr/local/lib
 
-SRC_FILES = isp_test.cpp ../xf_isp_accel.cpp
-OBJS = isp_test.o xf_isp_accel.o
+SRC_FILES = isp_test.cpp xf_isp_accel.cpp RGB2YUV_accel.cpp
+OBJDIR = obj
+#OBJS = isp_test.o xf_isp_accel.o
+OBJS := $(SRC_FILES:%.cpp=%.o)
 VPATH = .:..
-
-# Ex 1: .o files depend on .c files. Though we don't actually make the .o file.
-$(filter %.o,$(SRC_FILES)): %.o: %.c
-	echo "target: $@ prereq: $<"
 
 isp_test: $(OBJS)
 	$(CXX) $(CXXFLAGS) -o $@ $^ $(LDFLAGS)
@@ -29,5 +27,5 @@ isp_test: $(OBJS)
 all: isp_test
 
 clean:
-	rm isp_test
-	rm *.o
+	rm -f isp_test
+	rm -f *.o
