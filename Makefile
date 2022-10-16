@@ -55,6 +55,8 @@ platform: ## Create the Vitis platform
 .PHONY: linux
 linux: ## Configure and build Linux
 	cd plinux; petalinux-config --get-hw-description $(XSA_FILE) --silentconfig; \
+	petalinux-build -c fsbl-firmware -x clean; \
+	petalinux-build -c pmu-firmware -x clean; \
 	petalinux-build
 
 .PHONY: sdk
