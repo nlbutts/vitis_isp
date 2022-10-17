@@ -164,4 +164,4 @@ To start Gstreamer on the host use the following:
 
 # ZCU104 Boot switches
 The image below shows the configuration for the boot switches
-[switches](ZCU104_switches.png)
+![switches](ZCU104_switches.png)
