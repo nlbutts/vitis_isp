@@ -111,7 +111,7 @@ LDFLAGS += -pthread -L$(SYSROOT)/usr/lib -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.
 VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps --config connectivity.cfg
 VPP_LDFLAGS += --optimize 0 -R 2
 #VPP_LDFLAGS_krnl_ISPPipeline += --profile.data all:all:all --profile.stall=all:all --profile.memory=all --profile.exec=all --clock.defaultId=1
-VPP_LDFLAGS_krnl_ISPPipeline += --clock.defaultId=0
+VPP_LDFLAGS_krnl_ISPPipeline += --clock.defaultId=1
 endif
 CXXFLAGS += $(EXTRA_CXXFLAGS)
 VPP_FLAGS += $(EXTRA_VPP_FLAGS)
@@ -168,9 +168,9 @@ EXE_FILE_DEPS2 := $(HOST_SRCS2) $(EXE_FILE_DEPS2)
 EXE_NAME3 := stereopipe
 EXE_FILE3 := $(BUILD_DIR)/$(EXE_NAME3)
 EXE_FILE_DEPS3 := $(HOST_SRCS3) $(EXE_FILE_DEPS3)
-EXE_NAME4 := rgb2gray
-EXE_FILE4 := $(BUILD_DIR)/$(EXE_NAME4)
-EXE_FILE_DEPS4 := $(HOST_SRCS4) $(EXE_FILE_DEPS4)
+# EXE_NAME4 := rgb2gray
+# EXE_FILE4 := $(BUILD_DIR)/$(EXE_NAME4)
+# EXE_FILE_DEPS4 := $(HOST_SRCS4) $(EXE_FILE_DEPS4)
 
 HOST_ARGS := ../data/16bit.png
 PKG_HOST_ARGS = $(foreach args,$(HOST_ARGS),$(subst $(dir $(patsubst %/,%,$(args))),,$(args)))
@@ -199,7 +199,7 @@ $(TEMP_DIR)/rgb2gray_accel.xo: xf_cvt_color_accel.cpp
 	$(ECHO) "Compiling Kernel: RGB2YUV_accel"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k cvtcolor_bgr2gray -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/rgb2gray_accel.xo
+#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/rgb2gray_accel.xo
 
 $(TEMP_DIR)/Stereo_accel.xo: xf_stereo_pipeline_accel.cpp
 	$(ECHO) "Compiling Kernel: Stereo_accel"
@@ -212,14 +212,14 @@ $(TEMP_DIR)/xilLz4CompressStream.xo: $(COMP_DIR)/L2/src/lz4_compress_stream.cpp
 	$(ECHO) "Compiling Kernel: xilLz4CompressStream"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_xilLz4CompDecomp) $(VPP_FLAGS) -k xilLz4CompressStream -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' '$<'
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilLz4CompressStream.xo
+#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilLz4CompressStream.xo
 
 VPP_FLAGS_xilCompDatamover += -I $(COMP_DIR)/L2/include -I $(COMP_DIR)/L1/include/hw -I $(SEC_DIR)/L1/include
 $(TEMP_DIR)/xilCompDatamover.xo: $(COMP_DIR)/L2/tests/src/block_comp_dm.cpp
 	$(ECHO) "Compiling Kernel: xilCompDatamover"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_xilCompDatamover) $(VPP_FLAGS) -k xilCompDatamover -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilCompDatamover.xo
+#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilCompDatamover.xo
 
 
 BINARY_CONTAINERS_DEPS += $(BINARY_CONTAINER_krnl_ISPPipeline_OBJS)
@@ -238,9 +238,9 @@ $(EXE_FILE2): $(EXE_FILE_DEPS2) | check_env check_xrt
 $(EXE_FILE3): $(EXE_FILE_DEPS3) | check_env check_xrt
 	mkdir -p $(BUILD_DIR)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
-$(EXE_FILE4): $(EXE_FILE_DEPS4) | check_env check_xrt
-	mkdir -p $(BUILD_DIR)
-	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
+# $(EXE_FILE4): $(EXE_FILE_DEPS4) | check_env check_xrt
+# 	mkdir -p $(BUILD_DIR)
+# 	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
 
 else
 $(EXE_FILE1): $(EXE_FILE_DEPS1) | check_env check_sysroot
@@ -252,9 +252,9 @@ $(EXE_FILE2): $(EXE_FILE_DEPS2) | check_env check_sysroot
 $(EXE_FILE3): $(EXE_FILE_DEPS3) | check_env check_sysroot
 	mkdir -p $(BUILD_DIR)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(CXXFLAGS_VIS) $(LDFLAGS)
-$(EXE_FILE4): $(EXE_FILE_DEPS4) | check_env check_sysroot
-	mkdir -p $(BUILD_DIR)
-	$(CXX) -o $@ $^ $(CXXFLAGS) $(CXXFLAGS_VIS) $(LDFLAGS)
+# $(EXE_FILE4): $(EXE_FILE_DEPS4) | check_env check_sysroot
+# 	mkdir -p $(BUILD_DIR)
+# 	$(CXX) -o $@ $^ $(CXXFLAGS) $(CXXFLAGS_VIS) $(LDFLAGS)
 endif
 
 $(EMCONFIG):

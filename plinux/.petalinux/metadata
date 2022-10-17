@@ -1,6 +1,6 @@
 PETALINUX_VER=2022.1
 VALIDATE_HW_CHKSUM=1
-HARDWARE_PATH=/home/nlbutts/projects/vitis_isp/plinux/hw.xsa
-HARDWARE_CHECKSUM=a5613e71ffc1255627746727aa80ffa2
+HARDWARE_PATH=/home/nlbutts/projects/vitis_isp/board/MPSoC_ext_platform_wrapper.xsa
+HARDWARE_CHECKSUM=89e62458c32bc8cb6ba2a8fa5c33aaf0
 YOCTO_SDK=1dd2a216cb40dc0b474883920ea91cc6
 RFSCONFIG_CHKSUM=5647b3d794d8c2b7b55acdb6d5004a6a
