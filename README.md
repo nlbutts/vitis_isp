@@ -162,3 +162,6 @@ Petalinux uses SysV, which is terrible.
 To start Gstreamer on the host use the following:
 `gst-launch-1.0 udpsrc port=5000 ! 'application/x-rtp, media=(string)video, clock-rate=(int)90000, encoding-name=(string)JPEG, a-framerate=(string)30.000000, payload=(int)26, ssrc=(uint)3167073459, timestamp-offset=(uint)2147749579, seqnum-offset=(uint)3676' ! rtpjitterbuffer latency=50 ! rtpjpegdepay ! jpegdec ! glimagesink`
 
+# ZCU104 Boot switches
+The image below shows the configuration for the boot switches
+[switches](ZCU104_switches.png)

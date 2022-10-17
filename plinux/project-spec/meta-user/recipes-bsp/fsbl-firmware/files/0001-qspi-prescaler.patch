@@ -1,0 +1,13 @@
+diff --git a/lib/sw_apps/zynqmp_fsbl/src/xfsbl_qspi.c b/lib/sw_apps/zynqmp_fsbl/src/xfsbl_qspi.c
+index fc54df35e9..aaf0c2c61b 100644
+--- a/lib/sw_apps/zynqmp_fsbl/src/xfsbl_qspi.c
++++ b/lib/sw_apps/zynqmp_fsbl/src/xfsbl_qspi.c
+@@ -937,7 +937,7 @@ u32 XFsbl_Qspi32Init(u32 DeviceFlags)
+ 	/*
+ 	 * Set the pre-scaler for QSPI clock
+ 	 */
+-	Status = XQspiPsu_SetClkPrescaler(&QspiPsuInstance, XQSPIPSU_CLK_PRESCALE_8);
++	Status = XQspiPsu_SetClkPrescaler(&QspiPsuInstance, XQSPIPSU_CLK_PRESCALE_2);
+ 
+ 	if (Status != XFSBL_SUCCESS) {
+ 		UStatus = XFSBL_ERROR_QSPI_PRESCALER_CLK;

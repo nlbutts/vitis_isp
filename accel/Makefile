@@ -110,8 +110,9 @@ else ifeq ($(HOST_ARCH), aarch64)
 CXXFLAGS += -I$(CUR_DIR)/src/ -fmessage-length=0 --sysroot=$(SYSROOT)  -I$(SYSROOT)/usr/include/xrt -I$(XILINX_HLS)/include -std=c++14 -O3 -Wall -Wno-unknown-pragmas -Wno-unused-label
 LDFLAGS += -pthread -L$(SYSROOT)/usr/lib -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o -Wl,--as-needed -lxilinxopencl -lxrt_coreutil
 VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps --config connectivity.cfg
-VPP_LDFLAGS += --optimize 2 -R 2
-VPP_LDFLAGS_krnl_ISPPipeline += --profile.data all:all:all --profile.stall=all:all --profile.memory=all --profile.exec=all --clock.defaultId=1
+VPP_LDFLAGS += --optimize 0 -R 2
+#VPP_LDFLAGS_krnl_ISPPipeline += --profile.data all:all:all --profile.stall=all:all --profile.memory=all --profile.exec=all --clock.defaultId=1
+VPP_LDFLAGS_krnl_ISPPipeline += --clock.defaultId=0
 endif
 CXXFLAGS += $(EXTRA_CXXFLAGS)
 VPP_FLAGS += $(EXTRA_VPP_FLAGS)
@@ -193,7 +194,7 @@ $(TEMP_DIR)/ISPPipeline_accel.xo: xf_isp_accel.cpp
 	$(ECHO) "Compiling Kernel: ISPPipeline_accel"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k ISPPipeline_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/ISPPipeline_accel.xo
+#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/ISPPipeline_accel.xo
 
 $(TEMP_DIR)/rgb2gray_accel.xo: xf_cvt_color_accel.cpp
 	$(ECHO) "Compiling Kernel: RGB2YUV_accel"
@@ -252,9 +253,9 @@ $(EXE_FILE2): $(EXE_FILE_DEPS2) | check_env check_sysroot
 $(EXE_FILE3): $(EXE_FILE_DEPS3) | check_env check_sysroot
 	mkdir -p $(BUILD_DIR)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(CXXFLAGS_VIS) $(LDFLAGS)
-$(EXE_FILE4): $(EXE_FILE_DEPS4) | check_env check_xrt
+$(EXE_FILE4): $(EXE_FILE_DEPS4) | check_env check_sysroot
 	mkdir -p $(BUILD_DIR)
-	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(CXXFLAGS_VIS) $(LDFLAGS)
 endif
 
 $(EMCONFIG):

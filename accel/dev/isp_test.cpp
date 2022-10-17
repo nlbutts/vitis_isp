@@ -26,7 +26,7 @@ void ISPPipeline_accel(ap_uint<INPUT_PTR_WIDTH>* img_inp,
                        unsigned char mode_reg,
                        uint16_t pawb);
 
-void RGB2YUV_accel(ap_uint<OUTPUT_PTR_WIDTH>* img_inp,
+void cvtcolor_bgr2gray(ap_uint<OUTPUT_PTR_WIDTH>* img_inp,
                    ap_uint<OUTPUT_PTR_WIDTH2>* img_out,
                    int height,
                    int width);
@@ -103,7 +103,7 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    cv::Mat in_img, out_img, ocv_ref, in_gray, diff, yuv_img;
+    cv::Mat in_img, out_img, ocv_ref, in_gray, diff, gray_img;
 
     unsigned short in_width, in_height;
 
@@ -126,11 +126,11 @@ int main(int argc, char** argv) {
     size_t image_out_size_bytes = in_img.rows * in_img.cols * 1 * sizeof(unsigned short);
 #else
     out_img.create(in_img.rows, in_img.cols, CV_8UC3);
-    yuv_img.create(in_img.rows, in_img.cols, CV_16UC1);
+    gray_img.create(in_img.rows, in_img.cols, CV_8UC1);
     size_t vec_in_size_bytes = 256 * 3 * sizeof(unsigned char);
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned short);
     size_t image_out_size_bytes = in_img.rows * in_img.cols * 3 * sizeof(unsigned char);
-    size_t yuv_out_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned short);
+    size_t gray_out_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned char);
 #endif
 
     // Write input image
@@ -174,19 +174,19 @@ int main(int argc, char** argv) {
                       gamma_lut,
                       mode_reg, pawb);
 
-    RGB2YUV_accel((ap_uint<OUTPUT_PTR_WIDTH>*)out_img.data,
-                  (ap_uint<OUTPUT_PTR_WIDTH2>*)yuv_img.data,
+    cvtcolor_bgr2gray((ap_uint<OUTPUT_PTR_WIDTH>*)out_img.data,
+                  (ap_uint<OUTPUT_PTR_WIDTH2>*)gray_img.data,
                    height,
                    width);
 
-    RGB2YUV_accel((ap_uint<OUTPUT_PTR_WIDTH>*)out_img.data,
-                  (ap_uint<OUTPUT_PTR_WIDTH2>*)yuv_img.data,
+    cvtcolor_bgr2gray((ap_uint<OUTPUT_PTR_WIDTH>*)out_img.data,
+                  (ap_uint<OUTPUT_PTR_WIDTH2>*)gray_img.data,
                    height,
                    width);
 
     // Write output image
     imwrite("img.png", out_img);
-    imwrite("yuv.png", yuv_img);
+    imwrite("gray.png", gray_img);
 
     return 0;
 }
