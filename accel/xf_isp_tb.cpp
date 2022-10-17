@@ -19,6 +19,8 @@
 
 #include "xcl2.hpp"
 
+#include <chrono>
+
 void compute_gamma(float r_g, float g_g, float b_g, uchar gamma_lut[256 * 3]) {
     float gamma_inv[256] = {
         0.000000, 0.003922, 0.007843, 0.011765, 0.015686, 0.019608, 0.023529, 0.027451, 0.031373, 0.035294, 0.039216,
@@ -90,7 +92,7 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    cv::Mat in_img, out_img, ocv_ref, in_gray, diff, yuv_img;
+    cv::Mat in_img, out_img, ocv_ref, in_gray, diff, gray_img, small_img;
 
     unsigned short in_width, in_height;
 
@@ -112,12 +114,16 @@ int main(int argc, char** argv) {
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned char);
     size_t image_out_size_bytes = in_img.rows * in_img.cols * 1 * sizeof(unsigned short);
 #else
+    int new_height = in_img.rows / 2;
+    int new_width = in_img.cols / 2;
     out_img.create(in_img.rows, in_img.cols, CV_8UC3);
-    yuv_img.create(in_img.rows, in_img.cols, CV_16UC1);
+    gray_img.create(in_img.rows, in_img.cols, CV_8UC1);
+    small_img.create(new_height, new_width, CV_8UC3);
     size_t vec_in_size_bytes = 256 * 3 * sizeof(unsigned char);
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned short);
     size_t image_out_size_bytes = in_img.rows * in_img.cols * 3 * sizeof(unsigned char);
-    size_t yuv_out_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned short);
+    size_t gray_out_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned char);
+    size_t small_out_size_bytes = new_height * new_width * 3 * sizeof(unsigned char);
 #endif
 
     // Write input image
@@ -199,8 +205,15 @@ int main(int argc, char** argv) {
         cl::Event event_sp;
 
         // Launch the kernel
+        auto start2 = std::chrono::high_resolution_clock::now();
+
         OCL_CHECK(err, err = q.enqueueTask(kernel, NULL, &event_sp));
         clWaitForEvents(1, (const cl_event*)&event_sp);
+
+        auto finish2 = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<double> elapsed = finish2 - start2;
+        double t_sec = elapsed.count();
+        std::cout << "NLB: Hackked timer time: " << t_sec << std::endl;
 
         event_sp.getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
         event_sp.getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
@@ -211,54 +224,98 @@ int main(int argc, char** argv) {
         q.enqueueReadBuffer(imageFromDevice, CL_TRUE, 0, image_out_size_bytes, out_img.data);
     }
 
+    //q.finish();
+    imwrite("img.png", out_img);
+    /////////////////////////////////////// end of ISP ////////////////////////
+
+    // Create a kernel:
+    std::cout << "Creating the kernel: cvtcolor_bgr2gray" << std::endl;
+    OCL_CHECK(err, cl::Kernel kernel2(program, "cvtcolor_bgr2gray", &err));
+
+    OCL_CHECK(err, cl::Buffer imageToDevice2(context, CL_MEM_READ_ONLY, image_out_size_bytes, NULL, &err));
+    OCL_CHECK(err, cl::Buffer grayFromDevice(context, CL_MEM_WRITE_ONLY, gray_out_size_bytes, NULL, &err));
+    // Set the kernel arguments
+    OCL_CHECK(err, err = kernel2.setArg(0, imageToDevice2));
+    OCL_CHECK(err, err = kernel2.setArg(1, grayFromDevice));
+    OCL_CHECK(err, err = kernel2.setArg(2, height));
+    OCL_CHECK(err, err = kernel2.setArg(3, width));
+
+    for (int i = 0; i < 2; i++) {
+        std::cout << "Queing data" << std::endl;
+        OCL_CHECK(err, q.enqueueWriteBuffer(imageToDevice2, CL_TRUE, 0, image_out_size_bytes, out_img.data));
+
+        // Profiling Objects
+        cl_ulong start = 0;
+        cl_ulong end = 0;
+        double diff_prof = 0.0f;
+        cl::Event event_sp;
+
+        // Launch the kernel
+        std::cout << "Starting task" << std::endl;
+        OCL_CHECK(err, err = q.enqueueTask(kernel2, NULL, &event_sp));
+        std::cout << "Waiting" << std::endl;
+        clWaitForEvents(1, (const cl_event*)&event_sp);
+        std::cout << "Done waiting" << std::endl;
+
+        event_sp.getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
+        event_sp.getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
+        diff_prof = end - start;
+        std::cout << (diff_prof / 1000000) << "ms" << std::endl;
+
+        // Copying Device result data to Host memory
+        q.enqueueReadBuffer(grayFromDevice, CL_TRUE, 0, gray_out_size_bytes, gray_img.data);
+        std::cout << "Completed loop" << std::endl;
+    }
+
+    imwrite("gray.png", gray_img);
+
+    /////////////////////////////////////// end of rgb2gray ////////////////////////
+    // Create a kernel:
+    std::cout << "Creating the kernel: resize_accel" << std::endl;
+    OCL_CHECK(err, cl::Kernel kernel3(program, "resize_accel", &err));
+
+    OCL_CHECK(err, cl::Buffer imageToDevice3(context, CL_MEM_READ_ONLY, image_out_size_bytes, NULL, &err));
+    OCL_CHECK(err, cl::Buffer smallFromDevice(context, CL_MEM_WRITE_ONLY, small_out_size_bytes, NULL, &err));
+    // Set the kernel arguments
+    OCL_CHECK(err, err = kernel3.setArg(0, imageToDevice3));
+    OCL_CHECK(err, err = kernel3.setArg(1, smallFromDevice));
+    OCL_CHECK(err, err = kernel3.setArg(2, height));
+    OCL_CHECK(err, err = kernel3.setArg(3, width));
+    OCL_CHECK(err, err = kernel3.setArg(4, new_height));
+    OCL_CHECK(err, err = kernel3.setArg(5, new_width));
+
+    for (int i = 0; i < 2; i++) {
+        std::cout << "Queing data" << std::endl;
+        OCL_CHECK(err, q.enqueueWriteBuffer(imageToDevice3, CL_TRUE, 0, image_out_size_bytes, out_img.data));
+
+        // Profiling Objects
+        cl_ulong start = 0;
+        cl_ulong end = 0;
+        double diff_prof = 0.0f;
+        cl::Event event_sp;
+
+        // Launch the kernel
+        std::cout << "Starting task" << std::endl;
+        OCL_CHECK(err, err = q.enqueueTask(kernel3, NULL, &event_sp));
+        std::cout << "Waiting" << std::endl;
+        clWaitForEvents(1, (const cl_event*)&event_sp);
+        std::cout << "Done waiting" << std::endl;
+
+        event_sp.getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
+        event_sp.getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
+        diff_prof = end - start;
+        std::cout << (diff_prof / 1000000) << "ms" << std::endl;
+
+        // Copying Device result data to Host memory
+        q.enqueueReadBuffer(smallFromDevice, CL_TRUE, 0, small_out_size_bytes, small_img.data);
+        std::cout << "Completed loop" << std::endl;
+    }
+
+    imwrite("small.png", small_img);
+
     q.finish();
 
-    // // Create a kernel:
-    // std::cout << "Creating the kernel: RGB2YUV_accel" << std::endl;
-    // OCL_CHECK(err, cl::Kernel kernel2(program, "RGB2YUV_accel", &err));
-
-    // OCL_CHECK(err, cl::Buffer imageToDevice(context, CL_MEM_READ_ONLY, image_out_size_bytes, NULL, &err));
-    // OCL_CHECK(err, cl::Buffer yuvFromDevice(context, CL_MEM_WRITE_ONLY, yuv_out_size_bytes, NULL, &err));
-    // // Set the kernel arguments
-    // OCL_CHECK(err, err = kernel2.setArg(0, imageToDevice));
-    // OCL_CHECK(err, err = kernel2.setArg(1, yuvFromDevice));
-    // OCL_CHECK(err, err = kernel2.setArg(2, height));
-    // OCL_CHECK(err, err = kernel2.setArg(3, width));
-
-    // for (int i = 0; i < 2; i++) {
-    //     std::cout << "Queing data" << std::endl;
-    //     OCL_CHECK(err, q.enqueueWriteBuffer(imageToDevice, CL_TRUE, 0, image_out_size_bytes, in_img.data));
-
-    //     // Profiling Objects
-    //     cl_ulong start = 0;
-    //     cl_ulong end = 0;
-    //     double diff_prof = 0.0f;
-    //     cl::Event event_sp;
-
-    //     // Launch the kernel
-    //     std::cout << "Starting task" << std::endl;
-    //     OCL_CHECK(err, err = q.enqueueTask(kernel2, NULL, &event_sp));
-    //     std::cout << "Waiting" << std::endl;
-    //     clWaitForEvents(1, (const cl_event*)&event_sp);
-    //     std::cout << "Done waiting" << std::endl;
-
-    //     event_sp.getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
-    //     event_sp.getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
-    //     diff_prof = end - start;
-    //     std::cout << (diff_prof / 1000000) << "ms" << std::endl;
-
-    //     // Copying Device result data to Host memory
-    //     q.enqueueReadBuffer(yuvFromDevice, CL_TRUE, 0, yuv_out_size_bytes, yuv_img.data);
-    //     std::cout << "Completed loop" << std::endl;
-    // }
-
-    // q.finish();
-
     /////////////////////////////////////// end of CL ////////////////////////
-
-    // Write output image
-    imwrite("img.png", out_img);
-    //imwrite("yuv.png", yuv_img);
 
     return 0;
 }

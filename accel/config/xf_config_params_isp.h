@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-#define XF_NPPC XF_NPPC1 // XF_NPPC1 --1PIXEL , XF_NPPC2--2PIXEL ,XF_NPPC4--4 and XF_NPPC8--8PIXEL
+#define XF_NPPC XF_NPPC2 // XF_NPPC1 --1PIXEL , XF_NPPC2--2PIXEL ,XF_NPPC4--4 and XF_NPPC8--8PIXEL
 
 #define XF_WIDTH 1928  // MAX_COLS
 #define XF_HEIGHT 1208 // MAX_ROWS
@@ -62,9 +62,8 @@
 
 #define XF_AXI_GBR 1
 
-#define INPUT_PTR_WIDTH 512
-#define OUTPUT_PTR_WIDTH 512
-#define OUTPUT_PTR_WIDTH2 512
+#define INPUT_PTR_WIDTH 128
+#define OUTPUT_PTR_WIDTH 128
 
 #define XF_USE_URAM 1 // uram enable
 
