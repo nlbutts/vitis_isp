@@ -14,29 +14,16 @@
  * limitations under the License.
  */
 
-#define NO_OF_DISPARITIES 48
+#define SAD_WINDOW_SIZE 11
+
+/* NO_OF_DISPARITIES must be greater than '0' and less than the image width */
+#define NO_OF_DISPARITIES 32
 
 /* NO_OF_DISPARITIES must not be lesser than PARALLEL_UNITS and NO_OF_DISPARITIES/PARALLEL_UNITS must be a
  * non-fractional number */
-#define PARALLEL_UNITS 16
+#define PARALLEL_UNITS 32
 
-/* SAD window size must be an odd number and it must be less than minimum of image height and width and less than the
- * tested size '21' */
-#define SAD_WINDOW_SIZE 15
-
-// Configure this based on the number of rows needed for Remap function
-#define XF_REMAP_BUFSIZE 128
-
-#define INPUT_PTR_WIDTH 32
-#define OUTPUT_PTR_WIDTH 32
-
-#define XF_USE_URAM true
-#define XF_CV_DEPTH_MAT_L 3
-#define XF_CV_DEPTH_MAT_R 3
-#define XF_CV_DEPTH_MAT_DISP 3
-#define XF_CV_DEPTH_MAP_XL 3
-#define XF_CV_DEPTH_MAP_YL 3
-#define XF_CV_DEPTH_MAP_XR 3
-#define XF_CV_DEPTH_MAP_YR 3
-#define XF_CV_DEPTH_LEFT_REMAPPED 3
-#define XF_CV_DEPTH_RIGHT_REMAPPED 3
+#define XF_USE_URAM false
+#define XF_CV_DEPTH_IN_0 3
+#define XF_CV_DEPTH_IN_1 3
+#define XF_CV_DEPTH_OUT 3

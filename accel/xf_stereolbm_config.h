@@ -14,25 +14,25 @@
  * limitations under the License.
  */
 
-#ifndef _XF_STEREO_PIPELINE_CONFIG_H_
-#define _XF_STEREO_PIPELINE_CONFIG_H_
+#ifndef _XF_STEREOBM_CONFIG_H_
+#define _XF_STEREOBM_CONFIG_H_
 
 #include "hls_stream.h"
 #include "common/xf_common.hpp"
 #include "common/xf_utility.hpp"
-#include "imgproc/xf_stereo_pipeline.hpp"
-#include "imgproc/xf_remap.hpp"
 #include "imgproc/xf_stereolbm.hpp"
 #include "config/xf_config_params_stereo.h"
 
+// Set the input and output pixel depth:
+#define IN_TYPE XF_8UC1
+#define PTR_IN_WIDTH 8
+#define OUT_TYPE XF_16UC1
+#define PTR_OUT_WIDTH 16
+
+// Set the optimization type:
+#define NPC XF_NPPC1
+
 /* config width and height */
-#define XF_HEIGHT 1080
-#define XF_WIDTH 1920
-
-#define XF_CAMERA_MATRIX_SIZE 9
-#define XF_DIST_COEFF_SIZE 5
-
-#define IN_TYPE ap_uint<8>
-#define OUT_TYPE ap_uint<16>
-
-#endif // _XF_STEREO_PIPELINE_CONFIG_H_
+#define WIDTH 1920
+#define HEIGHT 1080
+#endif // _XF_STEREOBM_CONFIG_H_
