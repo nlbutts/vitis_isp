@@ -108,10 +108,10 @@ VPP_LDFLAGS += --optimize 2 -R 2
 else ifeq ($(HOST_ARCH), aarch64)
 CXXFLAGS += -I$(CUR_DIR)/src/ -fmessage-length=0 --sysroot=$(SYSROOT)  -I$(SYSROOT)/usr/include/xrt -I$(XILINX_HLS)/include -std=c++14 -O3 -Wall -Wno-unknown-pragmas -Wno-unused-label
 LDFLAGS += -pthread -L$(SYSROOT)/usr/lib -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o -Wl,--as-needed -lxilinxopencl -lxrt_coreutil
-VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps
-#VPP_LDFLAGS += --optimize 2 -R 2
+VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps --config connectivity.cfg
 VPP_LDFLAGS += --optimize 0 -R 2
-#VPP_LDFLAGS_krnl_ISPPipeline += --profile.data all:all:all
+#VPP_LDFLAGS_krnl_ISPPipeline += --profile.data all:all:all --profile.stall=all:all --profile.memory=all --profile.exec=all --clock.defaultId=1
+VPP_LDFLAGS_krnl_ISPPipeline += --clock.defaultId=0
 endif
 CXXFLAGS += $(EXTRA_CXXFLAGS)
 VPP_FLAGS += $(EXTRA_VPP_FLAGS)
@@ -126,6 +126,7 @@ endif
 
 #Inclue Required Host Source Files
 HOST_SRCS1 += xf_isp_tb.cpp $(VISLIB_DIR)/ext/xcl2/xcl2.cpp
+HOST_SRCS4 += xf_rgb2gray_tb.cpp $(VISLIB_DIR)/ext/xcl2/xcl2.cpp
 
 HOST_SRCS2 += lz4.cpp
 HOST_SRCS2 += $(COMP_DIR)/common/libs/compress/lz4OCLHost.cpp
@@ -167,6 +168,9 @@ EXE_FILE_DEPS2 := $(HOST_SRCS2) $(EXE_FILE_DEPS2)
 EXE_NAME3 := stereopipe
 EXE_FILE3 := $(BUILD_DIR)/$(EXE_NAME3)
 EXE_FILE_DEPS3 := $(HOST_SRCS3) $(EXE_FILE_DEPS3)
+EXE_NAME4 := rgb2gray
+EXE_FILE4 := $(BUILD_DIR)/$(EXE_NAME4)
+EXE_FILE_DEPS4 := $(HOST_SRCS4) $(EXE_FILE_DEPS4)
 
 HOST_ARGS := ../data/16bit.png
 PKG_HOST_ARGS = $(foreach args,$(HOST_ARGS),$(subst $(dir $(patsubst %/,%,$(args))),,$(args)))
@@ -191,11 +195,11 @@ $(TEMP_DIR)/ISPPipeline_accel.xo: xf_isp_accel.cpp
 	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k ISPPipeline_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
 BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/ISPPipeline_accel.xo
 
-$(TEMP_DIR)/RGB2YUV_accel.xo: RGB2YUV_accel.cpp
+$(TEMP_DIR)/rgb2gray_accel.xo: xf_cvt_color_accel.cpp
 	$(ECHO) "Compiling Kernel: RGB2YUV_accel"
 	mkdir -p $(TEMP_DIR)
-	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k RGB2YUV_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
-#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/RGB2YUV_accel.xo
+	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k cvtcolor_bgr2gray -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
+BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/rgb2gray_accel.xo
 
 $(TEMP_DIR)/Stereo_accel.xo: xf_stereo_pipeline_accel.cpp
 	$(ECHO) "Compiling Kernel: Stereo_accel"
@@ -208,20 +212,20 @@ $(TEMP_DIR)/xilLz4CompressStream.xo: $(COMP_DIR)/L2/src/lz4_compress_stream.cpp
 	$(ECHO) "Compiling Kernel: xilLz4CompressStream"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_xilLz4CompDecomp) $(VPP_FLAGS) -k xilLz4CompressStream -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' '$<'
-#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilLz4CompressStream.xo
+BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilLz4CompressStream.xo
 
 VPP_FLAGS_xilCompDatamover += -I $(COMP_DIR)/L2/include -I $(COMP_DIR)/L1/include/hw -I $(SEC_DIR)/L1/include
 $(TEMP_DIR)/xilCompDatamover.xo: $(COMP_DIR)/L2/tests/src/block_comp_dm.cpp
 	$(ECHO) "Compiling Kernel: xilCompDatamover"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_xilCompDatamover) $(VPP_FLAGS) -k xilCompDatamover -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
-#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilCompDatamover.xo
+BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilCompDatamover.xo
 
 
 BINARY_CONTAINERS_DEPS += $(BINARY_CONTAINER_krnl_ISPPipeline_OBJS)
 $(BINARY_CONTAINERS): $(BINARY_CONTAINERS_DEPS)
 	mkdir -p $(BUILD_DIR)
-	$(VPP) -l $(VPP_FLAGS) --temp_dir $(TEMP_DIR) --report_dir $(BUILD_REPORT_DIR)/krnl_ISPPipeline $(VPP_LDFLAGS)  $(VPP_LDFLAGS_krnl_ISPPipeline) $(AIE_LDFLAGS) --config connectivity.cfg  -o $@ $^
+	$(VPP) -l $(VPP_FLAGS) --temp_dir $(TEMP_DIR) --report_dir $(BUILD_REPORT_DIR)/krnl_ISPPipeline $(VPP_LDFLAGS)  $(VPP_LDFLAGS_krnl_ISPPipeline) $(AIE_LDFLAGS) -o $@ $^
 
 ############################## Setting Rules for Host (Building Host Executable) ##############################
 ifeq ($(HOST_ARCH), x86)
@@ -234,6 +238,9 @@ $(EXE_FILE2): $(EXE_FILE_DEPS2) | check_env check_xrt
 $(EXE_FILE3): $(EXE_FILE_DEPS3) | check_env check_xrt
 	mkdir -p $(BUILD_DIR)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
+$(EXE_FILE4): $(EXE_FILE_DEPS4) | check_env check_xrt
+	mkdir -p $(BUILD_DIR)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(LDFLAGS)
 
 else
 $(EXE_FILE1): $(EXE_FILE_DEPS1) | check_env check_sysroot
@@ -243,6 +250,9 @@ $(EXE_FILE2): $(EXE_FILE_DEPS2) | check_env check_sysroot
 	mkdir -p $(BUILD_DIR)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(CXXFLAGS_COMP) $(LDFLAGS)
 $(EXE_FILE3): $(EXE_FILE_DEPS3) | check_env check_sysroot
+	mkdir -p $(BUILD_DIR)
+	$(CXX) -o $@ $^ $(CXXFLAGS) $(CXXFLAGS_VIS) $(LDFLAGS)
+$(EXE_FILE4): $(EXE_FILE_DEPS4) | check_env check_sysroot
 	mkdir -p $(BUILD_DIR)
 	$(CXX) -o $@ $^ $(CXXFLAGS) $(CXXFLAGS_VIS) $(LDFLAGS)
 endif
@@ -278,6 +288,7 @@ SD_FILES += $(RUN_SCRIPT)
 SD_FILES += $(EXE_FILE1)
 SD_FILES += $(EXE_FILE2)
 SD_FILES += $(EXE_FILE3)
+SD_FILES += $(EXE_FILE4)
 SD_FILES += $(EMCONFIG)
 SD_FILES += system.dtb
 SD_FILES += boot.scr
@@ -289,7 +300,7 @@ PACKAGE_FILES := $(BINARY_CONTAINERS)
 PACKAGE_FILES += $(AIE_CONTAINER)
 SD_CARD := $(CUR_DIR)/package_$(TARGET)
 dfx_hw := off
-$(SD_CARD): $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(BINARY_CONTAINERS) $(RUN_SCRIPT) $(EMCONFIG) check_kimage check_rootfs
+$(SD_CARD): $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4) $(BINARY_CONTAINERS) $(RUN_SCRIPT) $(EMCONFIG) check_kimage check_rootfs
 	@echo "Generating sd_card folder...."
 	mkdir -p $(SD_CARD)
 	chmod a+rx $(BUILD_DIR)/run_script.sh
@@ -310,7 +321,7 @@ endif
 sd_card: $(SD_CARD)
 endif
 ############################## Setting Essential Checks and Building Rules ##############################
-RUN_DEPS += $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(BINARY_CONTAINERS) $(EMCONFIG)
+RUN_DEPS += $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4) $(BINARY_CONTAINERS) $(EMCONFIG)
 RUN_DEPS += $(SD_CARD)
 
 .PHONY: mkflag all run
@@ -374,9 +385,9 @@ emconfig: $(EMCONFIG)
 
 .PHONY: host
 ifeq ($(HOST_ARCH), x86)
-host:  check_env check_xrt $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3)
+host:  check_env check_xrt $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4)
 else
-host:  check_env check_sysroot $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3)
+host:  check_env check_sysroot $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4)
 endif
 
 .PHONY: xclbin
@@ -391,7 +402,7 @@ check_env:
 
 ############################## Cleaning Rules ##############################
 cleanh:
-	-$(RMDIR) $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) vitis_* TempConfig system_estimate.xtxt *.rpt .run/
+	-$(RMDIR) $(EXE_FILE1) $(EXE_FILE2) $(EXE_FILE3) $(EXE_FILE4) vitis_* TempConfig system_estimate.xtxt *.rpt .run/
 	-$(RMDIR) src/*.ll _xocc_* .Xil dltmp* xmltmp* *.log *.jou *.wcfg *.wdb sample_link.ini sample_compile.ini obj*  bin* *.csv *.jpg *.jpeg *.png
 
 cleank:

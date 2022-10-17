@@ -14,12 +14,20 @@
  * limitations under the License.
  */
 
-#define XF_NPPC XF_NPPC2 // XF_NPPC1 --1PIXEL , XF_NPPC2--2PIXEL ,XF_NPPC4--4 and XF_NPPC8--8PIXEL
+#define XF_NPPC XF_NPPC1 // XF_NPPC1 --1PIXEL , XF_NPPC2--2PIXEL ,XF_NPPC4--4 and XF_NPPC8--8PIXEL
 
-#define XF_WIDTH 1920  // MAX_COLS
-#define XF_HEIGHT 1080 // MAX_ROWS
+#define XF_WIDTH 1928  // MAX_COLS
+#define XF_HEIGHT 1208 // MAX_ROWS
 
-#define XF_BAYER_PATTERN XF_BAYER_RG // bayer pattern
+#define XF_BAYER_PATTERN XF_BAYER_GR // bayer pattern
+
+// enum XF_demosaicing {
+//     XF_BAYER_BG,
+//     XF_BAYER_GB,
+//     XF_BAYER_GR, - GOOD
+//     XF_BAYER_RG, - NO
+// };
+
 
 #define T_8U 0
 #define T_10U 0
@@ -54,19 +62,20 @@
 
 #define XF_AXI_GBR 1
 
-#define INPUT_PTR_WIDTH 128
-#define OUTPUT_PTR_WIDTH 128
+#define INPUT_PTR_WIDTH 512
+#define OUTPUT_PTR_WIDTH 512
+#define OUTPUT_PTR_WIDTH2 512
 
-#define XF_USE_URAM 0 // uram enable
+#define XF_USE_URAM 1 // uram enable
 
-#define XF_CV_DEPTH_IN_0 1
-#define XF_CV_DEPTH_IN_1 3
-#define XF_CV_DEPTH_IN_2 3
+#define XF_CV_DEPTH_IN_0 2
+#define XF_CV_DEPTH_IN_1 2
+#define XF_CV_DEPTH_IN_2 2
 #define XF_CV_DEPTH_IN_3 2
-#define XF_CV_DEPTH_OUT_0 3
-#define XF_CV_DEPTH_OUT_1 3
-#define XF_CV_DEPTH_OUT_2 3
-#define XF_CV_DEPTH_OUT_3 3
-#define XF_CV_DEPTH_OUT_4 3
-#define XF_CV_DEPTH_OUT_5 3
-#define XF_CV_DEPTH_OUT_6 3
+#define XF_CV_DEPTH_OUT_0 2
+#define XF_CV_DEPTH_OUT_1 2
+#define XF_CV_DEPTH_OUT_2 2
+#define XF_CV_DEPTH_OUT_3 2
+#define XF_CV_DEPTH_OUT_4 2
+#define XF_CV_DEPTH_OUT_5 2
+#define XF_CV_DEPTH_OUT_6 0
