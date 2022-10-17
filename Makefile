@@ -50,7 +50,7 @@ board: ## Create the Vivado board design
 
 .PHONY: platform
 platform: ## Create the Vitis platform
-	cd platform; xsct build.tcl
+	cd platform; rm -rf jdboard; xsct build.tcl
 
 .PHONY: linux
 linux: ## Configure and build Linux
