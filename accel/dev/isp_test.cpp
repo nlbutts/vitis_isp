@@ -30,6 +30,13 @@ void cvtcolor_bgr2gray(ap_uint<OUTPUT_PTR_WIDTH>* img_inp,
                    ap_uint<OUTPUT_PTR_WIDTH2>* img_out,
                    int height,
                    int width);
+
+void resize_accel(ap_uint<128>* img_inp,
+                  ap_uint<128>* img_out,
+                  int rows_in,
+                  int cols_in,
+                  int rows_out,
+                  int cols_out);
 }
 
 void compute_gamma(float r_g, float g_g, float b_g, uchar gamma_lut[256 * 3]) {
@@ -103,7 +110,7 @@ int main(int argc, char** argv) {
         return -1;
     }
 
-    cv::Mat in_img, out_img, ocv_ref, in_gray, diff, gray_img;
+    cv::Mat in_img, out_img, ocv_ref, in_gray, diff, gray_img, resize_img;
 
     unsigned short in_width, in_height;
 
@@ -125,8 +132,11 @@ int main(int argc, char** argv) {
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned char);
     size_t image_out_size_bytes = in_img.rows * in_img.cols * 1 * sizeof(unsigned short);
 #else
+    int new_width = in_img.cols / 2;
+    int new_height = in_img.rows / 2;
     out_img.create(in_img.rows, in_img.cols, CV_8UC3);
     gray_img.create(in_img.rows, in_img.cols, CV_8UC1);
+    resize_img.create(new_height, new_width, CV_8UC3);
     size_t vec_in_size_bytes = 256 * 3 * sizeof(unsigned char);
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned short);
     size_t image_out_size_bytes = in_img.rows * in_img.cols * 3 * sizeof(unsigned char);
@@ -184,9 +194,17 @@ int main(int argc, char** argv) {
                    height,
                    width);
 
+    resize_accel((ap_uint<OUTPUT_PTR_WIDTH>*)out_img.data,
+                 (ap_uint<128>*)resize_img.data,
+                 out_img.rows,
+                 out_img.cols,
+                 604,
+                 964);
+
     // Write output image
     imwrite("img.png", out_img);
     imwrite("gray.png", gray_img);
+    imwrite("small.png", resize_img);
 
     return 0;
 }

@@ -14,7 +14,7 @@ LDFLAGS += -l opencv_features2d -l opencv_flann -l opencv_video -l opencv_calib3
 LDFLAGS += -l opencv_highgui -lopencv_core
 LDFLAGS += -L/usr/local/lib
 
-SRC_FILES = isp_test.cpp xf_isp_accel.cpp xf_cvt_color_accel.cpp
+SRC_FILES = isp_test.cpp xf_isp_accel.cpp xf_cvt_color_accel.cpp xf_resize_accel.cpp
 OBJDIR = obj
 #OBJS = isp_test.o xf_isp_accel.o
 OBJS := $(SRC_FILES:%.cpp=%.o)
