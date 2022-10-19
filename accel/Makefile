@@ -61,7 +61,7 @@ OPENCV_INCLUDE = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux
 OPENCV_LIB = /opt/petalinux/2022.1/sysroots/cortexa72-cortexa53-xilinx-linux/usr/lib
 # When we source the SDK we get the ENV SDKTARGETSYSROOT which is the sysroot
 SYSROOT = $(SDKTARGETSYSROOT)
-DEVICE = $(ROOT_DIR)/platform/jdboard/export/jdboard/jdboard.xpfm
+DEVICE ?= $(ROOT_DIR)/platform/jdboard/export/jdboard/jdboard.xpfm
 TARGET ?= hw
 HOST_ARCH ?= aarch64
 VISLIB_DIR = $(ROOT_DIR)/Vitis_Libraries/vision
@@ -109,7 +109,7 @@ else ifeq ($(HOST_ARCH), aarch64)
 CXXFLAGS += -I$(CUR_DIR)/src/ -fmessage-length=0 --sysroot=$(SYSROOT)  -I$(SYSROOT)/usr/include/xrt -I$(XILINX_HLS)/include -std=c++14 -O3 -Wall -Wno-unknown-pragmas -Wno-unused-label
 LDFLAGS += -pthread -L$(SYSROOT)/usr/lib -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o -Wl,--as-needed -lxilinxopencl -lxrt_coreutil
 VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps --config connectivity.cfg
-VPP_LDFLAGS += --optimize 0 -R 2
+VPP_LDFLAGS += --optimize 2 -R 2
 #VPP_LDFLAGS_krnl_ISPPipeline += --profile.data all:all:all --profile.stall=all:all --profile.memory=all --profile.exec=all --clock.defaultId=1
 VPP_LDFLAGS_krnl_ISPPipeline += --clock.defaultId=1
 endif
@@ -218,14 +218,14 @@ $(TEMP_DIR)/xilLz4CompressStream.xo: $(COMP_DIR)/L2/src/lz4_compress_stream.cpp
 	$(ECHO) "Compiling Kernel: xilLz4CompressStream"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_xilLz4CompDecomp) $(VPP_FLAGS) -k xilLz4CompressStream -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' '$<'
-#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilLz4CompressStream.xo
+BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilLz4CompressStream.xo
 
 VPP_FLAGS_xilCompDatamover += -I $(COMP_DIR)/L2/include -I $(COMP_DIR)/L1/include/hw -I $(SEC_DIR)/L1/include
 $(TEMP_DIR)/xilCompDatamover.xo: $(COMP_DIR)/L2/tests/src/block_comp_dm.cpp
 	$(ECHO) "Compiling Kernel: xilCompDatamover"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_xilCompDatamover) $(VPP_FLAGS) -k xilCompDatamover -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
-#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilCompDatamover.xo
+BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/xilCompDatamover.xo
 
 
 BINARY_CONTAINERS_DEPS += $(BINARY_CONTAINER_krnl_ISPPipeline_OBJS)

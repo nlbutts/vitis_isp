@@ -190,42 +190,6 @@ int main(int argc, char** argv) {
     OCL_CHECK(err, err = kernel.setArg(5, mode_reg));
     OCL_CHECK(err, err = kernel.setArg(6, pawb));
 
-    for (int i = 0; i < 2; i++) {
-        OCL_CHECK(err, q.enqueueWriteBuffer(buffer_inVec,      // buffer on the FPGA
-                                            CL_TRUE,           // blocking call
-                                            0,                 // buffer offset in bytes
-                                            vec_in_size_bytes, // Size in bytes
-                                            gamma_lut));
-        OCL_CHECK(err, q.enqueueWriteBuffer(imageToDevice, CL_TRUE, 0, image_in_size_bytes, in_img.data));
-
-        // Profiling Objects
-        cl_ulong start = 0;
-        cl_ulong end = 0;
-        double diff_prof = 0.0f;
-        cl::Event event_sp;
-
-        // Launch the kernel
-        auto start2 = std::chrono::high_resolution_clock::now();
-
-        OCL_CHECK(err, err = q.enqueueTask(kernel, NULL, &event_sp));
-        clWaitForEvents(1, (const cl_event*)&event_sp);
-
-        auto finish2 = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed = finish2 - start2;
-        double t_sec = elapsed.count();
-        std::cout << "NLB: Hackked timer time: " << t_sec << std::endl;
-
-        event_sp.getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
-        event_sp.getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
-        diff_prof = end - start;
-        std::cout << (diff_prof / 1000000) << "ms" << std::endl;
-
-        // Copying Device result data to Host memory
-        q.enqueueReadBuffer(imageFromDevice, CL_TRUE, 0, image_out_size_bytes, out_img.data);
-    }
-
-    //q.finish();
-    imwrite("img.png", out_img);
     /////////////////////////////////////// end of ISP ////////////////////////
 
     // Create a kernel:
@@ -239,35 +203,6 @@ int main(int argc, char** argv) {
     OCL_CHECK(err, err = kernel2.setArg(1, grayFromDevice));
     OCL_CHECK(err, err = kernel2.setArg(2, height));
     OCL_CHECK(err, err = kernel2.setArg(3, width));
-
-    for (int i = 0; i < 2; i++) {
-        std::cout << "Queing data" << std::endl;
-        OCL_CHECK(err, q.enqueueWriteBuffer(imageToDevice2, CL_TRUE, 0, image_out_size_bytes, out_img.data));
-
-        // Profiling Objects
-        cl_ulong start = 0;
-        cl_ulong end = 0;
-        double diff_prof = 0.0f;
-        cl::Event event_sp;
-
-        // Launch the kernel
-        std::cout << "Starting task" << std::endl;
-        OCL_CHECK(err, err = q.enqueueTask(kernel2, NULL, &event_sp));
-        std::cout << "Waiting" << std::endl;
-        clWaitForEvents(1, (const cl_event*)&event_sp);
-        std::cout << "Done waiting" << std::endl;
-
-        event_sp.getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
-        event_sp.getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
-        diff_prof = end - start;
-        std::cout << (diff_prof / 1000000) << "ms" << std::endl;
-
-        // Copying Device result data to Host memory
-        q.enqueueReadBuffer(grayFromDevice, CL_TRUE, 0, gray_out_size_bytes, gray_img.data);
-        std::cout << "Completed loop" << std::endl;
-    }
-
-    imwrite("gray.png", gray_img);
 
     /////////////////////////////////////// end of rgb2gray ////////////////////////
     // Create a kernel:
@@ -284,33 +219,75 @@ int main(int argc, char** argv) {
     OCL_CHECK(err, err = kernel3.setArg(4, new_height));
     OCL_CHECK(err, err = kernel3.setArg(5, new_width));
 
-    for (int i = 0; i < 2; i++) {
-        std::cout << "Queing data" << std::endl;
-        OCL_CHECK(err, q.enqueueWriteBuffer(imageToDevice3, CL_TRUE, 0, image_out_size_bytes, out_img.data));
+    for (int i = 0; i < 20; i++) {
+        //------------------------------------------------------------------ ISP
+        OCL_CHECK(err, q.enqueueWriteBuffer(buffer_inVec,      // buffer on the FPGA
+                                            CL_TRUE,           // blocking call
+                                            0,                 // buffer offset in bytes
+                                            vec_in_size_bytes, // Size in bytes
+                                            gamma_lut));
+        OCL_CHECK(err, q.enqueueWriteBuffer(imageToDevice, CL_TRUE, 0, image_in_size_bytes, in_img.data));
 
         // Profiling Objects
         cl_ulong start = 0;
         cl_ulong end = 0;
         double diff_prof = 0.0f;
-        cl::Event event_sp;
+        cl::Event event_sp[4];
 
         // Launch the kernel
-        std::cout << "Starting task" << std::endl;
-        OCL_CHECK(err, err = q.enqueueTask(kernel3, NULL, &event_sp));
-        std::cout << "Waiting" << std::endl;
-        clWaitForEvents(1, (const cl_event*)&event_sp);
-        std::cout << "Done waiting" << std::endl;
+        OCL_CHECK(err, err = q.enqueueTask(kernel, NULL, &event_sp[0]));
+        OCL_CHECK(err, err = q.enqueueTask(kernel, NULL, &event_sp[1]));
+        OCL_CHECK(err, err = q.enqueueTask(kernel, NULL, &event_sp[2]));
+        OCL_CHECK(err, err = q.enqueueTask(kernel, NULL, &event_sp[3]));
+        clWaitForEvents(1, (const cl_event*)&event_sp[0]);
+        clWaitForEvents(1, (const cl_event*)&event_sp[1]);
+        clWaitForEvents(1, (const cl_event*)&event_sp[2]);
+        clWaitForEvents(1, (const cl_event*)&event_sp[3]);
 
-        event_sp.getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
-        event_sp.getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
+        event_sp[0].getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
+        event_sp[0].getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
         diff_prof = end - start;
+        std::cout << "4 ISP kernels: ";
+        std::cout << (diff_prof / 1000000) << "ms" << std::endl;
+
+        // Copying Device result data to Host memory
+        q.enqueueReadBuffer(imageFromDevice, CL_TRUE, 0, image_out_size_bytes, out_img.data);
+
+        //------------------------------------------------------------- BGR2GRAY
+        OCL_CHECK(err, q.enqueueWriteBuffer(imageToDevice2, CL_TRUE, 0, image_out_size_bytes, out_img.data));
+
+        // Launch the kernel
+        OCL_CHECK(err, err = q.enqueueTask(kernel2, NULL, &event_sp[0]));
+        clWaitForEvents(1, (const cl_event*)&event_sp[0]);
+
+        event_sp[0].getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
+        event_sp[0].getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
+        diff_prof = end - start;
+        std::cout << "bgr2gray ";
+        std::cout << (diff_prof / 1000000) << "ms" << std::endl;
+
+        // Copying Device result data to Host memory
+        q.enqueueReadBuffer(grayFromDevice, CL_TRUE, 0, gray_out_size_bytes, gray_img.data);
+
+        //--------------------------------------------------------------- Resize
+        OCL_CHECK(err, q.enqueueWriteBuffer(imageToDevice3, CL_TRUE, 0, image_out_size_bytes, out_img.data));
+
+        // Launch the kernel
+        OCL_CHECK(err, err = q.enqueueTask(kernel3, NULL, &event_sp[0]));
+        clWaitForEvents(1, (const cl_event*)&event_sp[0]);
+
+        event_sp[0].getProfilingInfo(CL_PROFILING_COMMAND_START, &start);
+        event_sp[0].getProfilingInfo(CL_PROFILING_COMMAND_END, &end);
+        diff_prof = end - start;
+        std::cout << "resize ";
         std::cout << (diff_prof / 1000000) << "ms" << std::endl;
 
         // Copying Device result data to Host memory
         q.enqueueReadBuffer(smallFromDevice, CL_TRUE, 0, small_out_size_bytes, small_img.data);
-        std::cout << "Completed loop" << std::endl;
     }
 
+    imwrite("img.png", out_img);
+    imwrite("gray.png", gray_img);
     imwrite("small.png", small_img);
 
     q.finish();
