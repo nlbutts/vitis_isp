@@ -61,8 +61,6 @@ export PATH := $(XILINX_VIVADO)/bin:$(PATH)
 
 # MK_INC_END vivado.mk
 
-DEVICE ?= u200
-
 # MK_INC_BEGIN vitis_set_part.mk
 
 # MK_INC_BEGIN vitis.mk
@@ -254,5 +252,13 @@ clean:
 
 # Used by Jenkins test
 cleanall: clean
+
+.PHONY: opencv
+opencv:
+	git clone --depth 1 --branch 4.4.0 https://github.com/opencv/opencv.git
+	mkdir -p ocvbuild
+	cd ocvbuild; cmake -D CMAKE_BUILD_TYPE=RELEASE -D CMAKE_INSTALL_PREFIX=vitis_opencv -D WITH_V4L=ON -DBUILD_TESTS=OFF -DBUILD_ZLIB=ON -DBUILD_JPEG=ON -DWITH_JPEG=ON -DWITH_PNG=ON -DBUILD_EXAMPLES=OFF -DINSTALL_C_EXAMPLES=OFF -DINSTALL_PYTHON_EXAMPLES=OFF -DWITH_OPENEXR=OFF -DBUILD_OPENEXR=OFF -DBUILD_JAVA=OFF -DBUILD_PERF_TESTS=OFF -DBUILD_TESTS=OFF -DBUILD_OPENCV_APPS=OFF -DBUILD_OPENCV_DNN=OFF -DBUILD_OPENCV_FLANN=OFF -DBUILD_OPENCV_GAP=OFF -DBUILD_OPENCV_STITCHING=OFF -DBUILD_OPENCV_TS=OFF -DBUILD_OPENCV_VIDEO=OFF ../opencv
+	make -C ocvbuild -j24
+	make -C ocvbuild install
 
 # MK_INC_END hls_test_rules.mk

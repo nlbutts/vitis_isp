@@ -14,16 +14,15 @@
  * limitations under the License.
  */
 
-#define WIDTH 128  // 7680//1920//
-#define HEIGHT 128 // 4320//1080//
-#define NPPC XF_NPPC1
+#define FILTER_SIZE_3 1
+#define FILTER_SIZE_5 0
+#define FILTER_SIZE_7 0
 
-#define T_8U 0
-#define T_16U 1
+#define RO 0
+#define NO 1
 
-#define BPATTERN XF_BAYER_RG
-
-#define XF_USE_URAM 0
+#define GRAY 0
+#define RGBA 1
 
 #define XF_CV_DEPTH_IN_1 1
 #define XF_CV_DEPTH_OUT_1 3

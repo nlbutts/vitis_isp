@@ -27,9 +27,9 @@ if {![info exists CLKP]} {
 
 open_project -reset $PROJ
 
-add_files "simple_hdr_accel.cpp" -cflags " -I ${PRJROOT}/build -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++0x" -csimflags " -I ${PRJROOT}/build -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++0x"
-add_files -tb "simple_hdr_tb.cpp" -cflags " -I ${PRJROOT}/build -I ${OPENCV_INCLUDE} -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++0x" -csimflags " -I ${PRJROOT}/build -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++0x"
-set_top simple_hdr_accel
+add_files "simple_hdr_accel.cpp" -cflags " -I ${PRJROOT}/build -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++14" -csimflags " -I ${PRJROOT}/build -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++14"
+add_files -tb "simple_hdr_tb.cpp" -cflags " -I ${PRJROOT}/build -I ${OPENCV_INCLUDE} -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++14" -csimflags " -I ${PRJROOT}/build -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++14"
+set_top div_test
 
 open_solution -reset $SOLN
 
