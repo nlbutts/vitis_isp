@@ -144,7 +144,7 @@ CXXFLAGS_COMP += -I$(COMP_DIR)/common/libs/logger
 CXXFLAGS_COMP += -I$(COMP_DIR)/L1/include/hw
 CXXFLAGS_COMP += -I$(COMP_DIR)/common/thirdParty/xxhash
 
-HOST_SRCS3 += xf_stereo_pipeline_tb.cpp $(VISLIB_DIR)/ext/xcl2/xcl2.cpp
+HOST_SRCS3 += xf_stereolbm_tb.cpp $(VISLIB_DIR)/ext/xcl2/xcl2.cpp
 CXXFLAGS_VIS += -I$(VISLIB_DIR)/L1/include
 CXXFLAGS_VIS += -I$(VISLIB_DIR)/ext/xcl2/
 
@@ -165,7 +165,7 @@ EXE_FILE_DEPS1 := $(HOST_SRCS1) $(EXE_FILE_DEPS1)
 EXE_NAME2 := lz4_comp
 EXE_FILE2 := $(BUILD_DIR)/$(EXE_NAME2)
 EXE_FILE_DEPS2 := $(HOST_SRCS2) $(EXE_FILE_DEPS2)
-EXE_NAME3 := stereopipe
+EXE_NAME3 := stereolbm
 EXE_FILE3 := $(BUILD_DIR)/$(EXE_NAME3)
 EXE_FILE_DEPS3 := $(HOST_SRCS3) $(EXE_FILE_DEPS3)
 # EXE_NAME4 := rgb2gray
@@ -193,25 +193,25 @@ $(TEMP_DIR)/ISPPipeline_accel.xo: xf_isp_accel.cpp
 	$(ECHO) "Compiling Kernel: ISPPipeline_accel"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k ISPPipeline_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/ISPPipeline_accel.xo
+# BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/ISPPipeline_accel.xo
 
 $(TEMP_DIR)/rgb2gray_accel.xo: xf_cvt_color_accel.cpp
 	$(ECHO) "Compiling Kernel: RGB2YUV_accel"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k cvtcolor_bgr2gray -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/rgb2gray_accel.xo
+# BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/rgb2gray_accel.xo
 
-$(TEMP_DIR)/Stereo_accel.xo: xf_stereo_pipeline_accel.cpp
-	$(ECHO) "Compiling Kernel: Stereo_accel"
+$(TEMP_DIR)/stereolbm_accel.xo: xf_stereolbm_accel.cpp
+	$(ECHO) "Compiling Kernel: stereo_accel"
 	mkdir -p $(TEMP_DIR)
-	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k stereopipeline_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' $^
-#BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/Stereo_accel.xo
+	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k stereolbm_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' $^
+BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/stereolbm_accel.xo
 
 $(TEMP_DIR)/Resize_accel.xo: xf_resize_accel.cpp
 	$(ECHO) "Compiling Kernel: Resize_accel"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k resize_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' $^
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/Resize_accel.xo
+# BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/Resize_accel.xo
 
 VPP_FLAGS_xilLz4CompDecomp += -I $(COMP_DIR)/L2/include -I $(COMP_DIR)/L1/include/hw -I $(SEC_DIR)/L1/include
 $(TEMP_DIR)/xilLz4CompressStream.xo: $(COMP_DIR)/L2/src/lz4_compress_stream.cpp
