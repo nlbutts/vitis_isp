@@ -16,6 +16,7 @@
 
 #include "common/xf_headers.hpp"
 #include "../xf_isp_types.h"
+#include "../xf_custom_convolution_config.h"
 
 extern "C" {
 void ISPPipeline_accel(ap_uint<INPUT_PTR_WIDTH>* img_inp,
@@ -27,7 +28,7 @@ void ISPPipeline_accel(ap_uint<INPUT_PTR_WIDTH>* img_inp,
                        uint16_t pawb);
 
 void cvtcolor_bgr2gray(ap_uint<OUTPUT_PTR_WIDTH>* img_inp,
-                   ap_uint<OUTPUT_PTR_WIDTH2>* img_out,
+                   ap_uint<OUTPUT_PTR_WIDTH>* img_out,
                    int height,
                    int width);
 
@@ -37,6 +38,12 @@ void resize_accel(ap_uint<128>* img_inp,
                   int cols_in,
                   int rows_out,
                   int cols_out);
+void customconv(ap_uint<PTR_IN_WIDTH>* img_in,
+                short int* filter,
+                unsigned char shift,
+                ap_uint<PTR_OUT_WIDTH>* img_out,
+                int rows,
+                int cols);
 }
 
 void compute_gamma(float r_g, float g_g, float b_g, uchar gamma_lut[256 * 3]) {
@@ -106,11 +113,11 @@ void compute_gamma(float r_g, float g_g, float b_g, uchar gamma_lut[256 * 3]) {
 int main(int argc, char** argv) {
     if (argc != 5) {
         fprintf(stderr, "Invalid Number of Arguments!\nUsage:\n");
-        fprintf(stderr, "<Executable Name> <input image path> <pawb> <mode> <gamma>\n");
+        fprintf(stderr, "<Executable Name> <input image path> <scale> <mode> <gamma>\n");
         return -1;
     }
 
-    cv::Mat in_img, out_img, ocv_ref, in_gray, diff, gray_img, resize_img;
+    cv::Mat in_img, out_img, ocv_ref, in_gray, diff, gray_img, resize_img, conv_img;
 
     unsigned short in_width, in_height;
 
@@ -136,6 +143,7 @@ int main(int argc, char** argv) {
     int new_height = in_img.rows / 2;
     out_img.create(in_img.rows, in_img.cols, CV_8UC3);
     gray_img.create(in_img.rows, in_img.cols, CV_8UC1);
+    conv_img.create(in_img.rows, in_img.cols, OUTTYPE);
     resize_img.create(new_height, new_width, CV_8UC3);
     size_t vec_in_size_bytes = 256 * 3 * sizeof(unsigned char);
     size_t image_in_size_bytes = in_img.rows * in_img.cols * sizeof(unsigned short);
@@ -153,15 +161,17 @@ int main(int argc, char** argv) {
     std::cout << "Input image height : " << height << std::endl;
     std::cout << "Input image width  : " << width << std::endl;
 
-    unsigned short pawb = atoi(argv[2]);
+    unsigned short pawb = 256;
+    unsigned short scale = atoi(argv[2]);
     unsigned char mode_reg = atoi(argv[3]);
     float gamma_val;
     sscanf(argv[4], "%f", &gamma_val);
 
-    printf("pawb: %d  mode: %d  gamma: %f\n",
+    printf("pawb: %d  mode: %d  gamma: %f  scale: %d\n",
             (int)pawb,
             (int)mode_reg,
-            gamma_val);
+            gamma_val,
+            (int)scale);
 
     unsigned char gamma_lut[256 * 3];
     uint32_t hist0_awb[3][HIST_SIZE] = {0};
@@ -185,12 +195,12 @@ int main(int argc, char** argv) {
                       mode_reg, pawb);
 
     cvtcolor_bgr2gray((ap_uint<OUTPUT_PTR_WIDTH>*)out_img.data,
-                  (ap_uint<OUTPUT_PTR_WIDTH2>*)gray_img.data,
+                  (ap_uint<OUTPUT_PTR_WIDTH>*)gray_img.data,
                    height,
                    width);
 
     cvtcolor_bgr2gray((ap_uint<OUTPUT_PTR_WIDTH>*)out_img.data,
-                  (ap_uint<OUTPUT_PTR_WIDTH2>*)gray_img.data,
+                  (ap_uint<OUTPUT_PTR_WIDTH>*)gray_img.data,
                    height,
                    width);
 
@@ -201,10 +211,31 @@ int main(int argc, char** argv) {
                  604,
                  964);
 
+    short int mask[3][3] = {{1, 2, 1},
+                            {2 ,4, 2},
+                            {1, 2, 1}};
+
+
+    for (int y = 0; y < 3; y++)
+    {
+        for (int x = 0; x < 3; x++)
+        {
+            mask[y][x] *= scale;
+        }
+    }
+
+    customconv((ap_uint<PTR_IN_WIDTH>*)gray_img.data,
+               &mask[0][0],
+               SHIFT,
+               (ap_uint<PTR_OUT_WIDTH>*)conv_img.data,
+               height,
+               width);
+
     // Write output image
     imwrite("img.png", out_img);
     imwrite("gray.png", gray_img);
     imwrite("small.png", resize_img);
+    imwrite("conv.png", conv_img);
 
     return 0;
 }
