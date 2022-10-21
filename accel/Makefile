@@ -199,7 +199,7 @@ $(TEMP_DIR)/rgb2gray_accel.xo: xf_cvt_color_accel.cpp
 	$(ECHO) "Compiling Kernel: RGB2YUV_accel"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k cvtcolor_bgr2gray -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o $@ $^
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/rgb2gray_accel.xo
+# BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/rgb2gray_accel.xo
 
 $(TEMP_DIR)/stereolbm_accel.xo: xf_stereolbm_accel.cpp
 	$(ECHO) "Compiling Kernel: stereo_accel"
@@ -211,7 +211,7 @@ $(TEMP_DIR)/Resize_accel.xo: xf_resize_accel.cpp
 	$(ECHO) "Compiling Kernel: Resize_accel"
 	mkdir -p $(TEMP_DIR)
 	$(VPP) -c $(VPP_FLAGS_ISPPipeline_accel) $(VPP_FLAGS) -k resize_accel -I'$(<D)' --temp_dir $(TEMP_DIR) --report_dir $(TEMP_REPORT_DIR) -o'$@' $^
-BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/Resize_accel.xo
+# BINARY_CONTAINER_krnl_ISPPipeline_OBJS += $(TEMP_DIR)/Resize_accel.xo
 
 VPP_FLAGS_xilLz4CompDecomp += -I $(COMP_DIR)/L2/include -I $(COMP_DIR)/L1/include/hw -I $(SEC_DIR)/L1/include
 $(TEMP_DIR)/xilLz4CompressStream.xo: $(COMP_DIR)/L2/src/lz4_compress_stream.cpp
