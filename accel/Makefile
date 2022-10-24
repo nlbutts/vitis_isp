@@ -109,7 +109,7 @@ else ifeq ($(HOST_ARCH), aarch64)
 CXXFLAGS += -I$(CUR_DIR)/src/ -fmessage-length=0 --sysroot=$(SYSROOT)  -I$(SYSROOT)/usr/include/xrt -I$(XILINX_HLS)/include -std=c++14 -O3 -Wall -Wno-unknown-pragmas -Wno-unused-label
 LDFLAGS += -pthread -L$(SYSROOT)/usr/lib -L$(XILINX_VITIS_AIETOOLS)/lib/aarch64.o -Wl,--as-needed -lxilinxopencl -lxrt_coreutil
 VPP_FLAGS += -t $(TARGET) --platform $(XPLATFORM) --save-temps --config connectivity.cfg
-VPP_LDFLAGS += --optimize 2 -R 2
+VPP_LDFLAGS += --optimize 3 -R 2
 #VPP_LDFLAGS_krnl_ISPPipeline += --profile.data all:all:all --profile.stall=all:all --profile.memory=all --profile.exec=all --clock.defaultId=1
 #VPP_LDFLAGS_krnl_ISPPipeline += --clock.defaultId=
 endif

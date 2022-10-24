@@ -12,6 +12,7 @@ typedef unsigned short int uint16_t;
 
 #define WIDTH 128
 #define HEIGHT 128
+#define BITS 16
 
 #if GRAY
 #define TYPE XF_8UC1
@@ -42,9 +43,12 @@ typedef unsigned short int uint16_t;
 #define INPUT_PTR_WIDTH 128
 #define OUTPUT_PTR_WIDTH 128
 
-typedef ap_axiu<16, 1, 1, 1> pixel;
+typedef ap_axiu<BITS, 1, 1, 1> pixel;
 
 //void simple_hdr(ap_uint<INPUT_PTR_WIDTH>* img_inp, ap_uint<OUTPUT_PTR_WIDTH>* img_out, int rows, int cols, int K1, int K2, int sigma1, int sigma2);
-void simple_stream(hls::stream<pixel>& src, hls::stream<pixel>& dst, ap_uint<12> width, ap_uint<12> height);
+template <int SRC_T,
+          int ROWS,
+          int COLS>
+void simple_stream(hls::stream<pixel>& src, hls::stream<pixel>& dst, ap_uint<SRC_T> width, ap_uint<SRC_T> height);
 
 #endif // _SIMPLE_HDR_CONFIG_

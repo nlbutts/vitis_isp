@@ -1,7 +1,7 @@
 #include <cstdio>
 
 #include "common/xf_headers.hpp"
-#include "simple_hdr_config.hpp"
+#include "simple_hdr_accel.hpp"
 
 int main(int argc, char ** argv)
 {
@@ -25,21 +25,22 @@ int main(int argc, char ** argv)
     {
         for (int x = 0; x < cols; x++)
         {
-            pixel p = {0};
+            pixel p;
             if ((y == 0) && (x == 0))
-            {
                 p.user = 1;
-            }
+            else
+                p.user = 0;
+
             if ((x == (cols - 1)))
-            {
-                p.data.last = 1;
-            }
-            p.data = img.at(x, y);
+                p.last = 1;
+
+            auto tp = img.at<uint16_t>(x, y);
+            p.data = tp;
             src.write(p);
         }
     }
 
-    simple_stream(src, dst, cols, rows);
+    simple_stream<BITS, 128, 128>(src, dst, cols, rows);
 
     // printf("Dst: ");
     // bool eos = false;
