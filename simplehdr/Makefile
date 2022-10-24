@@ -253,6 +253,10 @@ clean:
 # Used by Jenkins test
 cleanall: clean
 
+.PHONY: ref
+ref: simple_hdr_ref.cpp
+	$(CXX) -g -std=c++14 -O0 -o $@ $< -I/usr/local/include/opencv4 -L/usr/local/lib -lopencv_core -lopencv_imgcodecs -lopencv_imgproc
+
 .PHONY: opencv
 opencv:
 	git clone --depth 1 --branch 4.4.0 https://github.com/opencv/opencv.git

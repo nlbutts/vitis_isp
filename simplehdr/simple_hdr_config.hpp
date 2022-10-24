@@ -2,6 +2,7 @@
 #define _SIMPLE_HDR_CONFIG_
 
 #include "hls_stream.h"
+#include "ap_axi_sdata.h"
 #include "common/xf_common.hpp"
 #include "common/xf_utility.hpp"
 #include "imgproc/xf_gaussian_filter.hpp"
@@ -16,7 +17,7 @@ typedef unsigned short int uint16_t;
 #define TYPE XF_8UC1
 #define CH_TYPE XF_GRAY
 #else
-#define TYPE XF_8UC3
+#define TYPE XF_16UC1
 #define CH_TYPE XF_RGB
 #endif
 
@@ -41,6 +42,9 @@ typedef unsigned short int uint16_t;
 #define INPUT_PTR_WIDTH 128
 #define OUTPUT_PTR_WIDTH 128
 
-void simple_hdr(ap_uint<INPUT_PTR_WIDTH>* img_inp, ap_uint<OUTPUT_PTR_WIDTH>* img_out, int rows, int cols, int K1, int K2, int sigma1, int sigma2);
-void div_test(ap_uint<16> pixel1, ap_uint<16> pixel2, ap_uint<8> shift, ap_uint<16> *result);
+typedef ap_axiu<16, 1, 1, 1> pixel;
+
+//void simple_hdr(ap_uint<INPUT_PTR_WIDTH>* img_inp, ap_uint<OUTPUT_PTR_WIDTH>* img_out, int rows, int cols, int K1, int K2, int sigma1, int sigma2);
+void simple_stream(hls::stream<pixel>& src, hls::stream<pixel>& dst, ap_uint<12> width, ap_uint<12> height);
+
 #endif // _SIMPLE_HDR_CONFIG_

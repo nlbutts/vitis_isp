@@ -40,7 +40,7 @@ set_part $XPART
 create_clock -period $CLKP
 
 if {$CSIM == 1} {
-  csim_design -ldflags "-L ${OPENCV_LIB} -lopencv_imgcodecs -lopencv_imgproc -lopencv_core -lopencv_highgui -lopencv_flann -lopencv_features2d" -argv " ${VITIS_LIB}/data/128x128.png "
+  csim_design -ldflags "-L ${OPENCV_LIB} -lopencv_imgcodecs -lopencv_imgproc -lopencv_core -lopencv_highgui -lopencv_flann -lopencv_features2d" -argv " ${PRJROOT}/test.png"
 }
 
 if {$CSYNTH == 1} {
@@ -48,7 +48,7 @@ if {$CSYNTH == 1} {
 }
 
 if {$COSIM == 1} {
-  cosim_design -ldflags "-L ${OPENCV_LIB} -lopencv_imgcodecs -lopencv_imgproc -lopencv_core -lopencv_highgui -lopencv_flann -lopencv_features2d" -argv " ${VITIS_LIB}/data/128x128.png "
+  cosim_design -ldflags "-L ${OPENCV_LIB} -lopencv_imgcodecs -lopencv_imgproc -lopencv_core -lopencv_highgui -lopencv_flann -lopencv_features2d" -argv " ${PRJROOT}/test.png"
 }
 
 if {$VIVADO_SYN == 1} {

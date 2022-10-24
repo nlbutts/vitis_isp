@@ -18,11 +18,38 @@ int main(int argc, char ** argv)
     cv::Mat blur_img;
     blur_img.create(img.rows, img.cols, CV_8UC3);
 
-    //simple_hdr((ap_uint<INPUT_PTR_WIDTH>*)img.data, (ap_uint<OUTPUT_PTR_WIDTH>*)blur_img.data, rows, cols, 1, 1, 3, 1.5);
-    ap_uint<16> result;
-    div_test(1234, 512, 12, &result);
+    hls::stream<pixel> src;
+    hls::stream<pixel> dst;
 
-    printf("Resulting pixel: %d\n", (int)result);
+    for (int y = 0; y < rows; y++)
+    {
+        for (int x = 0; x < cols; x++)
+        {
+            pixel p = {0};
+            if ((y == 0) && (x == 0))
+            {
+                p.user = 1;
+            }
+            if ((x == (cols - 1)))
+            {
+                p.data.last = 1;
+            }
+            p.data = img.at(x, y);
+            src.write(p);
+        }
+    }
+
+    simple_stream(src, dst, cols, rows);
+
+    // printf("Dst: ");
+    // bool eos = false;
+    // do
+    // {
+    //     pixel p2 = dst.read();
+    //     printf("%d ", (int)p2.data);
+
+    //     eos = p2.last;
+    // } while (eos == false);
 
     //cv::imwrite("blur.png", blur_img);
 }
