@@ -2,18 +2,60 @@
 #include <fstream>
 #include <sstream>
 
-
-#include "common/xf_headers.hpp"
 #include "bayer_comp_accel.hpp"
+
+void * open_file(const char * file, int * size)
+{
+    void * data = NULL;
+    FILE * f = fopen(file, "rb");
+    if (f != NULL)
+    {
+        fseek(f, 0, SEEK_END);
+        *size = ftell(f);
+        data = malloc(*size);
+        fseek(f, 0, SEEK_SET);
+        fread(data, 1, *size, f);
+        fclose(f);
+    }
+    else
+    {
+        printf("File was not opened or read\n");
+    }
+    return data;
+}
 
 int main(int argc, char ** argv)
 {
-    if (argc != 2)
+    if (argc != 3)
     {
-        printf("Usage: simple_hdr <input image>\n");
+        printf("Usage: simple_hdr <input image> <compare image>\n");
         return -1;
     }
 
+    int size;
+    void * data = open_file(argv[1], &size);
+    void * compdata = malloc(size);
+
+    int compsize = Rice_Compress((int16_t*)data, compdata, size, 7);
+
+    printf("Input size: %d  output size: %d\n", size, compsize);
+
+    FILE * f = fopen("comp.rice", "wb");
+    fwrite(compdata, 1, compsize, f);
+    fclose(f);
+
+    uint8_t * golden = (uint8_t*)open_file(argv[2], &size);
+    uint8_t * ptr = &golden[0x0d];
+    int result = memcmp(ptr, compdata, compsize);
+    printf("Memory compare result: %d\n", result);
+
+    free(compdata);
+    free(data);
+    free(golden);
+
+    return result;
+
+#if 0
     auto img = cv::imread(argv[1], -1);
     int rows = img.rows;
     int cols = img.cols;
@@ -91,5 +133,6 @@ int main(int argc, char ** argv)
         fwrite(output[i].data(), 2, output[i].size(), f);
         fclose(f);
     }
+#endif
 }
 

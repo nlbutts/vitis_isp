@@ -1,2 +1,2 @@
-break bayer_comp_tb.cpp:48
-run test.png
+break main
+run g1d.bin

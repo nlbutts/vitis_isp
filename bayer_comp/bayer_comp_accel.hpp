@@ -7,9 +7,181 @@
 #include "common/xf_common.hpp"
 #include "common/xf_utility.hpp"
 
-#define BITS 16
+#define RICE_HISTORY    16
+#define RICE_WORD       16
+#define BITS            16
+#define RICE_THRESHOLD  8
 
 typedef ap_axiu<BITS, 1, 1, 1> pixel;
+
+typedef struct {
+    unsigned char *BytePtr;
+    unsigned int  index;
+    unsigned int  NumBytes;
+    unsigned int  tempbits;
+    unsigned int  tempcount;
+} rice_bitstream_t;
+
+/*************************************************************************
+* _Rice_NumBits() - Determine number of information bits in a word.
+*************************************************************************/
+
+static int _Rice_NumBits( unsigned int x )
+{
+    int n;
+    for( n = 32; !(x & 0x80000000) && (n > 0); -- n ) x <<= 1;
+    return n;
+}
+
+
+/*************************************************************************
+* _Rice_InitBitstream() - Initialize a bitstream.
+*************************************************************************/
+
+static void _Rice_InitBitstream( rice_bitstream_t *stream,
+    void *buf, unsigned int bytes )
+{
+    stream->BytePtr   = (unsigned char *) buf;
+    stream->index     = 0;
+    stream->NumBytes  = bytes;
+    stream->tempbits  = 0;
+    stream->tempcount = 0;
+
+}
+
+
+/*************************************************************************
+* _Rice_WriteBit() - Write a bit to the output stream.
+*************************************************************************/
+
+static void _Rice_WriteBit( rice_bitstream_t *stream, int x )
+{
+    if( stream->index < stream->NumBytes )
+    {
+        stream->tempbits |= x;
+        stream->tempcount++;
+        if (stream->tempcount >= 8)
+        {
+            stream->BytePtr[stream->index] = stream->tempbits & 0xFF;
+            stream->tempbits = 0;
+            stream->tempcount = 0;
+            stream->index++;
+        }
+        else
+        {
+            stream->tempbits <<= 1;
+        }
+    }
+}
+
+
+/*************************************************************************
+* _Rice_EncodeWord() - Encode and write a word to the output stream.
+*************************************************************************/
+
+static void _Rice_EncodeWord( unsigned int x, int k,
+    rice_bitstream_t *stream )
+{
+    unsigned int q, i;
+    int          j, o;
+
+    /* Determine overflow */
+    q = x >> k;
+
+    /* Too large rice code? */
+    if( q > RICE_THRESHOLD )
+    {
+        /* Write Rice code (except for the final zero) */
+        for( j = 0; j < RICE_THRESHOLD; ++ j )
+        {
+            _Rice_WriteBit( stream, 1 );
+        }
+
+        /* Encode the overflow with alternate coding */
+        q -= RICE_THRESHOLD;
+
+        /* Write number of bits needed to represent the overflow */
+        o = _Rice_NumBits( q );
+        for( j = 0; j < o; ++ j )
+        {
+            _Rice_WriteBit( stream, 1 );
+        }
+        _Rice_WriteBit( stream, 0 );
+
+        /* Write the o-1 least significant bits of q "as is" */
+        for( j = o-2; j >= 0; -- j )
+        {
+            _Rice_WriteBit( stream, (q >> j) & 1 );
+        }
+    }
+    else
+    {
+        /* Write Rice code */
+        for( i = 0; i < q; ++ i )
+        {
+            _Rice_WriteBit( stream, 1 );
+        }
+        _Rice_WriteBit( stream, 0 );
+    }
+
+    /* Encode the rest of the k bits */
+    for( j = k-1; j >= 0; -- j )
+    {
+        _Rice_WriteBit( stream, (x >> j) & 1 );
+    }
+}
+
+int Rice_Compress( int16_t *in, void *out, unsigned int insize, int k )
+{
+#pragma dataflow
+    rice_bitstream_t stream;
+    unsigned int     i, x, n, incount;
+    unsigned int     hist[ RICE_HISTORY ];
+    int              j, sx;
+
+    incount = insize / (RICE_WORD>>3);
+
+    /* Initialize output bitsream */
+    _Rice_InitBitstream( &stream, out, insize+1 );
+
+    /* Encode input stream */
+    for( i = 0; (i < incount) && (stream.index <= insize); ++ i )
+    {
+        /* Revise optimum k? */
+        if( i >= RICE_HISTORY )
+        {
+            k = 0;
+            for( j = 0; j < RICE_HISTORY; ++ j )
+            {
+                k += hist[ j ];
+            }
+            k = (k + (RICE_HISTORY>>1)) / RICE_HISTORY;
+        }
+
+        /* Read word from input buffer */
+        sx = in[i];
+        x = sx < 0 ? -1-(sx<<1) : sx<<1;
+
+        /* Encode word to output buffer */
+        _Rice_EncodeWord( x, k, &stream );
+
+        /* Update history */
+        hist[ i % RICE_HISTORY ] = _Rice_NumBits( x );
+    }
+
+    /* Was there a buffer overflow? */
+    if( i < incount )
+    {
+        printf("OVERFLOW\n");
+    }
+    else
+    {
+        // Flush the last few bits
+        stream.BytePtr[stream.index] = (stream.tempbits << (7 - stream.tempcount)) & 0xFF;
+    }
+
+    return stream.index;
+}
 
 void write_dst_port(ap_uint<2> index,
                     pixel out_p,
