@@ -2,10 +2,9 @@
 #define _BAYER_COMP_ACCEL_HPP_
 
 
+#include <stdlib.h>
 #include "hls_stream.h"
 #include "ap_axi_sdata.h"
-#include "common/xf_common.hpp"
-#include "common/xf_utility.hpp"
 
 #define RICE_HISTORY    16
 #define RICE_WORD       16
@@ -172,7 +171,7 @@ int Rice_Compress( int16_t *in, void *out, unsigned int insize, int k )
     /* Was there a buffer overflow? */
     if( i < incount )
     {
-        printf("OVERFLOW\n");
+        //printf("OVERFLOW\n");
     }
     else
     {
