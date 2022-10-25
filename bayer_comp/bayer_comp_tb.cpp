@@ -42,7 +42,7 @@ int main(int argc, char ** argv)
             auto tp = img.at<uint16_t>(y, x);
             if ((y == 0) && (x < 10))
             {
-                printf("%d ", (int)tp);
+                printf("%04X ", (int)tp);
             }
             p.data = tp;
             src.write(p);
@@ -51,7 +51,7 @@ int main(int argc, char ** argv)
 
     printf("\n");
 
-    bayer_comp_accel(src, dst, cols, rows);
+    bayer_comp_accel(src, dst[0], dst[1], dst[2], dst[3], cols, rows);
 
     int last_count = 0;
     int debug = 0;
@@ -76,7 +76,7 @@ int main(int argc, char ** argv)
                 if (debug < 10)
                 {
                     debug++;
-                    printf("%d ", (int)p2.data);
+                    printf("%04X ", (int)p2.data);
                 }
             } while (!last);
 

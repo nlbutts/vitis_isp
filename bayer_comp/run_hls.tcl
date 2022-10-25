@@ -27,7 +27,7 @@ if {![info exists CLKP]} {
 
 open_project -reset $PROJ
 
-add_files "simple_hdr_accel.cpp" -cflags " -I ${PRJROOT}/build -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++14" -csimflags " -I ${PRJROOT}/build -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++14"
+add_files "bayer_comp_accel.cpp" -cflags " -I ${PRJROOT}/build -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++14" -csimflags " -I ${PRJROOT}/build -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++14"
 add_files -tb "bayer_comp_tb.cpp" -cflags " -I ${PRJROOT}/build -I ${OPENCV_INCLUDE} -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++14" -csimflags " -I ${PRJROOT}/build -I${VITIS_LIB}/L1/include -I ./ -D__SDSVHLS__ -std=c++14"
 set_top bayer_comp_accel
 

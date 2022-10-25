@@ -6,17 +6,49 @@
 #include "ap_axi_sdata.h"
 #include "common/xf_common.hpp"
 #include "common/xf_utility.hpp"
-#include "imgproc/xf_gaussian_filter.hpp"
 
 #define BITS 16
 
 typedef ap_axiu<BITS, 1, 1, 1> pixel;
 
+void write_dst_port(ap_uint<2> index,
+                    pixel out_p,
+                    hls::stream<pixel> &dst0,
+                    hls::stream<pixel> &dst1,
+                    hls::stream<pixel> &dst2,
+                    hls::stream<pixel> &dst3)
+{
+    switch (index)
+    {
+        case 0:
+            dst0.write(out_p);
+            break;
+        case 1:
+            dst1.write(out_p);
+            break;
+        case 2:
+            dst2.write(out_p);
+            break;
+        case 3:
+            dst3.write(out_p);
+            break;
+    }
+}
+
+
 //template <int TYPE>
 void bayer_comp_accel(hls::stream<pixel> &src,
-                      hls::stream<pixel> dst[4],
+                      hls::stream<pixel> &dst0,
+                      hls::stream<pixel> &dst1,
+                      hls::stream<pixel> &dst2,
+                      hls::stream<pixel> &dst3,
                       int width, int height)
 {
+#pragma HLS INTERFACE axis port=src
+#pragma HLS INTERFACE axis port=dst0
+#pragma HLS INTERFACE axis port=dst1
+#pragma HLS INTERFACE axis port=dst2
+#pragma HLS INTERFACE axis port=dst3
     bool eos = false;
     ap_uint<12> row = 0;
     ap_uint<12> col = 0;
@@ -43,12 +75,12 @@ void bayer_comp_accel(hls::stream<pixel> &src,
         if ((row == (height - 2)) && (col >= (width - 2)))
         {
             last = true;
-            printf("row: %d col: %d\n", row, col);
+            //printf("row: %d col: %d\n", row, col);
         }
         else if ((row == (height - 1)) && (col >= (width - 2)))
         {
             last = true;
-            printf("row: %d col: %d\n", row, col);
+            //printf("row: %d col: %d\n", row, col);
         }
         else
         {
@@ -76,14 +108,16 @@ void bayer_comp_accel(hls::stream<pixel> &src,
             first_pixel[index] = true;
             out_p.user = 1;
             out_p.data = in_p.data;
-            dst[index].write(out_p);
+            //dst[index].write(out_p);
+            write_dst_port(index, out_p, dst0, dst1, dst2, dst3);
         }
         else
         {
             ap_uint<BITS> diff = in_p.data - previous[index];
             out_p.data = diff;
             out_p.last = last;
-            dst[index].write(out_p);
+            //dst[index].write(out_p);
+            write_dst_port(index, out_p, dst0, dst1, dst2, dst3);
         }
 
         previous[index] = in_p.data;
