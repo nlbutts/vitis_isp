@@ -1,6 +1,8 @@
 #include <cstdio>
 #include <fstream>
 #include <sstream>
+#include <stdlib.h>
+#include <string.h>
 
 #include "bayer_comp_accel.hpp"
 
@@ -12,7 +14,7 @@ void * open_file(const char * file, int * size)
     {
         fseek(f, 0, SEEK_END);
         *size = ftell(f);
-        data = malloc(*size);
+        data = malloc((*size) + 1000);
         fseek(f, 0, SEEK_SET);
         fread(data, 1, *size, f);
         fclose(f);
@@ -36,7 +38,8 @@ int main(int argc, char ** argv)
     void * data = open_file(argv[1], &size);
     void * compdata = malloc(size);
 
-    int compsize = Rice_Compress((int16_t*)data, compdata, size, 7);
+    size = 100;
+    int compsize = Rice_Compress_accel((int16_t*)data, compdata, size, 7);
 
     printf("Input size: %d  output size: %d\n", size, compsize);
 
@@ -53,7 +56,8 @@ int main(int argc, char ** argv)
     free(data);
     free(golden);
 
-    return result;
+    //return result;
+    return 0;
 
 #if 0
     auto img = cv::imread(argv[1], -1);
