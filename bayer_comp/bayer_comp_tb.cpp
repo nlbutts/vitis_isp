@@ -35,11 +35,23 @@ int main(int argc, char ** argv)
     }
 
     int size;
-    void * data = open_file(argv[1], &size);
-    void * compdata = malloc(size);
+    int16_t * data = (int16_t*)open_file(argv[1], &size);
+    uint8_t * compdata = (uint8_t*)malloc(size);
 
+    hls::stream<int16_t> indata;
+    hls::stream<uint8_t> outdata;
     size = 100;
-    int compsize = Rice_Compress_accel((int16_t*)data, compdata, size, 7);
+    for (int i = 0; i < size; i++)
+    {
+        indata.write(data[i]);
+    }
+    //int compsize = Rice_Compress_accel((int16_t*)data, compdata, size, 7);
+    int compsize = Rice_Compress_accel(indata, outdata, size, 7);
+
+    for (int i = 0; i < compsize; i++)
+    {
+        compdata[i] = outdata.read();
+    }
 
     printf("Input size: %d  output size: %d\n", size, compsize);
 

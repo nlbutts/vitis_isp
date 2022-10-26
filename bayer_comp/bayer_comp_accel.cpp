@@ -1,6 +1,6 @@
 #include <stdlib.h>
-#include "hls_stream.h"
 #include "ap_axi_sdata.h"
+#include "bayer_comp_accel.hpp"
 
 #define RICE_HISTORY    16
 #define RICE_WORD       16
@@ -10,9 +10,8 @@
 typedef ap_axiu<BITS, 1, 1, 1> pixel;
 
 typedef struct {
-    unsigned char *BytePtr;
+    hls::stream<uint8_t> * outdata;
     unsigned int  index;
-    unsigned int  NumBytes;
     unsigned int  tempbits;
     unsigned int  tempcount;
 } rice_bitstream_t;
@@ -23,9 +22,15 @@ typedef struct {
 
 static int _Rice_NumBits( unsigned int x )
 {
-    int n;
-    for( n = 32; !(x & 0x80000000) && (n > 0); -- n ) x <<= 1;
-    return n;
+    int n, temp = 0;
+    if (x)
+    {
+        temp = 32 - __builtin_clz(x);
+    }
+    //for( n = 32; !(x & 0x80000000) && (n > 0); -- n ) x <<= 1;
+    //return n;
+    //printf("_Rice_NumBits: %d %d\n", n, temp);
+    return temp;
 }
 
 
@@ -34,14 +39,12 @@ static int _Rice_NumBits( unsigned int x )
 *************************************************************************/
 
 static void _Rice_InitBitstream( rice_bitstream_t *stream,
-    void *buf, unsigned int bytes )
+    hls::stream<uint8_t> &outdata )
 {
-    stream->BytePtr   = (unsigned char *) buf;
-    stream->index     = 0;
-    stream->NumBytes  = bytes;
-    stream->tempbits  = 0;
-    stream->tempcount = 0;
-
+    stream->outdata     = &outdata;
+    stream->tempbits    = 0;
+    stream->tempcount   = 0;
+    stream->index       = 0;
 }
 
 
@@ -51,22 +54,33 @@ static void _Rice_InitBitstream( rice_bitstream_t *stream,
 
 static void _Rice_WriteBit( rice_bitstream_t *stream, int x )
 {
-    if( stream->index < stream->NumBytes )
+    // if( stream->index < stream->NumBytes )
+    // {
+    //     stream->tempbits |= x;
+    //     stream->tempcount++;
+    //     if (stream->tempcount >= 8)
+    //     {
+    //         stream->BytePtr[stream->index] = stream->tempbits & 0xFF;
+    //         stream->tempbits = 0;
+    //         stream->tempcount = 0;
+    //         stream->index++;
+    //     }
+    //     else
+    //     {
+    //         stream->tempbits <<= 1;
+    //     }
+    // }
+    stream->tempbits |= x;
+    stream->tempcount++;
+    if (stream->tempcount >= 8)
     {
-        stream->tempbits |= x;
-        stream->tempcount++;
-        if (stream->tempcount >= 8)
-        {
-            stream->BytePtr[stream->index] = stream->tempbits & 0xFF;
-            stream->tempbits = 0;
-            stream->tempcount = 0;
-            stream->index++;
-        }
-        else
-        {
-            stream->tempbits <<= 1;
-        }
+        uint8_t byte = stream->tempbits & 0xFF;
+        stream->tempbits = 0;
+        stream->tempcount = 0;
+        stream->index++;
+        stream->outdata->write(byte);
     }
+    stream->tempbits <<= 1;
 }
 
 
@@ -78,7 +92,7 @@ static void _Rice_EncodeWord( unsigned int x, int k,
     rice_bitstream_t *stream )
 {
     unsigned int q, i;
-    int          j, o;
+    int          j, o, o2;
 
     /* Determine overflow */
     q = x >> k;
@@ -126,20 +140,30 @@ static void _Rice_EncodeWord( unsigned int x, int k,
     }
 }
 
-int Rice_Compress( int16_t *in, void *out, unsigned int insize, int k )
+
+//int Rice_Compress( int16_t *in, uint8_t *out, unsigned int insize, int k )
+int Rice_Compress(hls::stream<int16_t> &indata,
+                  hls::stream<uint8_t> &outdata,
+                  unsigned int insize,
+                  int k )
 {
     rice_bitstream_t stream;
     unsigned int     i, x, n, incount;
     unsigned int     hist[ RICE_HISTORY ];
     int              j, sx;
 
-    incount = insize / (RICE_WORD>>3);
+    _Rice_InitBitstream(&stream, outdata);
+
+    //incount = insize / (RICE_WORD>>3);
+    // how many 8-bit values from 16-bit inputs
+    incount = insize >> 1;
 
     /* Initialize output bitsream */
-    _Rice_InitBitstream( &stream, out, insize+1 );
+    //_Rice_InitBitstream( &stream, out, insize+1 );
 
     /* Encode input stream */
-    for( i = 0; (i < incount) && (stream.index <= insize); ++ i )
+    //for( i = 0; (i < incount) && (stream.index <= insize); ++ i )
+    for( i = 0; i < incount; ++ i )
     {
         /* Revise optimum k? */
         if( i >= RICE_HISTORY )
@@ -149,11 +173,14 @@ int Rice_Compress( int16_t *in, void *out, unsigned int insize, int k )
             {
                 k += hist[ j ];
             }
-            k = (k + (RICE_HISTORY>>1)) / RICE_HISTORY;
+            //k = (k + (RICE_HISTORY>>1)) / RICE_HISTORY;
+            // RICE_HISTORY is 16 which is a shift by 4
+            k = (k + (RICE_HISTORY>>1)) >> 4;
         }
 
         /* Read word from input buffer */
-        sx = in[i];
+        sx = indata.read();
+        //sx = in[i];
         x = sx < 0 ? -1-(sx<<1) : sx<<1;
 
         /* Encode word to output buffer */
@@ -163,16 +190,20 @@ int Rice_Compress( int16_t *in, void *out, unsigned int insize, int k )
         hist[ i % RICE_HISTORY ] = _Rice_NumBits( x );
     }
 
-    /* Was there a buffer overflow? */
-    if( i < incount )
-    {
-        //printf("OVERFLOW\n");
-    }
-    else
-    {
-        // Flush the last few bits
-        stream.BytePtr[stream.index] = (stream.tempbits << (7 - stream.tempcount)) & 0xFF;
-    }
+    // /* Was there a buffer overflow? */
+    // if( i < incount )
+    // {
+    //     //printf("OVERFLOW\n");
+    // }
+    // else
+    // {
+    // }
+
+    // Flush the last few bits
+    uint8_t finalbyte = (stream.tempbits << (7 - stream.tempcount)) & 0xFF;
+    stream.index++;
+    outdata.write(finalbyte);
+    //stream.BytePtr[stream.index] = (stream.tempbits << (7 - stream.tempcount)) & 0xFF;
 
     return stream.index;
 }
@@ -305,9 +336,16 @@ void bayer_comp_accel(hls::stream<pixel> &src,
 //     bayer_comp_accel_imp(src, dst0, dst1, dst2, dst3, width, height);
 // }
 
-int Rice_Compress_accel( int16_t *in, void *out, unsigned int insize, int k )
+int Rice_Compress_accel( hls::stream<int16_t> &indata,
+                         hls::stream<uint8_t> &outdata,
+                         unsigned int insize,
+                         int k )
 {
+#pragma HLS INTERFACE mode=s_axilite port=return
+#pragma HLS INTERFACE mode=s_axilite port=insize
+#pragma HLS INTERFACE mode=s_axilite port=k
+#pragma HLS DATAFLOW
 #pragma HLS INTERFACE axis port=in
 #pragma HLS INTERFACE axis port=out
-    return Rice_Compress(in, out, insize, k);
+    return Rice_Compress(indata, outdata, insize, k);
 }
