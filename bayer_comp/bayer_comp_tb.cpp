@@ -45,6 +45,7 @@ int main(int argc, char ** argv)
     {
         indata.write(data[i]);
     }
+
     //int compsize = Rice_Compress_accel((int16_t*)data, compdata, size, 7);
     int compsize = Rice_Compress_accel(indata, outdata, size, 7);
 

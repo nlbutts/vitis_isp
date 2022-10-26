@@ -11,7 +11,7 @@ typedef ap_axiu<BITS, 1, 1, 1> pixel;
 
 typedef struct {
     hls::stream<uint8_t> * outdata;
-    unsigned int  index;
+    unsigned int  index2;
     unsigned int  tempbits;
     unsigned int  tempcount;
 } rice_bitstream_t;
@@ -44,7 +44,7 @@ static void _Rice_InitBitstream( rice_bitstream_t *stream,
     stream->outdata     = &outdata;
     stream->tempbits    = 0;
     stream->tempcount   = 0;
-    stream->index       = 0;
+    stream->index2       = 0;
 }
 
 
@@ -77,7 +77,7 @@ static void _Rice_WriteBit( rice_bitstream_t *stream, int x )
         uint8_t byte = stream->tempbits & 0xFF;
         stream->tempbits = 0;
         stream->tempcount = 0;
-        stream->index++;
+        stream->index2++;
         stream->outdata->write(byte);
     }
     stream->tempbits <<= 1;
@@ -201,11 +201,10 @@ int Rice_Compress(hls::stream<int16_t> &indata,
 
     // Flush the last few bits
     uint8_t finalbyte = (stream.tempbits << (7 - stream.tempcount)) & 0xFF;
-    stream.index++;
     outdata.write(finalbyte);
     //stream.BytePtr[stream.index] = (stream.tempbits << (7 - stream.tempcount)) & 0xFF;
 
-    return stream.index;
+    return stream.index2 + 1;
 }
 
 void write_dst_port(ap_uint<2> index,
@@ -345,7 +344,7 @@ int Rice_Compress_accel( hls::stream<int16_t> &indata,
 #pragma HLS INTERFACE mode=s_axilite port=insize
 #pragma HLS INTERFACE mode=s_axilite port=k
 #pragma HLS DATAFLOW
-#pragma HLS INTERFACE axis port=in
-#pragma HLS INTERFACE axis port=out
+#pragma HLS INTERFACE axis port=indata
+#pragma HLS INTERFACE axis port=outdata
     return Rice_Compress(indata, outdata, insize, k);
 }
