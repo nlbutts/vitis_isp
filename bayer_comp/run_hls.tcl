@@ -46,7 +46,8 @@ if {$CSYNTH == 1} {
 }
 
 if {$COSIM == 1} {
-  cosim_design -disable_dependency_check -argv " ${PRJROOT}/g1d.bin ${PRJROOT}/g1d.bin.rice" -trace_level port -wave_debug
+  #cosim_design -disable_dependency_check -argv " ${PRJROOT}/g1d.bin ${PRJROOT}/g1d.bin.rice" -trace_level port -wave_debug
+  cosim_design -argv " ${PRJROOT}/g1d.bin ${PRJROOT}/g1d.bin.rice" -trace_level port -wave_debug
 }
 
 if {$VIVADO_SYN == 1} {

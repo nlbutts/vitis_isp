@@ -346,7 +346,7 @@ int Rice_Compress_accel( hls::stream<int16_t> &indata,
 #pragma HLS INTERFACE mode=s_axilite port=return
 #pragma HLS INTERFACE mode=s_axilite port=insize
 #pragma HLS INTERFACE mode=s_axilite port=k
-#pragma HLS DATAFLOW
+//#pragma HLS DATAFLOW
 #pragma HLS INTERFACE axis port=indata
 #pragma HLS INTERFACE axis port=outdata
     return Rice_Compress(indata, outdata, insize, k);
