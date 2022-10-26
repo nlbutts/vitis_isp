@@ -10,27 +10,27 @@
 typedef ap_axiu<BITS, 1, 1, 1> pixel;
 
 typedef struct {
-    hls::stream<uint8_t> * outdata;
-    unsigned int  index2;
-    unsigned int  tempbits;
-    unsigned int  tempcount;
+    hls::stream<uint8_t>*   outdata;
+    unsigned int            index;
+    ap_uint<9>              tempbits;
 } rice_bitstream_t;
 
 /*************************************************************************
 * _Rice_NumBits() - Determine number of information bits in a word.
 *************************************************************************/
 
-static int _Rice_NumBits( unsigned int x )
+static int _Rice_NumBits( uint16_t x )
 {
-    int n, temp = 0;
+    //int n = 0;
+    uint8_t n = 0;
     if (x)
     {
-        temp = 32 - __builtin_clz(x);
+        n = 32 - __builtin_clz(x);
     }
     //for( n = 32; !(x & 0x80000000) && (n > 0); -- n ) x <<= 1;
     //return n;
     //printf("_Rice_NumBits: %d %d\n", n, temp);
-    return temp;
+    return n;
 }
 
 
@@ -42,9 +42,8 @@ static void _Rice_InitBitstream( rice_bitstream_t *stream,
     hls::stream<uint8_t> &outdata )
 {
     stream->outdata     = &outdata;
-    stream->tempbits    = 0;
-    stream->tempcount   = 0;
-    stream->index2       = 0;
+    stream->tempbits    = 1;
+    stream->index       = 0;
 }
 
 
@@ -52,7 +51,7 @@ static void _Rice_InitBitstream( rice_bitstream_t *stream,
 * _Rice_WriteBit() - Write a bit to the output stream.
 *************************************************************************/
 
-static void _Rice_WriteBit( rice_bitstream_t *stream, int x )
+static void _Rice_WriteBit( rice_bitstream_t *stream, bool x )
 {
     // if( stream->index < stream->NumBytes )
     // {
@@ -70,17 +69,14 @@ static void _Rice_WriteBit( rice_bitstream_t *stream, int x )
     //         stream->tempbits <<= 1;
     //     }
     // }
-    stream->tempbits |= x;
-    stream->tempcount++;
-    if (stream->tempcount >= 8)
-    {
-        uint8_t byte = stream->tempbits & 0xFF;
-        stream->tempbits = 0;
-        stream->tempcount = 0;
-        stream->index2++;
-        stream->outdata->write(byte);
-    }
     stream->tempbits <<= 1;
+    stream->tempbits[0] = x;
+    if (stream->tempbits & 0x100)
+    {
+        stream->outdata->write(stream->tempbits & 0xFF);
+        stream->tempbits = 1;
+        stream->index++;
+    }
 }
 
 
@@ -88,11 +84,16 @@ static void _Rice_WriteBit( rice_bitstream_t *stream, int x )
 * _Rice_EncodeWord() - Encode and write a word to the output stream.
 *************************************************************************/
 
-static void _Rice_EncodeWord( unsigned int x, int k,
-    rice_bitstream_t *stream )
+static void _Rice_EncodeWord( uint16_t x,
+                              ap_uint<5> k,
+                              rice_bitstream_t *stream )
 {
-    unsigned int q, i;
-    int          j, o, o2;
+    //unsigned int q, i;
+    uint8_t q, i;
+    //int8_t          j, o;
+    int8_t          j;
+    ap_uint<5>      o;
+    //int          j, o;
 
     /* Determine overflow */
     q = x >> k;
@@ -145,21 +146,20 @@ static void _Rice_EncodeWord( unsigned int x, int k,
 int Rice_Compress(hls::stream<int16_t> &indata,
                   hls::stream<uint8_t> &outdata,
                   unsigned int insize,
-                  int k )
+                  uint16_t k )
 {
-    rice_bitstream_t stream;
-    unsigned int     i, x, n, incount;
-    unsigned int     hist[ RICE_HISTORY ];
-    int              j, sx;
+    rice_bitstream_t    stream;
+    unsigned int        i, incount;
+    ap_uint<5>          hist[ RICE_HISTORY ];
+    ap_uint<5>          j;
+    int16_t             sx;
+    uint16_t            x;
 
     _Rice_InitBitstream(&stream, outdata);
 
     //incount = insize / (RICE_WORD>>3);
     // how many 8-bit values from 16-bit inputs
     incount = insize >> 1;
-
-    /* Initialize output bitsream */
-    //_Rice_InitBitstream( &stream, out, insize+1 );
 
     /* Encode input stream */
     //for( i = 0; (i < incount) && (stream.index <= insize); ++ i )
@@ -180,7 +180,6 @@ int Rice_Compress(hls::stream<int16_t> &indata,
 
         /* Read word from input buffer */
         sx = indata.read();
-        //sx = in[i];
         x = sx < 0 ? -1-(sx<<1) : sx<<1;
 
         /* Encode word to output buffer */
@@ -200,11 +199,15 @@ int Rice_Compress(hls::stream<int16_t> &indata,
     // }
 
     // Flush the last few bits
-    uint8_t finalbyte = (stream.tempbits << (7 - stream.tempcount)) & 0xFF;
-    outdata.write(finalbyte);
+    while (!(stream.tempbits & 0x100))
+    {
+        stream.tempbits <<= 1;
+    }
+    //uint8_t finalbyte = (stream.tempbits << (7 - stream.tempcount)) & 0xFF;
+    outdata.write(stream.tempbits & 0xFF);
     //stream.BytePtr[stream.index] = (stream.tempbits << (7 - stream.tempcount)) & 0xFF;
 
-    return stream.index2 + 1;
+    return stream.index + 1;
 }
 
 void write_dst_port(ap_uint<2> index,

@@ -62,15 +62,14 @@ int main(int argc, char ** argv)
 
     uint8_t * golden = (uint8_t*)open_file(argv[2], &size);
     uint8_t * ptr = &golden[0x0d];
-    int result = memcmp(ptr, compdata, compsize);
+    int result = memcmp(ptr, compdata, compsize - 1);
     printf("Memory compare result: %d\n", result);
 
     free(compdata);
     free(data);
     free(golden);
 
-    //return result;
-    return 0;
+    return result;
 
 #if 0
     auto img = cv::imread(argv[1], -1);
