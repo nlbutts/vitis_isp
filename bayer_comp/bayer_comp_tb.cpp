@@ -13,26 +13,34 @@
 #include "bayer_comp_struct.h"
 #include "bayer_comp_accel.hpp"
 
-void * open_file(const char * file, int * size)
-{
-    void * data = NULL;
-    FILE * f = fopen(file, "rb");
-    if (f != NULL)
-    {
-        fseek(f, 0, SEEK_END);
-        *size = ftell(f);
-        data = malloc((*size) + 1000);
-        fseek(f, 0, SEEK_SET);
-        fread(data, 1, *size, f);
-        fclose(f);
-    }
-    else
-    {
-        printf("File was not opened or read\n");
-    }
-    return data;
-}
-
+/**
+ * @brief Appends a channel of data to the compressed image format.
+ *
+ * +------------------------+
+ * |  Header                |
+ * |                        |
+ * +------------------------+
+ * | Compressed Ch1         |
+ * |                        |
+ * |                        |
+ * +------------------------+
+ * | Compressed Ch2         |
+ * |                        |
+ * |                        |
+ * +------------------------+
+ * | Compressed Ch3         |
+ * |                        |
+ * |                        |
+ * +------------------------+
+ * | Compressed Ch4         |
+ * |                        |
+ * |                        |
+ * +------------------------+
+ *
+ * @param pkg a vector to append data to
+ * @param comp_data pointer to the compressed data
+ * @param comp_size size of the compressed data
+ */
 void append_comp_channel(std::vector<uint8_t> &pkg, uint8_t * comp_data, int comp_size)
 {
     for (int i = 0; i < comp_size; i++)
@@ -41,6 +49,14 @@ void append_comp_channel(std::vector<uint8_t> &pkg, uint8_t * comp_data, int com
     }
 }
 
+/**
+ * @brief Debug function to save a vector to a file
+ * I hate C++ file I/O, hence the C style file I/O
+ *
+ * @tparam T vector type
+ * @param filename name of the file to save
+ * @param pkg reference to a vector
+ */
 template<typename T>
 void save_vector(std::string filename, std::vector<T> &pkg)
 {
@@ -50,7 +66,12 @@ void save_vector(std::string filename, std::vector<T> &pkg)
     fclose(f);
 }
 
-
+/**
+ * @brief Compress an image using a reference implementation
+ *
+ * @param img the image to compress
+ * @return std::vector<uint8_t> a vector of compress data
+ */
 std::vector<uint8_t> compress_ref(cv::Mat &img)
 {
     int total_pixels = img.rows * img.cols;
@@ -132,6 +153,13 @@ std::vector<uint8_t> compress_ref(cv::Mat &img)
     return pkg;
 }
 
+/**
+ * @brief Checks to make sure the header is correct.
+ *
+ * @param header pointer to the header
+ * @return true header is good
+ * @return false header is bad
+ */
 bool verifyHeader(BayerComp * header)
 {
     bool result = false;
@@ -155,7 +183,13 @@ bool verifyHeader(BayerComp * header)
     return result;
 }
 
-void diff_to_uint16(int16_t * data, int size)
+/**
+ * @brief Converts from a difference data to a int16
+ *
+ * @param data pointer to the data
+ * @param size size of the data in bytes
+ */
+void diff_to_int16(int16_t * data, int size)
 {
     for (int i = 1; i < (size/2); i++)
     {
@@ -163,6 +197,13 @@ void diff_to_uint16(int16_t * data, int size)
     }
 }
 
+/**
+ * @brief Decompress a compressed image
+ *
+ * @param comp_data vector to the compressed data
+ * @param filename filename to use to save the image
+ * @return cv::Mat This function returns the decompressed image
+ */
 cv::Mat decompress_ref(std::vector<uint8_t> &comp_data, std::string filename)
 {
     cv::Mat img;
@@ -181,7 +222,7 @@ cv::Mat decompress_ref(std::vector<uint8_t> &comp_data, std::string filename)
                             header->channel_size[i],
                             uncompressed_size,
                             RICE_FMT_INT16);
-            diff_to_uint16(decomp_data[i], uncompressed_size);
+            diff_to_int16(decomp_data[i], uncompressed_size);
             src += header->channel_size[i];
             // std::vector<uint16_t> test(decomp_data[i], decomp_data[i] + uncompressed_size/2);
             // std::stringstream ss;
@@ -207,10 +248,24 @@ cv::Mat decompress_ref(std::vector<uint8_t> &comp_data, std::string filename)
         }
 
         cv::imwrite("ref.png", img);
+
+        free(decomp_data[0]);
+        free(decomp_data[1]);
+        free(decomp_data[2]);
+        free(decomp_data[3]);
     }
     return img;
 }
 
+/**
+ * @brief Compare two images against each other.
+ * This assumes the images are the same data type, width, and height.
+ * If this assumption is broken, this code will most likely throw an exception
+ *
+ * @param img1 first image
+ * @param img2 second image
+ * @return int 0 if good, non zero if not.
+ */
 int compare_images(cv::Mat img1, cv::Mat img2)
 {
     int result = -1;
@@ -225,6 +280,13 @@ int compare_images(cv::Mat img1, cv::Mat img2)
     return result;
 }
 
+/**
+ * @brief This is our friendly neighborhood main
+ *
+ * @param argc number of arguments
+ * @param argv arguments
+ * @return int return value
+ */
 int main(int argc, char ** argv)
 {
     int result = 0;
@@ -278,85 +340,5 @@ int main(int argc, char ** argv)
     // printf("Memory compare result: %d\n", result);
 
     return result;
-
-#if 0
-    auto img = cv::imread(argv[1], -1);
-    int rows = img.rows;
-    int cols = img.cols;
-
-    cv::Mat blur_img;
-    blur_img.create(img.rows, img.cols, CV_8UC3);
-
-    hls::stream<pixel> src;
-    hls::stream<pixel> dst[4];
-
-    std::vector<uint16_t> output[4];
-
-    for (int y = 0; y < rows; y++)
-    {
-        for (int x = 0; x < cols; x++)
-        {
-            pixel p;
-            if ((y == 0) && (x == 0))
-                p.user = 1;
-            else
-                p.user = 0;
-
-            if ((x == (cols - 1)))
-                p.last = 1;
-
-            auto tp = img.at<uint16_t>(y, x);
-            if ((y == 0) && (x < 10))
-            {
-                printf("%04X ", (int)tp);
-            }
-            p.data = tp;
-            src.write(p);
-        }
-    }
-
-    printf("\n");
-
-    bayer_comp_accel(src, dst[0], dst[1], dst[2], dst[3], cols, rows);
-
-    int last_count = 0;
-    int debug = 0;
-    do
-    {
-        for (int i = 0; i < 4; i++)
-        {
-            bool last = false;
-            printf("i: %d\n", i);
-            debug = 0;
-            do
-            {
-                pixel p2 = dst[i].read();
-                output[i].push_back(p2.data);
-                last = p2.last;
-                if (p2.last)
-                {
-                    last_count++;
-                    printf("i: %d p2.last: %d\n", i, (int)p2.last);
-                }
-
-                if (debug < 10)
-                {
-                    debug++;
-                    printf("%04X ", (int)p2.data);
-                }
-            } while (!last);
-
-        }
-    } while (last_count < 4);
-
-    for (int i = 0; i < 4; i++)
-    {
-        std::stringstream ss;
-        ss << "diff" << i << ".bin";
-        FILE * f = fopen(ss.str().c_str(), "wb");
-        fwrite(output[i].data(), 2, output[i].size(), f);
-        fclose(f);
-    }
-#endif
 }
 
