@@ -1,2 +1,3 @@
 break main
-run g1d.bin g1d.bin.rice
+run test.png
+

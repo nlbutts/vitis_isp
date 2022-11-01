@@ -8,6 +8,7 @@
 #define RICE_THRESHOLD  8
 
 typedef ap_axiu<BITS, 1, 1, 1> pixel;
+typedef ap_axiu<8, 1, 1, 1> compdata;
 
 typedef struct {
     hls::stream<uint8_t>*   outdata;
@@ -210,6 +211,7 @@ int Rice_Compress(hls::stream<int16_t> &indata,
     return stream.index + 1;
 }
 
+#if 0
 void write_dst_port(ap_uint<2> index,
                     pixel out_p,
                     hls::stream<pixel> &dst0,
@@ -237,17 +239,11 @@ void write_dst_port(ap_uint<2> index,
 
 //template <int TYPE>
 void bayer_comp_accel(hls::stream<pixel> &src,
-                      hls::stream<pixel> &dst0,
-                      hls::stream<pixel> &dst1,
-                      hls::stream<pixel> &dst2,
-                      hls::stream<pixel> &dst3,
+                      hls::stream<compdata> &dst,
                       int width, int height)
 {
 #pragma HLS INTERFACE axis port=src
-#pragma HLS INTERFACE axis port=dst0
-#pragma HLS INTERFACE axis port=dst1
-#pragma HLS INTERFACE axis port=dst2
-#pragma HLS INTERFACE axis port=dst3
+#pragma HLS INTERFACE axis port=dst
     bool eos = false;
     ap_uint<12> row = 0;
     ap_uint<12> col = 0;
@@ -322,21 +318,7 @@ void bayer_comp_accel(hls::stream<pixel> &src,
         previous[index] = in_p.data;
     } while (eos == false);
 }
-
-// void bayer_comp_accel_imp(hls::stream<pixel> &src,
-//                       hls::stream<pixel> &dst0,
-//                       hls::stream<pixel> &dst1,
-//                       hls::stream<pixel> &dst2,
-//                       hls::stream<pixel> &dst3,
-//                       int width, int height)
-// {
-// #pragma HLS INTERFACE axis port=src
-// #pragma HLS INTERFACE axis port=dst0
-// #pragma HLS INTERFACE axis port=dst1
-// #pragma HLS INTERFACE axis port=dst2
-// #pragma HLS INTERFACE axis port=dst3
-//     bayer_comp_accel_imp(src, dst0, dst1, dst2, dst3, width, height);
-// }
+#endif
 
 int Rice_Compress_accel( hls::stream<int16_t> &indata,
                          hls::stream<uint8_t> &outdata,
